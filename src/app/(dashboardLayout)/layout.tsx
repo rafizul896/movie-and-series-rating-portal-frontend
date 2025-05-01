@@ -10,11 +10,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   const links = [
-    { href: '/admin/dashbord', label: 'Dashboard' },
+    { href: '/admin/dashboard', label: 'Dashboard' },
     { href: '/admin/reviews/pending', label: 'Pending Reviews' },
     { href: '/admin/content/published', label: 'Published Content' },
     { href: '/admin/users/activity', label: 'User Activity' },
-    { href: '/admin/analytics', label: 'Analytics' },
+    { href: '/admin/analytics/stats', label: 'Analytics' },
+    { href: '/admin/media', label: 'Manage Media' },  // New route added for media management
+    { href: '/admin/reports', label: 'Reports' },  // New route for reports
+    { href: '/admin/content/remove', label: 'Remove Content' },  // New route for content removal
   ];
 
   return (
@@ -30,7 +33,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
         <nav className="space-y-2">
           {links.map(({ href, label }) => (
-            <Link key={href} href={href} className="block px-3 py-2 rounded hover:bg-gray-700">
+            <Link
+              key={href}
+              href={href}
+              className="block px-3 py-2 rounded hover:bg-gray-700"
+              aria-label={label}  // Add aria-label for accessibility
+            >
               {label}
             </Link>
           ))}
