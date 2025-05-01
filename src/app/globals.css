@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -118,5 +120,31 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* html, body styling */
+body {
+  @apply bg-[#000000] h-full  text-white;
+  font-family: "DM Sans", sans-serif;
+}
+
+.heading_font {
+  font-family: "Bebas Neue", cursive;
+}
+
+#__next {
+  @apply h-full;
+}
+
+html {
+  @apply h-full;
+}
+
+/* custom clssname and styling */
+
+@layer components {
+  .headerLink {
+    @apply cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3];
   }
 }
