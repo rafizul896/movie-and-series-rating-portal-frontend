@@ -52,8 +52,8 @@ const Navbar = () => {
             Kids
           </p>
           <Bell className="h-5 w-5 text-white cursor-pointer hover:text-gray-300 transition" />
-          <Link href="/account">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200">
+          <Link href="/login">
+            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer">
               Create Account
             </button>
           </Link>
@@ -97,8 +97,8 @@ const Navbar = () => {
             <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
               Kids
             </li>
-            <Link href="/account">
-              <button className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition duration-200 mt-2">
+            <Link href="/login">
+              <button className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition duration-200 mt-2 cursor-pointer">
                 Create Account
               </button>
             </Link>
