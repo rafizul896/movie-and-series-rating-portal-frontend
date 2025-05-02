@@ -67,4 +67,16 @@
   cursor: pointer;
   margin-left: 6px;
   font-weight: 500;
+  font-size: 16px;
+  padding-top: 2px;
+}
+
+.forgot-password {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+  color: #e50814;
 }

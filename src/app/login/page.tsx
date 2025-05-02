@@ -80,10 +80,13 @@ const Login = () => {
 
         <div className="form-switch">
           {signState === "Sign In" ? (
-            <p>
-              New Here?{" "}
-              <span onClick={() => setSignState("Sign up")}>Sign Up</span>
-            </p>
+            <div>
+              <p className="forgot-password">Forgot Password?</p>
+              <p>
+                New Here?{" "}
+                <span onClick={() => setSignState("Sign up")}>Sign Up</span>
+              </p>
+            </div>
           ) : (
             <p>
               Already have an account?{" "}

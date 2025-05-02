@@ -27,9 +27,12 @@ const Navbar = () => {
           />
 
           <ul className="hidden space-x-6 md:flex">
-            <li className="headerLink text-white hover:text-gray-300 transition duration-200">
+            <Link
+              href="/"
+              className="headerLink text-white hover:text-gray-300 transition duration-200"
+            >
               Home
-            </li>
+            </Link>
             <li className="headerLink text-white hover:text-gray-300 transition duration-200">
               TV Shows
             </li>
