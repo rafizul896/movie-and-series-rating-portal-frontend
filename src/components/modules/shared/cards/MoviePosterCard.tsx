@@ -2,10 +2,9 @@ import { TMoviePosterCardProps } from "@/types/props.type";
 import Image from "next/image";
 
 const MoviePosterCard = ({ movie }: { movie: TMoviePosterCardProps }) => {
-  const { name, id, image } = movie;
-  console.log(name, id, image);
+  const { name, image } = movie;
   return (
-    <div className="relative h-72 md:h-80 w-48 md:w-60 rounded-lg overflow-hidden shadow-2xl shadow-[#800000] group cursor-pointer">
+    <div className="relative h-64 md:h-72 w-48 md:w-52 rounded-lg overflow-hidden shadow-2xl shadow-[#800000] group cursor-pointer">
       {/* Movie Image */}
       <Image src={image} alt={name} fill className="object-cover" />
 
