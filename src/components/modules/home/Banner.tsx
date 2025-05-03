@@ -5,7 +5,7 @@ import info_icon from "../../../assets/info_icon.png";
 import "../../../style/banner.css";
 import { PlayIcon, X } from "lucide-react";
 import { bannerMovies } from "@/assets/banner";
-import TitleCards from "../shared/TitleCards";
+
 
 const Banner = () => {
   const [index, setIndex] = useState(0);
@@ -56,7 +56,7 @@ const Banner = () => {
               More Info
             </button>
           </div>
-          <TitleCards />
+          {/* <TitleCards /> */}
         </div>
       </div>
 
