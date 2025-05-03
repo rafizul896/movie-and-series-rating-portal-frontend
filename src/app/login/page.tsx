@@ -3,8 +3,10 @@
 import Image from "next/image";
 import logo from "../../assets/logo.png";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import "../../style/login.css";
+import { loginUser, registerUser } from "@/services/authService";
+import { toast } from "sonner";
 
 const Login = () => {
   const [signState, setSignState] = useState("Sign In");
@@ -12,16 +14,39 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (signState === "Sign In") {
-      console.log("Sign In Data:", data);
-      // add your sign in logic here
+      try {
+        const res = await loginUser(data);
+        console.log(res);
+        if (res.error) {
+          toast.error(res.error);
+        } else {
+          toast.success(res.message);
+          reset();
+        }
+      } catch (error: any) {
+        console.log(error);
+        toast.error(error.data.message || "Something went wrong");
+      }
     } else {
-      console.log("Sign Up Data:", data);
-      // add your sign up logic here
+      try {
+        const res = await registerUser(data);
+        console.log(res);
+        if (res.error) {
+          toast.error(res.error);
+        } else {
+          toast.success(res.message);
+          reset();
+        }
+      } catch (error: any) {
+        console.log(error);
+        toast.error(error.data.message || "Something went wrong");
+      }
     }
   };
 
