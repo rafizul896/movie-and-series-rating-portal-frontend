@@ -3,7 +3,7 @@
 import Image from "next/image";
 import logo from "../../../assets/logo.png";
 import Link from "next/link";
-import { Bell, Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -27,15 +27,21 @@ const Navbar = () => {
           />
 
           <ul className="hidden space-x-6 md:flex">
-            <li className="headerLink text-white hover:text-gray-300 transition duration-200">
+            <Link
+              href="/"
+              className="headerLink text-white hover:text-gray-300 transition duration-200"
+            >
               Home
-            </li>
+            </Link>
             <li className="headerLink text-white hover:text-gray-300 transition duration-200">
               TV Shows
             </li>
-            <li className="headerLink text-white hover:text-gray-300 transition duration-200">
+            <Link
+              href="/movies"
+              className="headerLink text-white hover:text-gray-300 transition duration-200"
+            >
               Movies
-            </li>
+            </Link>
             <li className="headerLink text-white hover:text-gray-300 transition duration-200">
               New & Popular
             </li>
@@ -47,13 +53,8 @@ const Navbar = () => {
 
         {/* Right section - Desktop Icons and Button */}
         <div className="hidden md:flex items-center space-x-4 text-sm font-light">
-          <Search className="h-5 w-5 text-white cursor-pointer hover:text-gray-300 transition" />
-          <p className="text-white cursor-pointer hover:text-gray-300 transition">
-            Kids
-          </p>
-          <Bell className="h-5 w-5 text-white cursor-pointer hover:text-gray-300 transition" />
-          <Link href="/account">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200">
+          <Link href="/login">
+            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer">
               Create Account
             </button>
           </Link>
@@ -61,7 +62,6 @@ const Navbar = () => {
 
         {/* Mobile menu button - visible only on small screens */}
         <div className="flex md:hidden items-center space-x-4">
-          <Search className="h-5 w-5 text-white cursor-pointer hover:text-gray-300 transition" />
           <button
             onClick={toggleMobileMenu}
             className="text-white focus:outline-none"
@@ -94,11 +94,8 @@ const Navbar = () => {
             <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
               My List
             </li>
-            <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
-              Kids
-            </li>
-            <Link href="/account">
-              <button className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition duration-200 mt-2">
+            <Link href="/login">
+              <button className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition duration-200 mt-2 cursor-pointer">
                 Create Account
               </button>
             </Link>

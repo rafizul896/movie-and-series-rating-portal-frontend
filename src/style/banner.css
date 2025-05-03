@@ -30,7 +30,6 @@
   right: 6%;
   color: white;
   z-index: 1;
-  max-width: 700px;
 }
 
 .caption-title {
@@ -44,6 +43,7 @@
   font-size: 1rem;
   margin-bottom: 25px;
   line-height: 1.5;
+  max-width: 700px;
 }
 
 .hero-btns {
@@ -81,6 +81,11 @@
   filter: invert(1);
 }
 
+/* .title-Cards {
+  margin-top: 40px;
+} */
+
+
 /* Responsive Styles */
 @media screen and (max-width: 768px) {
   .caption-title {
@@ -100,6 +105,8 @@
     font-size: 0.95rem;
   }
 }
+
+
 
 /* for video play */
 
