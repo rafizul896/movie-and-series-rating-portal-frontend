@@ -36,9 +36,12 @@ const Navbar = () => {
             <li className="headerLink text-white hover:text-gray-300 transition duration-200">
               TV Shows
             </li>
-            <li className="headerLink text-white hover:text-gray-300 transition duration-200">
+            <Link
+              href="/movies"
+              className="headerLink text-white hover:text-gray-300 transition duration-200"
+            >
               Movies
-            </li>
+            </Link>
             <li className="headerLink text-white hover:text-gray-300 transition duration-200">
               New & Popular
             </li>
