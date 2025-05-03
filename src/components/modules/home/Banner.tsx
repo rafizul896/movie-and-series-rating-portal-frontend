@@ -6,13 +6,14 @@ import "../../../style/banner.css";
 import { PlayIcon, X } from "lucide-react";
 import { bannerMovies } from "@/assets/banner";
 
+
 const Banner = () => {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
-    if (showVideo) return; // Pause when video is showing
+    if (showVideo) return;
 
     const timer = setInterval(() => {
       setFade(true);
@@ -23,7 +24,7 @@ const Banner = () => {
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [showVideo]); // re-run effect when showVideo changes
+  }, [showVideo]);
 
   const current = bannerMovies[index];
 
@@ -55,6 +56,7 @@ const Banner = () => {
               More Info
             </button>
           </div>
+          {/* <TitleCards /> */}
         </div>
       </div>
 

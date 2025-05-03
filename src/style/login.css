@@ -1,0 +1,82 @@
+.login {
+  height: 100vh;
+  background-image: linear-gradient(#0000007e, #0000007e),
+    url(../../public/background_banner_img.jpg);
+  padding: 20px 8%;
+}
+
+.login-logo {
+  margin-bottom: 20px;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 450px;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 4px;
+  padding: 60px;
+  margin: auto;
+}
+
+.login-form h1 {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.login-form input {
+  width: 100%;
+  height: 50px;
+  background: #333;
+  color: white;
+  margin: 12px 0;
+  margin: 12px 0;
+  border: 0;
+  outline: none;
+  border-radius: 4px;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.login-form input ::placeholder {
+  color: #555;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.login-form button {
+  width: 100%;
+  border: 0;
+  outline: none;
+  border-radius: 4px;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 12px 0;
+  background: #e50814;
+  cursor: pointer;
+}
+
+.form-switch {
+  margin: 20px 0;
+}
+
+.form-switch span {
+  color: #e50814;
+  cursor: pointer;
+  margin-left: 6px;
+  font-weight: 500;
+  font-size: 16px;
+  padding-top: 2px;
+}
+
+.forgot-password {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+  color: #e50814;
+}
