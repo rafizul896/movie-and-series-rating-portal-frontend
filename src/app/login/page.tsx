@@ -7,16 +7,20 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import "../../style/login.css";
 import { loginUser, registerUser } from "@/services/authService";
 import { toast } from "sonner";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 const Login = () => {
   const [signState, setSignState] = useState("Sign In");
-
+  const { setUser, setIsLoading } = useUser();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (signState === "Sign In") {
@@ -27,6 +31,9 @@ const Login = () => {
           toast.error(res.error);
         } else {
           toast.success(res.message);
+          router.push("/");
+          setUser(res.data);
+          setIsLoading(false);
           reset();
         }
       } catch (error: any) {
@@ -106,7 +113,9 @@ const Login = () => {
         <div className="form-switch">
           {signState === "Sign In" ? (
             <div>
-              <p className="forgot-password">Forgot Password?</p>
+              <Link href="/forgot-password" className="forgot-password">
+                Forgot Password?{" "}
+              </Link>
               <p>
                 New Here?{" "}
                 <span onClick={() => setSignState("Sign up")}>Sign Up</span>
