@@ -1,6 +1,9 @@
+import UpdateModal from "@/components/modules/adminDashboard/Media/updateModal";
 
-export default function addMovie() {
+export default function AddMoviePage() {
   return (
-    <div>add movie page</div>
-  )
+    <div className="bg-black min-h-screen">
+      <UpdateModal />
+    </div>
+  );
 }
