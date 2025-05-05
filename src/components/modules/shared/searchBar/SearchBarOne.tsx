@@ -34,12 +34,12 @@ const SearchBarOne = ({
     <div className="bg-zinc-900/80 p-6 rounded-xl shadow-md max-w-6xl mx-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col md:flex-row md:items-end gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <FormField
               control={form.control}
               name="query"
               render={({ field }) => (
-                <FormItem className="flex-1">
+                <FormItem className="md:w-1/2">
                   <FormLabel className="text-white">Search</FormLabel>
                   <FormControl>
                     <Input
@@ -52,83 +52,91 @@ const SearchBarOne = ({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="genre"
-              render={({ field }) => (
-                <FormItem className="w-full md:w-40">
-                  <FormLabel className="text-white">Genre</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="bg-zinc-800 text-white border border-zinc-700">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-zinc-900 text-white">
-                        {genres.map((g) => (
-                          <SelectItem key={g} value={g}>
-                            {g}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            <div className="md:w-1/2 flex gap-4">
+              <FormField
+                control={form.control}
+                name="genre"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Genre</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <SelectTrigger className="bg-zinc-800 text-white border border-zinc-700">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-zinc-900 text-white">
+                          {genres.map((g) => (
+                            <SelectItem key={g} value={g}>
+                              {g}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="platform"
-              render={({ field }) => (
-                <FormItem className="w-full md:w-48">
-                  <FormLabel className="text-white">Platform</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="bg-zinc-800 text-white border border-zinc-700">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-zinc-900 text-white">
-                        {platforms.map((p) => (
-                          <SelectItem key={p} value={p}>
-                            {p}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="platform"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel className="text-white">Platform</FormLabel>
+                    <FormControl className="w-full">
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <SelectTrigger className="bg-zinc-800 text-white border border-zinc-700 w-full ">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-zinc-900 text-white">
+                          {platforms.map((p) => (
+                            <SelectItem key={p} value={p}>
+                              {p}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="year"
-              render={({ field }) => (
-                <FormItem className="w-full md:w-32">
-                  <FormLabel className="text-white">Year</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="bg-zinc-800 text-white border border-zinc-700">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-zinc-900 text-white max-h-60 overflow-auto">
-                        {years.map((y) => (
-                          <SelectItem key={y} value={y}>
-                            {y}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="year"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Year</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <SelectTrigger className="bg-zinc-800 text-white border border-zinc-700">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-zinc-900 text-white max-h-60 overflow-auto">
+                          {years.map((y) => (
+                            <SelectItem key={y} value={y}>
+                              {y}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <div className="pt-5">
-              <Button
-                type="submit"
-                className="bg-[#800000] hover:bg-[#a00000] text-white"
-              >
+              <Button type="submit" variant={"custom"} className="w-full">
                 Search
               </Button>
             </div>
