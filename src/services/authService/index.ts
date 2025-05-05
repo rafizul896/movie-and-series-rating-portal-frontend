@@ -47,7 +47,7 @@ export const refreshToken = async () => {
       `${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,
       {
         method: "POST",
-        credentials: "include",
+        credentials: "include", // include cookies
       }
     );
     const result = await res.json();
@@ -63,3 +63,45 @@ export const refreshToken = async () => {
     return Error(error);
   }
 };
+
+export const forgotPassword = async (userData: FieldValues) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/forgot-password`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const resetPassword = async (
+  userData: FieldValues & { token: string }
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/reset-password`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: ` ${userData.token}`,
+        },
+        body: JSON.stringify(userData),
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
