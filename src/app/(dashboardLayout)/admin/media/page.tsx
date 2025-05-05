@@ -1,11 +1,12 @@
-"use client";
+// app/admin/media/page.tsx
 
-import { useRouter } from "next/navigation";
+"use client";
 import { useState, useEffect } from "react";
 import { columns } from "@/components/modules/adminDashboard/Media/columns";
 import { DataTable } from "@/components/modules/adminDashboard/Media/data-table";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
+import UpdateModal from "@/components/modules/adminDashboard/Media/updateModal";
 
 // Movie type
 type Movie = {
@@ -18,7 +19,7 @@ type Movie = {
   isDeleted: boolean;
 };
 
-// Dummy data (replace with actual API call later)
+// Dummy data
 async function getData(): Promise<Movie[]> {
   return [
     {
@@ -53,7 +54,7 @@ async function getData(): Promise<Movie[]> {
 
 export default function ManageMediaPage() {
   const [data, setData] = useState<Movie[]>([]);
-  const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +65,7 @@ export default function ManageMediaPage() {
   }, []);
 
   const handleAddMediaClick = () => {
-    router.push("/admin/media/add-movie");
+    setOpen(true);
   };
 
   return (
@@ -73,18 +74,16 @@ export default function ManageMediaPage() {
       <div className="container mx-auto py-10">
         <div className="flex justify-end mb-6">
           <Button
-            className="bg-gradient-to-r cursor-pointer from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 
-                      text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:shadow-lg
-                      transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                      focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
-                      flex items-center space-x-2"
             onClick={handleAddMediaClick}
+            variant={"custom"}
           >
             <PlusCircle className="w-5 h-5" />
             <span>Add Movie</span>
           </Button>
         </div>
+
         <DataTable columns={columns} data={data} />
+        <UpdateModal open={open} setOpen={setOpen} />
       </div>
     </div>
   );
