@@ -3,6 +3,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+import { ActionCell } from "./ActionCell";
 
 export type Movie = {
   id: string;
@@ -13,7 +14,6 @@ export type Movie = {
   isTrending: boolean;
   isDeleted: boolean;
 };
-
 
 export const columns: ColumnDef<Movie>[] = [
   {
@@ -56,17 +56,13 @@ export const columns: ColumnDef<Movie>[] = [
       );
     },
   },
-  {
-    id: "actions",
-    header: "Action",
-    cell: ({ row }) => {
-      const media = row.original;
-      return (
-        <div className="flex gap-2">
-          <button className="text-blue-500 hover:underline">Edit</button>
-          <button className="text-red-500 hover:underline">Delete</button>
-        </div>
-      );
-    },
+  // columns.tsx
+{
+  id: "actions",
+  header: "Action",
+  cell: ({ row }) => {
+    const media = row.original;
+    return <ActionCell media={media} />;
   },
+},
 ];
