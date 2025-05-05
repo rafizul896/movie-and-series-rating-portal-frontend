@@ -21,7 +21,11 @@ const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
   { title: "Create Movie", url: "/admin/create-movie", icon: Inbox },
   { title: "Pending Reviews", url: "/admin/reviews/pending", icon: Inbox },
-  { title: "Published Content", url: "/admin/content/published", icon: Calendar },
+  {
+    title: "Published Content",
+    url: "/admin/content/published",
+    icon: Calendar,
+  },
   { title: "User Activity", url: "/admin/users/activity", icon: Search },
   { title: "Analytics", url: "/admin/analytics/stats", icon: Settings },
 ];
@@ -33,7 +37,7 @@ export function AppSidebar() {
     <Sidebar className="w-56 ">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="font-bold text-xs text-black tracking-wide px-3 pt-4 pb-2">
+          <SidebarGroupLabel className="font-bold text-xs text-black tracking-wide px-3 mb-5 pt-4 pb-2">
             ADMIN DASHBOARD
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -46,8 +50,12 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild>
                       <a
                         href={item.url}
-                        className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors
-                          ${isActive ? "bg-blue-600 text-white" : "hover:bg-[#2a2a3b]"}
+                        className={`flex  items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors
+                          ${
+                            isActive
+                              ? "bg-blue-600 text-white"
+                              : "hover:bg-[#2a2a3b]"
+                          }
                         `}
                       >
                         <item.icon size={18} />

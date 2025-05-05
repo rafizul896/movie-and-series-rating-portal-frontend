@@ -22,8 +22,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -36,9 +34,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setIsLoading(false);
       }
     };
-
     fetchUser();
-  }, []); 
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, isLoading, setUser, setIsLoading }}>
@@ -52,7 +49,6 @@ export const useUser = () => {
   if (context == undefined) {
     throw new Error("useUser must be used within a UserProvider");
   }
-
   return context;
 };
 
