@@ -5,13 +5,30 @@ import logo from "../../../assets/logo.png";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
+import { logoutUser } from "@/services/user";
 
 const Navbar = () => {
+  const { user, setIsLoading, setUser, isLoading } = useUser();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+
+  const handleLogout = async () => {
+    await logoutUser();
+    localStorage.removeItem("accessToken");
+    setIsLoading(true);
+    setUser(null);
+    router.push("/login");
+  };
+
+  if (isLoading) {
+    return <div>loading</div>;
+  }
 
   return (
     <header className="fixed w-full bg-gradient-to-b from-black to-transparent z-50">
@@ -53,11 +70,24 @@ const Navbar = () => {
 
         {/* Right section - Desktop Icons and Button */}
         <div className="hidden md:flex items-center space-x-4 text-sm font-light">
-          <Link href="/login">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer">
-              Create Account
-            </button>
-          </Link>
+          {user ? (
+            <>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer">
+                  Create Account
+                </button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile menu button - visible only on small screens */}
