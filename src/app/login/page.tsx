@@ -27,14 +27,13 @@ const Login = () => {
       try {
         const res = await loginUser(data);
         console.log(res);
-        if (res.error) {
-          toast.error(res.error);
-        } else {
-          toast.success(res.message);
+        if (res.success) {
+          toast.success(res.message || "Login successful");
           router.push("/");
           setUser(res.data);
-          setIsLoading(false);
           reset();
+        } else {
+          toast.error(res.message || "Login failed");
         }
       } catch (error: any) {
         console.log(error);
@@ -43,12 +42,12 @@ const Login = () => {
     } else {
       try {
         const res = await registerUser(data);
-        console.log(res);
-        if (res.error) {
-          toast.error(res.error);
-        } else {
-          toast.success(res.message);
+        // console.log(res);
+        if (res.success) {
+          toast.success(res.message || "Registration successful");
           reset();
+        } else {
+          toast.error(res.message || "Registration failed");
         }
       } catch (error: any) {
         console.log(error);

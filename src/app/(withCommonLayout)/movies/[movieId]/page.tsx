@@ -8,7 +8,7 @@ import React from "react";
 
 const MovieDetailsPage = () => {
   const movie = {
-    title: "Avengers",
+    title: "Avengers Endgame",
     synopsis: "A marine on an alien planet becomes torn between two worlds.",
     genres: ["Sci-Fi", "Adventure"],
     type: "MOVIE",
