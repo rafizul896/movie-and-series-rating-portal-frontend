@@ -3,4 +3,11 @@ export type TSearchBarOne = {
   genre: string;
   platform: string;
   year: string;
+  sortBy?: string;
+};
+
+export type TFilterOptions = {
+  genre: string;
+  platform: string;
+  year: string;
 };

@@ -1,7 +1,7 @@
 "use client";
 
+import { Calendar, Film, Home, Inbox, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -19,7 +19,7 @@ import { NavUser } from "./nav-user";
 
 const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
-  { title: "Create Movie", url: "/admin/create-movie", icon: Inbox },
+  { title: "Media", url: "/admin/media", icon: Film },
   { title: "Pending Reviews", url: "/admin/reviews/pending", icon: Inbox },
   {
     title: "Published Content",
@@ -34,10 +34,10 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="w-56 ">
-      <SidebarContent>
+    <Sidebar className=" w-56  ">
+      <SidebarContent className="">
         <SidebarGroup>
-          <SidebarGroupLabel className="font-bold text-xs text-black tracking-wide px-3 mb-5 pt-4 pb-2">
+          <SidebarGroupLabel className="font-bold text-xs text-white tracking-wide px-3 pt-4 pb-2">
             ADMIN DASHBOARD
           </SidebarGroupLabel>
           <SidebarGroupContent>

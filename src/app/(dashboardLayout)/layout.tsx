@@ -4,12 +4,14 @@ import { AppSidebar } from "@/components/modules/adminDashboard/app-sidebar"
  
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
+
+     <SidebarProvider>
       <AppSidebar />
-      <main>
+      <main className="p-2 w-screen">
         <SidebarTrigger />
-       <div className="p-3"> {children}</div>
+        {children}
       </main>
     </SidebarProvider>
+
   )
 }
