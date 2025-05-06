@@ -41,10 +41,10 @@ const ReviewManagementPage = () => {
       </div>
       {loading ? (
         <LoadingPage />
+      ) : allReviews?.data.length ? (
+        <ReviewTable tableData={allReviews?.data} onRefetch={refetch} />
       ) : (
-        allReviews?.data.length && (
-          <ReviewTable tableData={allReviews?.data} onRefetch={refetch} />
-        )
+        <p className="text-center">No Data found</p>
       )}
     </div>
   );
