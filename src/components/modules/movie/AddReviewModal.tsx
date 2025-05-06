@@ -25,6 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
+import { addReview } from "@/services/reviewService";
 
 const reviewFormSchema = z.object({
   rating: z.coerce.number().min(1).max(10),
@@ -55,25 +56,11 @@ const AddReviewModal = ({ movieId }: { movieId: string }) => {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/reviews`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        toast.success("Review submitted!");
-        form.reset();
-      } else {
-        toast.error(data?.message || "Failed to submit review");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("Something went wrong");
+      const result = await addReview(payload, token);
+      toast.success(result?.message || "Review added successfully");
+      form.reset();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to submit review");
     }
   };
 
