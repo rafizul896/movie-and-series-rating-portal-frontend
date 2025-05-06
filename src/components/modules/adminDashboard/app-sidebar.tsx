@@ -1,7 +1,7 @@
 "use client";
 
+import { Calendar, Film, Home, Inbox,  Settings,Users } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { Calendar, Home, Inbox, Search, Settings,Film  } from "lucide-react";
 
 import {
   Sidebar,
@@ -19,10 +19,15 @@ import { NavUser } from "./nav-user";
 
 const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
+  { title: "Users", url: "/admin/users", icon: Users },
   { title: "Media", url: "/admin/media", icon: Film },
   { title: "Pending Reviews", url: "/admin/reviews/pending", icon: Inbox },
-  { title: "Published Content", url: "/admin/content/published", icon: Calendar },
-  { title: "User Activity", url: "/admin/users/activity", icon: Search },
+  {
+    title: "Published Content",
+    url: "/admin/content/published",
+    icon: Calendar,
+  },
+
   { title: "Analytics", url: "/admin/analytics/stats", icon: Settings },
 ];
 
@@ -46,8 +51,12 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild>
                       <a
                         href={item.url}
-                        className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors
-                          ${isActive ? "bg-blue-600 text-white" : "hover:bg-[#2a2a3b]"}
+                        className={`flex  items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors
+                          ${
+                            isActive
+                              ? "bg-blue-600 text-white"
+                              : "hover:bg-[#2a2a3b]"
+                          }
                         `}
                       >
                         <item.icon size={18} />

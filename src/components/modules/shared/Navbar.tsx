@@ -8,6 +8,14 @@ import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
 import { logoutUser } from "@/services/user";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import user_img from "../../../assets/default_user.jpg";
 
 const Navbar = () => {
   const { user, setIsLoading, setUser, isLoading } = useUser();
@@ -62,31 +70,67 @@ const Navbar = () => {
             <li className="headerLink text-white hover:text-gray-300 transition duration-200">
               New & Popular
             </li>
-            <li className="headerLink text-white hover:text-gray-300 transition duration-200">
-              My List
-            </li>
           </ul>
         </div>
 
-        {/* Right section - Desktop Icons and Button */}
+        {/* Right section - Avatar Dropdown Menu */}
         <div className="hidden md:flex items-center space-x-4 text-sm font-light">
           {user ? (
-            <>
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer"
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer ring-2 ring-white hover:ring-red-500 transition duration-300">
+                  <AvatarImage
+                    src={user_img?.src}
+                    alt="User Avatar"
+                    className="object-cover"
+                  />
+                  <AvatarFallback className="bg-gray-200 text-black">
+                    {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="bg-white text-sm text-gray-800 w-52 rounded-md shadow-xl mt-2 p-1"
               >
-                Logout
-              </button>
-            </>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/wishlist"
+                    className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                  >
+                    Wishlist
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/watchlist"
+                    className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                  >
+                    Watchlist
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/dashboard"
+                    className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                  >
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="text-red-600 hover:text-red-700 w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                >
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
-            <>
-              <Link href="/login">
-                <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer">
-                  Create Account
-                </button>
-              </Link>
-            </>
+            <Link href="/login">
+              <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer">
+                Create Account
+              </button>
+            </Link>
           )}
         </div>
 
@@ -121,14 +165,33 @@ const Navbar = () => {
             <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
               New & Popular
             </li>
-            <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
-              My List
-            </li>
-            <Link href="/login">
-              <button className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition duration-200 mt-2 cursor-pointer">
-                Create Account
-              </button>
-            </Link>
+            {user ? (
+              <>
+                <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
+                  Wishlist
+                </li>
+                <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
+                  Watchlist
+                </li>
+                <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
+                  Dashboard
+                </li>
+                <li
+                  onClick={handleLogout}
+                  className="text-red-600 hover:text-red-300 transition duration-200 border-b border-gray-800 pb-2"
+                >
+                  Logout
+                </li>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <button className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition duration-200 mt-2 cursor-pointer">
+                    Create Account
+                  </button>
+                </Link>
+              </>
+            )}
           </ul>
         </div>
       )}

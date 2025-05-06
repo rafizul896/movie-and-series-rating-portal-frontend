@@ -4,7 +4,8 @@ import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 
 export const getCurrentUser = async () => {
-  const token = cookies().get("refreshToken");
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("refreshToken");
   if (token) {
     const decodedToken = jwtDecode(token.value);
     return decodedToken;

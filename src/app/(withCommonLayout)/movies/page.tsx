@@ -1,6 +1,6 @@
 "use client";
 
-import { movieData } from "@/components/modules/home/movies.db";
+import LoadingPage from "@/app/loading";
 import SmallMovieCardOne from "@/components/modules/shared/cards/SmallMovieCardOne";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,10 +18,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useAllMovies from "@/hooks/useMovie";
 import { TSearchBarOne } from "@/types/form.type";
+import { TMovie } from "@/types/movie.type";
+
 import { useForm } from "react-hook-form";
 
 const AllMoviesPage = () => {
+  const { allMovies: moviesData, loading } = useAllMovies();
+
   const genres = ["Action", "Drama", "Comedy", "Thriller"];
   const sortBy = ["Highest Rated", "Most Reviewes", "Latest Released"];
   const platforms = ["Netflix", "Disney+", "Amazon Prime", "Hulu"];
@@ -58,19 +63,17 @@ const AllMoviesPage = () => {
     console.log("Form Reset");
   };
 
+  if (loading) {
+    return <LoadingPage />;
+  }
+
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row gap-4 min-h-screen">
         {/* Left Section: Movie Cards */}
         <div className="w-full md:w-9/12">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
-            {movieData.map((movie) => (
-              <SmallMovieCardOne key={movie.id} movie={movie} />
-            ))}
-            {movieData.map((movie) => (
-              <SmallMovieCardOne key={movie.id} movie={movie} />
-            ))}
-            {movieData.map((movie) => (
+            {moviesData?.map((movie: TMovie) => (
               <SmallMovieCardOne key={movie.id} movie={movie} />
             ))}
           </div>
