@@ -76,7 +76,7 @@ const ReviewTable = ({
                 >
                   {review.approved ? (
                     <span className="w-full bg-red-600 text-white cursor-pointer px-2 py-1 rounded">
-                      Deny
+                      Unpublish
                     </span>
                   ) : (
                     <span className="w-full bg-green-600 text-white cursor-pointer px-2 py-1 rounded">
