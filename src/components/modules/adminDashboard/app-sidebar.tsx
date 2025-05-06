@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Film, Home, Inbox,  Settings,Users } from "lucide-react";
+import { Calendar, Film, Home, Inbox, Settings, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -16,12 +16,13 @@ import {
 } from "@/components/ui/sidebar";
 
 import { NavUser } from "./nav-user";
+import Link from "next/link";
 
 const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
   { title: "Users", url: "/admin/users", icon: Users },
   { title: "Media", url: "/admin/media", icon: Film },
-  { title: "Pending Reviews", url: "/admin/reviews/pending", icon: Inbox },
+  { title: "Review Management", url: "/admin/reviews", icon: Inbox },
   {
     title: "Published Content",
     url: "/admin/content/published",
@@ -71,6 +72,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="border-t border-[#2a2a3b] mt-4 pt-3 px-3">
+        <Link href={"/"}>Home</Link>
         <NavUser />
       </SidebarFooter>
     </Sidebar>
