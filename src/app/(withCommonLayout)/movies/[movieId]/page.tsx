@@ -1,4 +1,5 @@
 "use client";
+import AddReviewModal from "@/components/modules/movie/AddReviewModal";
 import ReviewCardOne from "@/components/modules/shared/cards/ReviewCardOne";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -15,6 +16,11 @@ const MovieDetailsPage = () => {
 
   const param = useParams();
 
+  // const token = localStorage.getItem("accessToken");
+
+  // const user = jwtDecode(token || "");
+  // console.log(user);
+
   useEffect(() => {
     const fetchMovies = async () => {
       const res = await getSingleMovie(param?.movieId as string);
@@ -22,57 +28,21 @@ const MovieDetailsPage = () => {
     };
 
     fetchMovies();
-  }, []);
+  }, [param?.movieId]);
 
   console.log(moviesData);
 
-  const reviews = [
-    {
-      id: 1,
-      name: "Aktheruzzaman",
-      profileImage:
-        "https://img.freepik.com/premium-vector/person-icon_109161-4674.jpg?w=360",
-      rating: 9,
-      content: "love it!",
-      date: "26 may 2025",
-      tags: ["fantasy", "action"],
-      comments: [
-        {
-          id: 1,
-          comment: "Demo comment 1",
-        },
-        {
-          id: 2,
-          comment: "Demo comment 2",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Aktheruzzaman",
-      profileImage:
-        "https://img.freepik.com/premium-vector/person-icon_109161-4674.jpg?w=360",
-      rating: 9,
-      content: "Looks Good",
-      date: "20 may 2025",
-      tags: ["fantasy", "action"],
-      comments: [
-        {
-          id: 1,
-          comment: "demo comment",
-        },
-      ],
-    },
-  ];
-
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex gap-2">
-        <div className="w-3/12">
+      <div className="flex gap-2 flex-col md:flex-row">
+        <div className="md:w-3/12">
           <div className="w-10/12 mx-auto">
             <div className="relative w-52 h-80 mx-auto">
               <Image
-                src={moviesData?.thumbnail || ""}
+                src={
+                  moviesData?.thumbnail ||
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoWcWg0E8pSjBNi0TtiZsqu8uD2PAr_K11DA&s"
+                }
                 alt={moviesData?.title || ""}
                 fill
                 className="rounded"
@@ -93,7 +63,7 @@ const MovieDetailsPage = () => {
               <div>
                 <p>Genres</p>
                 <div className="flex gap-1 flex-wrap mt-1">
-                  {moviesData?.genres.map((g) => (
+                  {moviesData?.genres?.map((g) => (
                     <span
                       key={g}
                       className="text-sm bg-gray-500 px-[10px] py-[1px] rounded"
@@ -107,7 +77,7 @@ const MovieDetailsPage = () => {
               <div>
                 <p>Available on</p>
                 <div className="flex gap-1 flex-wrap mt-1">
-                  {moviesData?.platforms.map((p) => (
+                  {moviesData?.platforms?.map((p) => (
                     <span
                       key={p}
                       className="text-sm bg-red-600 text-white px-[10px] py-[1px] rounded"
@@ -120,10 +90,10 @@ const MovieDetailsPage = () => {
             </div>
           </div>
         </div>
-        <div className="w-9/12">
+        <div className="md:w-9/12 p-4 md:p-0">
           <Link
             href={"/movies"}
-            className="text-red-500 flex items-center gap-2 cursor-pointer"
+            className="text-red-500 md:flex items-center gap-2 cursor-pointer hidden"
           >
             <ArrowLeft size={20} /> Back to Movies
           </Link>
@@ -148,7 +118,7 @@ const MovieDetailsPage = () => {
           <p>{moviesData?.synopsis}</p>
           <h6 className="mt-5">Cast: </h6>
           <div className="flex flex-wrap gap-2 mt-1">
-            {moviesData?.cast.map((cast) => (
+            {moviesData?.cast?.map((cast) => (
               <p
                 key={cast}
                 className="text-sm bg-gray-500 px-[10px] py-[1px] rounded-xl"
@@ -161,11 +131,11 @@ const MovieDetailsPage = () => {
           <div className="Reviews mt-10 bg-gray-700/45 p-3 rounded">
             <div className="flex justify-between mb-3">
               <h5 className="mb-1 md:text-xl">Reviews</h5>
-              <Button variant={"custom"}>Write a review</Button>
+              <AddReviewModal movieId={moviesData?.id || ""} />
             </div>
             <Separator className="mb-3" />
             <div className="p-2">
-              {reviews.map((review) => (
+              {moviesData?.reviews?.map((review) => (
                 <ReviewCardOne key={review?.id} review={review} />
               ))}
             </div>
