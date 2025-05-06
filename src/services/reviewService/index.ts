@@ -84,3 +84,38 @@ export const deleteReview = async (reviewId: string, token: string) => {
     throw new Error("Unknown error occurred while deleting reviews");
   }
 };
+
+export const addReview = async (
+  data: {
+    rating: number;
+    content: string;
+    tags: string[];
+    hasSpoiler?: boolean;
+    movieId: string;
+  },
+  token: string
+) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/reviews`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to submit review");
+    }
+    revalidateTag("movies");
+
+    const result = await res.json();
+    return result;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error("Unknown error occurred while submitting review");
+  }
+};

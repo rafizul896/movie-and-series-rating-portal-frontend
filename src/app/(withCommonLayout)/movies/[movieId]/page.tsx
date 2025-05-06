@@ -105,7 +105,11 @@ const MovieDetailsPage = () => {
           </p>
           <h1 className="text-xl md:text-3xl mt-2 mb-1">{moviesData?.title}</h1>
           <div className="flex gap-4 text-gray-400 mb-2">
-            <p className="text-yellow-400">⭐9/10</p>
+            <p className="text-yellow-400">
+              ⭐
+              {moviesData?.avgRating ? moviesData?.avgRating?.toFixed(1) : "8"}
+              /10
+            </p>
             <p>
               Buy:{" "}
               <span className="font-semibold ">${moviesData?.buyPrice}</span>
