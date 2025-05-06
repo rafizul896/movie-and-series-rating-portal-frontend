@@ -1,3 +1,19 @@
+export type TSingleMovieReview = {
+  approved: boolean;
+  content: string;
+  createdAt: string;
+  hasSpoiler: boolean;
+  id: string;
+  rating: number;
+  tags: string[];
+  user: {
+    id: string;
+    name: string;
+    profileImage: string | null;
+  };
+  _count: { likes: number; comments: number };
+};
+
 export type TMovie = {
   avgRating: number;
   buyPrice: number;
@@ -13,6 +29,7 @@ export type TMovie = {
   platforms: string[];
   releaseYear: number;
   rentPrice: number;
+  reviews?: TSingleMovieReview[];
   reviewCount: number;
   streamingLink: string;
   synopsis: string;
