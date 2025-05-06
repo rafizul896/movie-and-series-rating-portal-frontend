@@ -7,7 +7,6 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
-import { logoutUser } from "@/services/user";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -16,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import user_img from "../../../assets/default_user.jpg";
+import { logoutUser } from "@/services/authService";
 
 const Navbar = () => {
   const { user, setIsLoading, setUser, isLoading } = useUser();
@@ -28,7 +28,6 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await logoutUser();
-    localStorage.removeItem("accessToken");
     setIsLoading(true);
     setUser(null);
     router.push("/login");
@@ -109,14 +108,16 @@ const Navbar = () => {
                     Watchlist
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/dashboard"
-                    className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                  >
-                    Dashboard
-                  </Link>
-                </DropdownMenuItem>
+                {user.role === "ADMIN" && (
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/admin/dashboard"
+                      className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                    >
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem
                   onClick={handleLogout}
                   className="text-red-600 hover:text-red-700 w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
@@ -173,9 +174,14 @@ const Navbar = () => {
                 <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
                   Watchlist
                 </li>
-                <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
-                  Dashboard
-                </li>
+                {user.role === "ADMIN" && (
+                  <Link
+                    href="/admin/dashboard"
+                    className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
+                  >
+                    Dashboard
+                  </Link>
+                )}
                 <li
                   onClick={handleLogout}
                   className="text-red-600 hover:text-red-300 transition duration-200 border-b border-gray-800 pb-2"
