@@ -1,0 +1,24 @@
+export type TMovie = {
+  avgRating: number;
+  buyPrice: number;
+  cast: string[];
+  createdAt: string;
+  director: string;
+  discountPrice: number;
+  genres: string[];
+  id: string;
+  isDeleted: false;
+  isTrending: false;
+  likesCount: number;
+  platforms: string[];
+  releaseYear: number;
+  rentPrice: number;
+  reviewCount: number;
+  streamingLink: string;
+  synopsis: string;
+  thumbnail: string;
+  title: string;
+  totalRating: number;
+  type: string;
+  updatedAt: string;
+};

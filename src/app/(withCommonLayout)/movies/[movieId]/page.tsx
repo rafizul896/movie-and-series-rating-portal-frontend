@@ -1,29 +1,30 @@
+"use client";
 import ReviewCardOne from "@/components/modules/shared/cards/ReviewCardOne";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { getSingleMovie } from "@/services/movie";
+import { TMovie } from "@/types/movie.type";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const MovieDetailsPage = () => {
-  const movie = {
-    title: "Avengers Endgame",
-    synopsis: "A marine on an alien planet becomes torn between two worlds.",
-    genres: ["Sci-Fi", "Adventure"],
-    type: "MOVIE",
-    releaseYear: 2009,
-    director: "James Cameron",
-    cast: ["Sam Worthington", "Zoe Saldana"],
-    platforms: ["Disney+"],
-    buyPrice: 13.99,
-    rentPrice: 4.99,
-    discountPrice: 3.49,
-    thumbnail:
-      "https://wallpapercat.com/w/full/e/c/7/119551-1350x2160-samsung-hd-avengers-wallpaper.jpg",
-    streamingLink: "https://streaming.example.com/avatar",
-    isTrending: true,
-  };
+  const [moviesData, setMoviesData] = useState<TMovie>();
+
+  const param = useParams();
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const res = await getSingleMovie(param?.movieId as string);
+      setMoviesData(res?.data?.data || []);
+    };
+
+    fetchMovies();
+  }, []);
+
+  console.log(moviesData);
 
   const reviews = [
     {
@@ -71,8 +72,8 @@ const MovieDetailsPage = () => {
           <div className="w-10/12 mx-auto">
             <div className="relative w-52 h-80 mx-auto">
               <Image
-                src={movie.thumbnail}
-                alt={movie.title}
+                src={moviesData?.thumbnail || ""}
+                alt={moviesData?.title || ""}
                 fill
                 className="rounded"
               />
@@ -84,15 +85,15 @@ const MovieDetailsPage = () => {
             <div className="bg-red-400/20 p-3 rounded mt-4">
               <div className="grid grid-cols-2 mt-1">
                 <p>Release Year</p>
-                <p>{movie.releaseYear}</p>
+                <p>{moviesData?.releaseYear}</p>
                 <p>Director</p>
-                <p>{movie.director}</p>
+                <p>{moviesData?.director}</p>
               </div>
               <hr className="my-3" />
               <div>
                 <p>Genres</p>
                 <div className="flex gap-1 flex-wrap mt-1">
-                  {movie.genres.map((g) => (
+                  {moviesData?.genres.map((g) => (
                     <span
                       key={g}
                       className="text-sm bg-gray-500 px-[10px] py-[1px] rounded"
@@ -106,7 +107,7 @@ const MovieDetailsPage = () => {
               <div>
                 <p>Available on</p>
                 <div className="flex gap-1 flex-wrap mt-1">
-                  {movie.platforms.map((p) => (
+                  {moviesData?.platforms.map((p) => (
                     <span
                       key={p}
                       className="text-sm bg-red-600 text-white px-[10px] py-[1px] rounded"
@@ -128,24 +129,26 @@ const MovieDetailsPage = () => {
           </Link>
           <p className="text-gray-500 mt-5 font-semibold flex items-center">
             <span className="font-normal text-xs px-2 py-[2px] rounded-full bg-red-100 text-red-950 mr-3">
-              {movie.type}
+              {moviesData?.type}
             </span>
-            {movie.releaseYear}
+            {moviesData?.releaseYear}
           </p>
-          <h1 className="text-xl md:text-3xl mt-2 mb-1">{movie.title}</h1>
+          <h1 className="text-xl md:text-3xl mt-2 mb-1">{moviesData?.title}</h1>
           <div className="flex gap-4 text-gray-400 mb-2">
             <p className="text-yellow-400">⭐9/10</p>
             <p>
-              Buy: <span className="font-semibold ">${movie.buyPrice}</span>
+              Buy:{" "}
+              <span className="font-semibold ">${moviesData?.buyPrice}</span>
             </p>
             <p>
-              Rent: <span className="font-semibold ">${movie.rentPrice}</span>
+              Rent:{" "}
+              <span className="font-semibold ">${moviesData?.rentPrice}</span>
             </p>
           </div>
-          <p>{movie.synopsis}</p>
+          <p>{moviesData?.synopsis}</p>
           <h6 className="mt-5">Cast: </h6>
           <div className="flex flex-wrap gap-2 mt-1">
-            {movie.cast.map((cast) => (
+            {moviesData?.cast.map((cast) => (
               <p
                 key={cast}
                 className="text-sm bg-gray-500 px-[10px] py-[1px] rounded-xl"

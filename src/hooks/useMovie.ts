@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { getAllMovies } from "@/services/movie";
+import { useEffect, useState } from "react";
 
 const useAllMovies = () => {
   const [allMovies, setAllMovies] = useState([]);
