@@ -3,16 +3,22 @@ import AddReviewModal from "@/components/modules/movie/AddReviewModal";
 import ReviewCardOne from "@/components/modules/shared/cards/ReviewCardOne";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
+import { addToWatchList } from "@/services/watchList";
 import { TMovie } from "@/types/movie.type";
+import { TAddToWatchList } from "@/types/watchList.type";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 const MovieDetailsPage = () => {
   const [moviesData, setMoviesData] = useState<TMovie>();
+  const [isPending, startTransition] = useTransition();
+  const { user, isLoading } = useUser();
 
   const param = useParams();
 
@@ -30,7 +36,30 @@ const MovieDetailsPage = () => {
     fetchMovies();
   }, [param?.movieId]);
 
-  console.log(moviesData);
+  // console.log(moviesData);
+
+  const handleAddToWatchList = async (movieId:string) => {
+    if(!user){
+      toast.error("You have to signup first")
+      return
+    }
+    startTransition(async () => {
+      try {
+        const data:TAddToWatchList = {
+          movieId: movieId,
+          userId:  user?.id,
+        }
+        const result = await addToWatchList(data)
+        if(result.success){
+          toast.success(result?.message || "Successfully added to watchlist")
+        }else{
+          toast.error(result?.message || "Something went wrong!")
+        }
+      } catch (error) {
+        toast.error("Something went wrong!");
+      }
+    });
+  };
 
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,7 +79,10 @@ const MovieDetailsPage = () => {
             </div>
             <div className="flex flex-col gap-3">
               <Button variant={"custom"}>Buy or Rent</Button>
-              <Button variant={"customOutlined"}>+ Add to wishlist</Button>
+              <Button onClick={()=> handleAddToWatchList(moviesData?.id as string)} variant={"customOutlined"}>
+                {" "}
+                {isPending ? "Adding..." : "+ Add to wishlist"}
+              </Button>
             </div>
             <div className="bg-red-400/20 p-3 rounded mt-4">
               <div className="grid grid-cols-2 mt-1">
