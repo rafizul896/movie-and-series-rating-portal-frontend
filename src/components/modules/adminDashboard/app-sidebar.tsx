@@ -1,8 +1,8 @@
 "use client";
 
-import { Calendar, Film, Home, Inbox, Search, Settings } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { Calendar, Film, Home, Inbox, Settings, Users } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   Sidebar,
@@ -21,6 +21,7 @@ import { NavUser } from "./nav-user";
 const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
   { title: "Movie Management", url: "/admin/movie", icon: Film },
+  { title: "Users", url: "/admin/users", icon: Users },
   { title: "Media", url: "/admin/media", icon: Film },
   { title: "Pending Reviews", url: "/admin/reviews/pending", icon: Inbox },
   {
@@ -28,7 +29,7 @@ const items = [
     url: "/admin/content/published",
     icon: Calendar,
   },
-  { title: "User Activity", url: "/admin/users/activity", icon: Search },
+
   { title: "Analytics", url: "/admin/analytics/stats", icon: Settings },
 ];
 
