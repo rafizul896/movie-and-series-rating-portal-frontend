@@ -1,0 +1,1 @@
+export type TAddToWatchList = {userId : string | undefined,movieId:string}
