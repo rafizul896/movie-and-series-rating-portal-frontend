@@ -4,8 +4,9 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export function SectionCards({ data }: { data: any }) {
   const { totalRevenue, totalPurchases, rentalCount, buyCount } = data;
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="mt-2 space-y-6">
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
