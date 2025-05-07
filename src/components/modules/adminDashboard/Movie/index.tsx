@@ -1,3 +1,5 @@
+"use client";
+
 import { Pencil, Trash } from "lucide-react";
 import {
   Table,
@@ -9,8 +11,40 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
+import { deletedMovie } from "@/services/movie";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 
 const AllMedia = ({ mediaData }: any) => {
+  const router = useRouter();
+
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deletedMovie(id);
+      if (res.success) {
+        toast.success(res.message || "Media deleted successfully");
+        router.push("/admin/movie");
+      } else {
+        toast.error(res.message || "Could not delete media");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-6 text-white">All Movies</h2>
@@ -28,7 +62,7 @@ const AllMedia = ({ mediaData }: any) => {
                 Release Year
               </TableHead>
               <TableHead className="px-4 py-3 text-left">Like Count</TableHead>
-              {/* <TableHead className="px-4 py-3 text-left">Year</TableHead> */}
+
               <TableHead className="px-4 py-3 text-left">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -41,10 +75,6 @@ const AllMedia = ({ mediaData }: any) => {
                   key={listing.id}
                   className="border-b hover:bg-gray-100 transition"
                 >
-                  {/* <TableCell className="px-4 py-3 font-medium">
-                    {index + 1}
-                  </TableCell> */}
-
                   {/* Image Column */}
                   <TableCell className="px-4 py-3">
                     <Image
@@ -67,44 +97,52 @@ const AllMedia = ({ mediaData }: any) => {
 
                   {/* Status Column */}
                   <TableCell className="px-4 py-3 ">
-                    {/* <span
-                      className={`px-3 py-1 rounded-full text-white text-xs font-bold ${
-                        listing.status === "Active"
-                          ? "bg-green-500"
-                          : "bg-red-500"
-                      }`}
-                    >
-                      {listing.status}
-                    </span> */}
                     <span className="text-black">{listing.releaseYear}</span>
                   </TableCell>
 
                   <TableCell className="px-4 py-3">
-                    {/* <span
-                      className={`px-3 py-1 rounded-full text-white text-xs font-bold ${
-                        listing.isTrending === "true"
-                          ? "bg-green-500"
-                          : "bg-red-500"
-                      }`}
-                    >
-                      {listing.isTrending}
-                    </span> */}
                     <span className="text-black">{listing.likesCount}</span>
                   </TableCell>
 
                   {/* Actions Column */}
                   <TableCell className="px-4 py-3 flex space-x-3">
-                    <Link href={`/user/dashboard/listing/${listing._id}`}>
+                    <Link href={`/admin/movie/${listing.id}`}>
                       <button className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md transition">
                         <Pencil className="w-5 h-5 cursor-pointer" />
                       </button>
                     </Link>
-                    <button
-                      // onClick={() => handleDelete(listing._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md transition cursor-pointer"
-                    >
-                      <Trash className="w-5 h-5" />
-                    </button>
+                    {/* deleted dialog add there */}
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md transition cursor-pointer">
+                          {" "}
+                          <Trash className="w-5 h-5" />
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="text-red-500">
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your media and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="bg-gray-500 hover:bg-gray-600 cursor-pointer">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDelete(listing.id)}
+                            className="text-white hover:bg-red-500 bg-red-600 cursor-pointer"
+                          >
+                            Continue
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               ))
@@ -114,7 +152,7 @@ const AllMedia = ({ mediaData }: any) => {
                   colSpan={7}
                   className="px-4 py-3 text-center text-gray-500"
                 >
-                  No listings found.
+                  No Media found.
                 </TableCell>
               </TableRow>
             )}

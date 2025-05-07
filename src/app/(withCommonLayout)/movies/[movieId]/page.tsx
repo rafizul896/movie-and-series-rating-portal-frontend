@@ -3,6 +3,7 @@ import AddReviewModal from "@/components/modules/movie/AddReviewModal";
 import ReviewCardOne from "@/components/modules/shared/cards/ReviewCardOne";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
 import { TMovie } from "@/types/movie.type";
 import { jwtDecode } from "jwt-decode";
@@ -10,10 +11,11 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 
 const MovieDetailsPage = () => {
   const [moviesData, setMoviesData] = useState<TMovie>();
+  const [isPending, startTransition] = useTransition();
 
   const param = useParams();
 
@@ -49,7 +51,9 @@ const MovieDetailsPage = () => {
             </div>
             <div className="flex flex-col gap-3">
               <Button variant={"custom"}>Buy or Rent</Button>
-              <Button variant={"customOutlined"}>+ Add to wishlist</Button>
+              {/* <Button onClick={()=> handleAddToWatchList(moviesData?.id as string)} variant={"customOutlined"}>
+                {isPending ? "Adding..." : "+ Add to wishlist"}
+              </Button> */}
             </div>
             <div className="bg-red-400/20 p-3 rounded mt-4">
               <div className="grid grid-cols-2 mt-1">
