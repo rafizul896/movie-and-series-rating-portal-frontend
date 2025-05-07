@@ -14,6 +14,18 @@ import Link from "next/link";
 import { deletedMovie } from "@/services/movie";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 
 const AllMedia = ({ mediaData }: any) => {
   const router = useRouter();
@@ -99,12 +111,38 @@ const AllMedia = ({ mediaData }: any) => {
                         <Pencil className="w-5 h-5 cursor-pointer" />
                       </button>
                     </Link>
-                    <button
-                      onClick={() => handleDelete(listing.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md transition cursor-pointer"
-                    >
-                      <Trash className="w-5 h-5" />
-                    </button>
+                    {/* deleted dialog add there */}
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md transition cursor-pointer">
+                          {" "}
+                          <Trash className="w-5 h-5" />
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="text-red-500">
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your media and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="bg-gray-500 hover:bg-gray-600 cursor-pointer">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDelete(listing.id)}
+                            className="text-white hover:bg-red-500 bg-red-600 cursor-pointer"
+                          >
+                            Continue
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               ))
@@ -114,7 +152,7 @@ const AllMedia = ({ mediaData }: any) => {
                   colSpan={7}
                   className="px-4 py-3 text-center text-gray-500"
                 >
-                  No listings found.
+                  No Media found.
                 </TableCell>
               </TableRow>
             )}
