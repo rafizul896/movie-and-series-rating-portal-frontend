@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -27,7 +28,7 @@ export function useUserColumns() {
           {row.original.name}
         </span>
       ),
-      size: 150, // Reduced column width
+      size: 150, 
     },
     {
       accessorKey: "profileImage",
@@ -48,7 +49,7 @@ export function useUserColumns() {
           </div>
         );
       },
-      size: 70, // Reduced column width
+      size: 70, 
     },
     {
       accessorKey: "email",
@@ -58,7 +59,7 @@ export function useUserColumns() {
           {row.original.email}
         </span>
       ),
-      size: 200, // Reduced column width
+      size: 200, 
     },
     {
       accessorKey: "role",
@@ -71,7 +72,7 @@ export function useUserColumns() {
           {row.original.role}
         </span>
       ),
-      size: 100, // Reduced column width
+      size: 100,
     },
     {
       accessorKey: "status",
@@ -126,7 +127,7 @@ export function useUserColumns() {
           </div>
         );
       },
-      size: 60, // Reduced column width
+      size: 60, 
     },
   ];
 
