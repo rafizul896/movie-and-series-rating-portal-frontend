@@ -31,8 +31,7 @@ const AllMoviesPage = () => {
   const platforms = ["Netflix", "Disney+", "Amazon Prime", "Hulu"];
   const years = Array.from({ length: 25 }, (_, i) => `${2025 - i}`);
   // const { allMovies, loading } = useAllMovies();
-  // console.log("all movies", allMovies);
-
+  // console.log("all movies", moviesData);
   const form = useForm<TSearchBarOne>({
     defaultValues: {
       query: "",
