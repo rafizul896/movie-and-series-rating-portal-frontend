@@ -13,7 +13,6 @@ import React, { useEffect, useState } from "react";
 
 const MovieDetailsPage = () => {
   const [moviesData, setMoviesData] = useState<TMovie>();
-
   const param = useParams();
 
   // const token = localStorage.getItem("accessToken");

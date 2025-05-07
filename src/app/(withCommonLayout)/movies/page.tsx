@@ -21,7 +21,6 @@ import {
 import useAllMovies from "@/hooks/useMovie";
 import { TSearchBarOne } from "@/types/form.type";
 import { TMovie } from "@/types/movie.type";
-
 import { useForm } from "react-hook-form";
 
 const AllMoviesPage = () => {
