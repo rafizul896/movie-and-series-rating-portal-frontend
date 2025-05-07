@@ -24,6 +24,11 @@ export const getAllReviews = async (params: ReviewQueryParams = {}) => {
     );
 
     const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result?.message || "Failed to fetch reviews");
+    }
+
     return result;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -45,11 +50,13 @@ export const toggleApproveReview = async (reviewId: string, token: string) => {
       }
     );
 
-    if (!res.ok) {
-      throw new Error("Failed to toggle review approval");
-    }
-    revalidateTag("reviews");
     const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result?.message || "Failed to toggle review approval");
+    }
+
+    revalidateTag("reviews");
     return result;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -71,11 +78,13 @@ export const deleteReview = async (reviewId: string, token: string) => {
       }
     );
 
-    if (!res.ok) {
-      throw new Error("Failed to delete review");
-    }
-    revalidateTag("reviews");
     const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result?.message || "Failed to delete review");
+    }
+
+    revalidateTag("reviews");
     return result;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -105,12 +114,13 @@ export const addReview = async (
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) {
-      throw new Error("Failed to submit review");
-    }
-    revalidateTag("movies");
-
     const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result?.message || "Failed to submit review");
+    }
+
+    revalidateTag("movies");
     return result;
   } catch (error: unknown) {
     if (error instanceof Error) {
