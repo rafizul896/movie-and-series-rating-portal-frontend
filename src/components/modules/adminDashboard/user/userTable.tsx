@@ -10,14 +10,18 @@ import { useUserColumns } from './userTableColums';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
 
 interface UserTableProps {
-  data: IUserType[];
+  data?: IUserType[]; // Make data optional with default value
 }
 
-export function UserTable({ data }: UserTableProps) {
+export function UserTable({ data = [] }: UserTableProps) {
+  // Ensure columns is always defined
   const columns = useUserColumns();
 
+  // Validate data before passing to table
+  const tableData = Array.isArray(data) ? data : [];
+  
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

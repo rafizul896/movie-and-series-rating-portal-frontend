@@ -2,10 +2,14 @@ import AllMedia from "@/components/modules/adminDashboard/Movie";
 import { AddMediaDialog } from "@/components/modules/adminDashboard/Movie/AddMovies";
 import { getAllMovies } from "@/services/movie";
 
+export const metadata = {
+  title: "FlimNest | Media-Dashboard",
+  description: "This is for media dashboard",
+};
+
 const MediaPage = async () => {
   const { data } = await getAllMovies();
   const allMovies = data.data;
-  console.log("all movie data ->", allMovies);
 
   return (
     <div className="mt-12">

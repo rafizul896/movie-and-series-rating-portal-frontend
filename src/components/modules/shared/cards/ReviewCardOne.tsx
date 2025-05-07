@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { TSingleMovieReview } from "@/types/movie.type";
+import { dateConvertor } from "@/utils/dateConvertor";
 import { useForm } from "react-hook-form";
 
 type TComment = {
@@ -47,7 +48,7 @@ const ReviewCardOne = ({ review }: { review: TSingleMovieReview }) => {
             </p>
           </div>
         </div>
-        <p>{review.createdAt}</p>
+        <p>{dateConvertor(review.createdAt)}</p>
       </div>
 
       <p className="mb-5">{review.content}</p>

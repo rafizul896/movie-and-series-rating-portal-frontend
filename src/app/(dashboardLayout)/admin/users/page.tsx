@@ -1,68 +1,13 @@
 // app/admin/users/page.tsx
-"use client";
+
 import { UserTable } from "@/components/modules/adminDashboard/user/userTable";
-import { IUserType, UserRole, UserStatus } from "@/types/user";
-import { useState, useEffect } from "react";
+import { getAllUser } from "@/services/user";
 
-async function getData(): Promise<IUserType[]> {
-  return [
-    {
-      id: "1",
-      name: "Admin User",
-      email: "admin@example.com",
-      profileImage: "/images/admin-avatar.jpg",
-      role: UserRole.ADMIN,
-      status: UserStatus.ACTIVE,
-      password: "", // Add missing property
-      createdAt: new Date().toISOString(), // Add missing property
-      updatedAt: new Date().toISOString(), // Add missing property
-    },
-    {
-      id: "2",
-      name: "Regular User",
-      email: "user@example.com",
-      profileImage: "",
-      role: UserRole.USER,
-      status: UserStatus.ACTIVE,
-      password: "",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "3",
-      name: "Blocked User",
-      email: "blocked@example.com",
-      profileImage: "/images/blocked-avatar.jpg",
-      role: UserRole.USER,
-      status: UserStatus.BLOCKED,
-      password: "",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: "4",
-      name: "Deleted User",
-      email: "deleted@example.com",
-      profileImage: "",
-      role: UserRole.USER,
-      status: UserStatus.DELETED,
-      password: "",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-  ];
-}
-
-export default function ManageUsersPage() {
-  const [data, setData] = useState<IUserType[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedData = await getData();
-      setData(fetchedData);
-    };
-    fetchData();
-  }, []);
+export default async function ManageUsersPage() {
+const { data } = await getAllUser();
+  // // const allUsers = data.data;
+  // console.log({data});
+  // // console.log("all users data ->", allUsers);
 
   return (
     <div className="container mx-auto">
