@@ -29,7 +29,7 @@ const MovieDetailsPage = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const res = await getSingleMovie(param?.movieId as string);
+      const res = await getSingleMovie(param?.movieId as string, user?.id);
       setMoviesData(res?.data?.data || []);
     };
 

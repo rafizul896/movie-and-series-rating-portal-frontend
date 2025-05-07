@@ -11,8 +11,6 @@ const WatchListPage = () => {
   
     useEffect(() => {
       const fetchWatchList = async () => {
-        // const res = await getSingleMovie(param?.movieId as string);
-        // setMoviesData(res?.data?.data || []);
         const res = await getAllWatchList();
         
         setWatchList(res?.data || []);
@@ -43,7 +41,7 @@ const WatchListPage = () => {
         {
             watchList?.length > 0 ? (
                 watchList?.map(({movies,id}: any) => {
-                    console.log(movies)
+                    
                     return (
                         <WatchListCard
                             id={id}
