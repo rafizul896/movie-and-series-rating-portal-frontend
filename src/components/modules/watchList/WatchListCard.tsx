@@ -3,9 +3,11 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import Link from "next/link";
 
 interface WatchListCardProps {
   id: string;
+  movieId: string;
   onRemove?: (id: string) => void;
   title: string;
   releaseYear: number;
@@ -20,6 +22,7 @@ interface WatchListCardProps {
 
 export default function WatchListCard({
   id,
+  movieId,
   title,
   releaseYear,
   createdAt,
@@ -57,10 +60,12 @@ export default function WatchListCard({
 
         {/* Watch Now button on hover */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <Button className="bg-red-600 hover:bg-red-700 text-white flex items-center gap-2">
+        <Link href={`/watchlist/${id}`}>
+        <Button className="bg-red-600 hover:bg-red-700 text-white flex items-center cursor-pointer gap-2">
             <Play className="h-4 w-4" />
             Watch Now
           </Button>
+        </Link>
         </div>
       </div>
 
