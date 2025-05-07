@@ -121,11 +121,84 @@ export const addReview = async (
     }
 
     revalidateTag("movies");
+    revalidateTag(`movie-${data.movieId}`);
+
     return result;
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
     throw new Error("Unknown error occurred while submitting review");
+  }
+};
+
+export const getReviewById = async (reviewId: string, token: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/reviews/${reviewId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `${token}`,
+        },
+        next: {
+          tags: [`review-${reviewId}`],
+        },
+      }
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result?.message || "Failed to fetch review");
+    }
+
+    return result;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error("Unknown error occurred while fetching review");
+  }
+};
+
+export const editReview = async (
+  reviewId: string,
+  data: {
+    rating: number;
+    content: string;
+    tags: string[];
+    hasSpoiler?: boolean;
+  },
+  token: string
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/reviews/${reviewId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result?.message || "Failed to update review");
+    }
+
+    revalidateTag("reviews");
+    revalidateTag(`review-${reviewId}`);
+
+    return result;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error("Unknown error occurred while updating review");
   }
 };

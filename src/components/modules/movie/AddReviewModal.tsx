@@ -34,7 +34,13 @@ const reviewFormSchema = z.object({
   hasSpoiler: z.boolean().optional(),
 });
 
-const AddReviewModal = ({ movieId }: { movieId: string }) => {
+const AddReviewModal = ({
+  movieId,
+  onReviewAdded,
+}: {
+  movieId: string;
+  onReviewAdded: () => void;
+}) => {
   const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof reviewFormSchema>>({
@@ -57,10 +63,9 @@ const AddReviewModal = ({ movieId }: { movieId: string }) => {
       movieId,
     };
 
-    console.log(payload);
-
     try {
       const result = await addReview(payload, token);
+      onReviewAdded();
       toast.success(result?.message || "Review added successfully");
       form.reset();
     } catch (error) {

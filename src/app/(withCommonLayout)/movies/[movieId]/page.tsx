@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getSingleMovie } from "@/services/movie";
 import { TMovie } from "@/types/movie.type";
+import { jwtDecode } from "jwt-decode";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,21 +17,19 @@ const MovieDetailsPage = () => {
 
   const param = useParams();
 
-  // const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("accessToken");
 
-  // const user = jwtDecode(token || "");
-  // console.log(user);
+  const user = jwtDecode(token || "");
+  console.log(user);
+
+  const fetchMovies = async () => {
+    const res = await getSingleMovie(param?.movieId as string, user?.id || "");
+    setMoviesData(res?.data?.data || []);
+  };
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      const res = await getSingleMovie(param?.movieId as string);
-      setMoviesData(res?.data?.data || []);
-    };
-
     fetchMovies();
   }, [param?.movieId]);
-
-  console.log(moviesData);
 
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,14 +134,21 @@ const MovieDetailsPage = () => {
           <div className="Reviews mt-10 bg-gray-700/45 p-3 rounded">
             <div className="flex justify-between mb-3">
               <h5 className="mb-1 md:text-xl">Reviews</h5>
-              <AddReviewModal movieId={moviesData?.id || ""} />
+              <AddReviewModal
+                movieId={moviesData?.id || ""}
+                onReviewAdded={fetchMovies}
+              />
             </div>
             <Separator className="mb-3" />
-            <div className="p-2">
-              {moviesData?.reviews?.map((review) => (
-                <ReviewCardOne key={review?.id} review={review} />
-              ))}
-            </div>
+
+            {moviesData?.reviews?.map((review) => (
+              <ReviewCardOne
+                key={review?.id}
+                review={review}
+                movieId={moviesData.id}
+                onReviewChange={fetchMovies}
+              />
+            ))}
           </div>
         </div>
       </div>

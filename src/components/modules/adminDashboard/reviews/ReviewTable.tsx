@@ -32,7 +32,7 @@ const ReviewTable = ({
     const token = localStorage.getItem("accessToken") || "";
     try {
       await toggleApproveReview(reviewId, token);
-      onRefetch(); // ✅ refresh reviews after toggle
+      onRefetch();
     } catch (err) {
       console.error("Toggle failed", err);
     }
