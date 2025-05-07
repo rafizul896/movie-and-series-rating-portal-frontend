@@ -9,7 +9,7 @@ export const metadata = {
 
 const MediaPage = async () => {
   const { data } = await getAllMovies();
-  const allMovies = data.data;
+  const allMovies = data?.data;
 
   return (
     <div className="mt-12">

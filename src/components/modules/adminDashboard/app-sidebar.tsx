@@ -20,9 +20,8 @@ import Link from "next/link";
 
 const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
-  { title: "Movie Management", url: "/admin/movie", icon: Film },
+  { title: "Media Management", url: "/admin/movie", icon: Film },
   { title: "Users", url: "/admin/users", icon: Users },
-  { title: "Media", url: "/admin/media", icon: Film },
   { title: "Review Management", url: "/admin/reviews", icon: Inbox },
   {
     title: "Published Content",
