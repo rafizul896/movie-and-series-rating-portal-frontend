@@ -206,23 +206,6 @@ export function AddMediaDialog() {
             )}
           </div>
 
-          {/* Media Type */}
-          <div>
-            <Label className="mb-2">Media Type</Label>
-            <Select
-              value={mediaType}
-              onValueChange={(v: any) => setMediaType(v)}
-            >
-              <SelectTrigger className="bg-white dark:bg-zinc-800">
-                <SelectValue placeholder="Select media type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="MOVIE">Movie</SelectItem>
-                <SelectItem value="SERIES">TV Series</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
           {/* Genres */}
           <div>
             <Label className="mb-2">Genres</Label>
@@ -273,18 +256,56 @@ export function AddMediaDialog() {
           </div>
 
           {/* Prices */}
-          {["buyPrice", "rentPrice"].map((field) => (
-            <div key={field}>
-              <Label className="mb-2" htmlFor={field}></Label>
+          <div className="flex gap-10">
+            <div>
+              <Label className="mb-2">Buy Price</Label>
               <Input
-                id={field}
+                id="buyPrice"
                 type="number"
                 min={0}
                 className="bg-white dark:bg-zinc-800"
-                {...register(field as keyof MovieFormData)}
+                {...register("buyPrice", { required: "Buy price is required" })}
               />
+              {errors.buyPrice && (
+                <p className="text-red-500 text-sm">
+                  {errors.buyPrice.message}
+                </p>
+              )}
             </div>
-          ))}
+            <div>
+              <Label className="mb-2">Rent Price</Label>
+              <Input
+                id="rentPrice"
+                type="number"
+                min={0}
+                className="bg-white dark:bg-zinc-800"
+                {...register("rentPrice", {
+                  required: "Rent price is required",
+                })}
+              />
+              {errors.rentPrice && (
+                <p className="text-red-500 text-sm">
+                  {errors.rentPrice.message}
+                </p>
+              )}
+            </div>
+            {/* Media Type */}
+            <div>
+              <Label className="mb-2">Media Type</Label>
+              <Select
+                value={mediaType}
+                onValueChange={(v: any) => setMediaType(v)}
+              >
+                <SelectTrigger className="bg-white dark:bg-zinc-800">
+                  <SelectValue placeholder="Select media type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="MOVIE">Movie</SelectItem>
+                  <SelectItem value="SERIES">TV Series</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
 
           {/* Thumbnail */}
           <div>
@@ -295,7 +316,7 @@ export function AddMediaDialog() {
               id="thumbnail"
               type="file"
               accept="image/*"
-              className="bg-white dark:bg-zinc-800"
+              className="bg-white dark:bg-zinc-800 cursor-pointer"
               onChange={handleThumbnailChange}
               required
             />
