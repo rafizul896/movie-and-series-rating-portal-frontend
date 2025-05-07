@@ -33,9 +33,9 @@ export const getAllMovies = async () => {
 //   }
 // };
 
-export const getSingleMovie = async (movieId: string) => {
+export const getSingleMovie = async (movieId: string, userId: string | undefined) => {
   const bodyData = {
-    userId: "6f39dc54-0a44-45ba-bd4d-4f2800e05313",
+    userId,
   };
 
   try {
