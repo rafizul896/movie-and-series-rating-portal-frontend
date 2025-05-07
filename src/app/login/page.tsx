@@ -5,7 +5,7 @@ import logo from "../../assets/logo.png";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import "../../style/login.css";
-import { loginUser, registerUser } from "@/services/authService";
+import { decodeToken, loginUser, registerUser } from "@/services/authService";
 import { toast } from "sonner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,37 +23,36 @@ const Login = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    if (signState === "Sign In") {
-      try {
+    setIsLoading(true);
+    try {
+      if (signState === "Sign In") {
         const res = await loginUser(data);
-        console.log(res);
-        if (res.error) {
-          toast.error(res.error);
-        } else {
-          toast.success(res.message);
+        if (res.success) {
+          toast.success(res.message || "Login successful");
+
+          const decodedToken: any = await decodeToken(res.data.accessToken);
+          await setUser(decodedToken);
           router.push("/");
-          setUser(res.data);
-          setIsLoading(false);
-          reset();
-        }
-      } catch (error: any) {
-        console.log(error);
-        toast.error(error.data.message || "Something went wrong");
-      }
-    } else {
-      try {
-        const res = await registerUser(data);
-        console.log(res);
-        if (res.error) {
-          toast.error(res.error);
         } else {
-          toast.success(res.message);
-          reset();
+          toast.error(res.message || "Login failed");
         }
-      } catch (error: any) {
-        console.log(error);
-        toast.error(error.data.message || "Something went wrong");
+      } else {
+        const res = await registerUser(data);
+        if (res.success) {
+          toast.success(res.message || "Registration successful");
+          const decodedToken: any = await decodeToken(res.data.accessToken);
+          await setUser(decodedToken);
+          router.push("/");
+          reset();
+        } else {
+          toast.error(res.message || "Registration failed");
+        }
       }
+    } catch (error: any) {
+      console.error("Auth error:", error);
+      toast.error(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 

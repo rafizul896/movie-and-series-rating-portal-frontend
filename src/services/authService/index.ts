@@ -1,6 +1,16 @@
-"use client";
+"use server";
 
+import { jwtDecode } from "jwt-decode";
+import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
+
+export interface DecodedUser {
+  email: string;
+  id: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
 
 export const registerUser = async (userData: FieldValues) => {
   try {
@@ -12,6 +22,9 @@ export const registerUser = async (userData: FieldValues) => {
       body: JSON.stringify(userData),
     });
     const result = await res.json();
+    if (result.success) {
+      (await cookies()).set("accessToken", result.data.accessToken);
+    }
     return result;
   } catch (error: any) {
     return Error(error);
@@ -22,26 +35,26 @@ export const loginUser = async (userData: FieldValues) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(userData),
       credentials: "include", // include cookies
     });
 
     const result = await res.json();
-
-    if (result.success && typeof window !== "undefined") {
-      localStorage.setItem("accessToken", result.data.accessToken);
-      console.log("Access token set:", localStorage.getItem("accessToken"));
+    if (result.success) {
+      (await cookies()).set("accessToken", result.data.accessToken);
     }
 
     return result;
   } catch (error: any) {
-    console.error("Login error:", error);
     return Error(error);
   }
 };
 
 export const refreshToken = async () => {
+  console.log("🔄 Calling refreshToken...");
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,
@@ -51,10 +64,8 @@ export const refreshToken = async () => {
       }
     );
     const result = await res.json();
-
     if (result.success) {
-      localStorage.setItem("accessToken", result.data.accessToken);
-      return result.data.accessToken;
+      (await cookies()).set("accessToken", result.data.accessToken);
     }
 
     return null;
@@ -105,3 +116,24 @@ export const resetPassword = async (
   }
 };
 
+export const getCurrentUser = async (): Promise<DecodedUser | null> => {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken");
+
+    if (!token) return null;
+
+    return jwtDecode<DecodedUser>(token.value);
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+  }
+};
+
+export const decodeToken = async (token: string): Promise<DecodedUser> => {
+  return jwtDecode<DecodedUser>(token);
+};
+
+export const logoutUser = async () => {
+  (await cookies()).delete("accessToken");
+};

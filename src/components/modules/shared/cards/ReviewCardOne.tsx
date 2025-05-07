@@ -1,30 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { TSingleMovieReview } from "@/types/movie.type";
+import { dateConvertor } from "@/utils/dateConvertor";
 import { useForm } from "react-hook-form";
-
-type TreviewComment = {
-  id: number;
-  comment: string;
-};
-
-type TReviewCardOne = {
-  id: number;
-  name: string;
-  profileImage: string;
-  rating: number;
-  content: string;
-  date: string;
-  tags: string[];
-  comments: TreviewComment[];
-};
 
 type TComment = {
   comment: string;
 };
 
-const ReviewCardOne = ({ review }: { review: TReviewCardOne }) => {
+const ReviewCardOne = ({ review }: { review: TSingleMovieReview }) => {
   const form = useForm<TComment>({
     defaultValues: {
       comment: "",
@@ -44,12 +31,15 @@ const ReviewCardOne = ({ review }: { review: TReviewCardOne }) => {
       <div className="flex justify-between">
         <div className="flex gap-4">
           <img
-            src={review.profileImage}
-            alt={review.name}
+            src={
+              review?.user?.profileImage ||
+              "https://static.vecteezy.com/system/resources/previews/008/506/404/non_2x/contact-person-red-icon-free-png.png"
+            }
+            alt={review?.user?.name}
             className="w-12 h-12 rounded-full"
           />
           <div>
-            <p>{review.name}</p>
+            <p>{review?.user?.name}</p>
             <p>⭐{review.rating}</p>
             <p>
               {review.tags.map((t) => (
@@ -58,7 +48,7 @@ const ReviewCardOne = ({ review }: { review: TReviewCardOne }) => {
             </p>
           </div>
         </div>
-        <p>{review.date}</p>
+        <p>{dateConvertor(review.createdAt)}</p>
       </div>
 
       <p className="mb-5">{review.content}</p>
@@ -66,8 +56,8 @@ const ReviewCardOne = ({ review }: { review: TReviewCardOne }) => {
       <div className="p-3 rounded">
         <p className="mb-1">Comments</p>
         <hr />
-        <div className="mt-3 w-full rounded space-y-2">
-          {review.comments.map((c) => (
+        {/* <div className="mt-3 w-full rounded space-y-2">
+          {review..map((c) => (
             <div
               key={c.id}
               className="text-sm text-white bg-gray-600/40 mb-2 p-2 rounded"
@@ -75,7 +65,7 @@ const ReviewCardOne = ({ review }: { review: TReviewCardOne }) => {
               {c.comment}
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* new  */}
         <Form {...form}>

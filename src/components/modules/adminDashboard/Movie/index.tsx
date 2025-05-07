@@ -1,0 +1,128 @@
+"use client";
+
+import { Pencil, Trash } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import Image from "next/image";
+import Link from "next/link";
+import { deletedMovie } from "@/services/movie";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
+const AllMedia = ({ mediaData }: any) => {
+  const router = useRouter();
+
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deletedMovie(id);
+      if (res.success) {
+        toast.success(res.message || "Media deleted successfully");
+        router.push("/admin/movie");
+      } else {
+        toast.error(res.message || "Could not delete media");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
+  return (
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-6 text-white">All Movies</h2>
+      {/* Responsive Table Wrapper */}
+      <div className="overflow-x-auto bg-white">
+        <Table className="min-w-full border border-gray-300">
+          {/* Table Head */}
+          <TableHeader>
+            <TableRow className="bg-gray-200 text-gray-700 uppercase text-sm font-semibold">
+              <TableHead className="px-4 py-3 text-left">Image</TableHead>
+              <TableHead className="px-4 py-3 text-left">Title</TableHead>
+
+              <TableHead className="px-4 py-3 text-left">Type</TableHead>
+              <TableHead className="px-4 py-3 text-left">
+                Release Year
+              </TableHead>
+              <TableHead className="px-4 py-3 text-left">Like Count</TableHead>
+
+              <TableHead className="px-4 py-3 text-left">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          {/* Table Body */}
+          <TableBody>
+            {mediaData && mediaData.length > 0 ? (
+              mediaData?.map((listing: any, index: number) => (
+                <TableRow
+                  key={listing.id}
+                  className="border-b hover:bg-gray-100 transition"
+                >
+                  {/* Image Column */}
+                  <TableCell className="px-4 py-3">
+                    <Image
+                      src={listing.thumbnail}
+                      alt={listing.title}
+                      width={100}
+                      height={100}
+                      className="w-16 h-16 rounded-md object-cover border"
+                    />
+                  </TableCell>
+
+                  <TableCell className="px-4 py-3 text-black">
+                    {listing.title}
+                  </TableCell>
+
+                  {/* Price Column */}
+                  <TableCell className="px-4 py-3 font-semibold text-green-600">
+                    {listing.type}
+                  </TableCell>
+
+                  {/* Status Column */}
+                  <TableCell className="px-4 py-3 ">
+                    <span className="text-black">{listing.releaseYear}</span>
+                  </TableCell>
+
+                  <TableCell className="px-4 py-3">
+                    <span className="text-black">{listing.likesCount}</span>
+                  </TableCell>
+
+                  {/* Actions Column */}
+                  <TableCell className="px-4 py-3 flex space-x-3">
+                    <Link href={`/admin/movie/${listing.id}`}>
+                      <button className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md transition">
+                        <Pencil className="w-5 h-5 cursor-pointer" />
+                      </button>
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(listing.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md transition cursor-pointer"
+                    >
+                      <Trash className="w-5 h-5" />
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={7}
+                  className="px-4 py-3 text-center text-gray-500"
+                >
+                  No listings found.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+};
+
+export default AllMedia;
