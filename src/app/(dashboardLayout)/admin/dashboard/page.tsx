@@ -1,9 +1,14 @@
-export default function DashboardPage() {
-    return (
-      <div>
-        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-        <p>Welcome to your dashboard overview!</p>
-      </div>
-    );
-  }
-  
+import { SectionCards } from "@/components/modules/adminDashboard/Dashboard/section-cards";
+import { getPurchaseAnalytics } from "@/services/dashboardHome";
+
+const DashboardPage = async () => {
+  const sectionCardsData = await getPurchaseAnalytics();
+
+  return (
+    <div>
+      <SectionCards data={sectionCardsData?.data} />
+    </div>
+  );
+};
+
+export default DashboardPage;
