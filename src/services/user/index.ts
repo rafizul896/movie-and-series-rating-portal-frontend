@@ -1,18 +1,43 @@
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { cookies } from "next/headers";
-import { jwtDecode } from "jwt-decode";
 
-export const getCurrentUser = async () => {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("refreshToken");
-  if (token) {
-    const decodedToken = jwtDecode(token.value);
-    return decodedToken;
+
+
+export const getAllUser = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user`, {
+      method: "GET",
+      next: {
+        tags: ["users"],
+      },
+    });
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
   }
-  return null;
 };
 
-export const logoutUser = async () => {
-  (await cookies()).delete("refreshToken");
-};
+
+export const updateUserStatus = async (userId: string, UserData: FormData) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/${userId}`, {
+        method: "PATCH",
+        body: UserData,
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: {
+          tags: ["users"],
+        },
+      });
+      const result = await res.json();
+      return result;
+    } catch (error: any) {
+      return { error: error.message };
+    }
+  };
+  

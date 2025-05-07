@@ -73,10 +73,7 @@ export default function ManageMediaPage() {
       <h1 className="text-2xl font-bold text-center py-4">Manage Media</h1>
       <div className="container mx-auto py-10">
         <div className="flex justify-end mb-6">
-          <Button
-            onClick={handleAddMediaClick}
-            variant={"custom"}
-          >
+          <Button onClick={handleAddMediaClick} variant={"custom"}>
             <PlusCircle className="w-5 h-5" />
             <span>Add Movie</span>
           </Button>
