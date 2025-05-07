@@ -37,7 +37,7 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="w-56 bg-[#1a1a2e] text-gray-300 shadow-lg min-h-screen">
+    <Sidebar className="w-56 bg-[#1a1a2e] text-gray-300 shadow-lg min-h-screen" collapsible="icon">
       {/* Logo / Brand */}
       <div className="px-4 py-5 border-b border-[#2a2a3b]">
         <Link href="/" className="flex items-center gap-2">
