@@ -1,62 +1,21 @@
 'use client';
 
 import { ColumnDef } from "@tanstack/react-table";
-import { IUserType, UserRole, UserStatus } from "@/types/user";
+import { IUserType } from "@/types/user";
 import Image from "next/image";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
+import { useState } from "react";
+import { DeleteUserDialog } from "./DeleteUserDialog";
 
 export function useUserColumns() {
-  const [selectedUser, setSelectedUser] = useState<IUserType | null>(null);
-  const [roleModalOpen, setRoleModalOpen] = useState(false);
-  const [statusModalOpen, setStatusModalOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.USER);
-  const [selectedStatus, setSelectedStatus] = useState<UserStatus>(UserStatus.ACTIVE);
+  const [openDialogId, setOpenDialogId] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<{ id: string; name?: string } | null>(null);
 
-  const handleRoleModalOpen = (user: IUserType) => {
-    setSelectedUser(user);
-    setSelectedRole(user.role);
-    setRoleModalOpen(true);
-  };
-
-  const handleStatusModalOpen = (user: IUserType) => {
-    setSelectedUser(user);
-    setSelectedStatus(user.status);
-    setStatusModalOpen(true);
-  };
-
-  const handleRoleChange = () => {
-    if (selectedUser) {
-      console.log("Updating role to:", selectedRole);
-      setRoleModalOpen(false);
-    }
-  };
-
-  const handleStatusChange = () => {
-    if (selectedUser) {
-      console.log("Updating status to:", selectedStatus);
-      setStatusModalOpen(false);
-    }
-  };
-
-  // Common modal configuration
-  const modalConfig = {
-    size: "sm:max-w-[500px]",
-    titleClass: "font-bold text-lg mb-4",
-    selectClass: "w-full bg-gray-700 border-gray-600 text-white",
-    selectContentClass: "bg-gray-800 border-gray-600 text-white",
-    selectItemClass: "hover:bg-gray-700",
-    buttonClass: "w-full bg-blue-600 hover:bg-blue-700 text-white",
-    buttonSize: "sm" as const,
+  const handleDelete = (user: IUserType) => {
+    setSelectedUser({ id: user.id, name: user.name });
+    setOpenDialogId(user.id);
   };
 
   const columns: ColumnDef<IUserType>[] = [
@@ -64,10 +23,11 @@ export function useUserColumns() {
       accessorKey: "name",
       header: "Name",
       cell: ({ row }) => (
-        <span className="font-medium text-white">
+        <span className="font-medium text-white line-clamp-1">
           {row.original.name}
         </span>
       ),
+      size: 150, // Reduced column width
     },
     {
       accessorKey: "profileImage",
@@ -78,138 +38,95 @@ export function useUserColumns() {
           <Image
             src={url}
             alt="Profile"
-            width={32}
-            height={32}
-            className="h-8 w-8 rounded-full object-cover border border-gray-600"
+            width={28}
+            height={28}
+            className="h-7 w-7 rounded-full object-cover border border-gray-600"
           />
         ) : (
-          <div className="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white border border-gray-600">
+          <div className="h-7 w-7 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white border border-gray-600">
             N/A
           </div>
         );
       },
+      size: 70, // Reduced column width
     },
     {
       accessorKey: "email",
       header: "Email",
       cell: ({ row }) => (
-        <span className="text-sm text-white">
+        <span className="text-sm text-white line-clamp-1">
           {row.original.email}
         </span>
       ),
+      size: 200, // Reduced column width
     },
     {
       accessorKey: "role",
       header: "Role",
-      cell: ({ row }) => {
-        const role = row.original.role;
-        return (
-          <>
-            <Badge 
-              className={`cursor-pointer w-20 text-xs h-6 text-white ${
-                role === "ADMIN" ? "bg-red-600" : "bg-blue-600"
-              }`}
-              onClick={() => handleRoleModalOpen(row.original)}
-            >
-              {role}
-            </Badge>
-            <Dialog open={roleModalOpen && selectedUser?.id === row.original.id} onOpenChange={setRoleModalOpen}>
-              <DialogContent className={`${modalConfig.size} bg-gray-800 text-white`}>
-                <DialogTitle className={modalConfig.titleClass}>
-                  Change Role for {selectedUser?.name}
-                </DialogTitle>
-                <div className="space-y-4">
-                  <Select
-                    value={selectedRole}
-                    onValueChange={(value: UserRole) => setSelectedRole(value)}
-                  >
-                    <SelectTrigger className={modalConfig.selectClass}>
-                      <SelectValue placeholder="Select role" />
-                    </SelectTrigger>
-                    <SelectContent className={modalConfig.selectContentClass}>
-                      {Object.values(UserRole).map((role) => (
-                        <SelectItem 
-                          key={role} 
-                          value={role} 
-                          className={modalConfig.selectItemClass}
-                        >
-                          {role}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Button 
-                    onClick={handleRoleChange}
-                    variant={"custom"}
-                    className="w-full"
-                    size={modalConfig.buttonSize}
-                  >
-                    Update Role
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </>
-        );
-      },
+      cell: ({ row }) => (
+        <span 
+         
+          className="text-xs h-5 px-2 font-normal"
+        >
+          {row.original.role}
+        </span>
+      ),
+      size: 100, // Reduced column width
     },
     {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => {
         const status = row.original.status;
-        const statusColors = {
-          ACTIVE: "bg-green-600",
-          BLOCKED: "bg-yellow-600",
-          DELETED: "bg-red-600"
-        };
+        const isDeleted = status.toLowerCase() === 'deleted';
+        
         return (
-          <>
-            <Badge 
-              className={`cursor-pointer text-xs w-20 h-6 text-white ${statusColors[status]}`}
-              onClick={() => handleStatusModalOpen(row.original)}
-            >
-              {status}
-            </Badge>
-            <Dialog open={statusModalOpen && selectedUser?.id === row.original.id} onOpenChange={setStatusModalOpen}>
-              <DialogContent className={`${modalConfig.size} bg-gray-800 text-white`}>
-                <DialogTitle className={modalConfig.titleClass}>
-                  Change Status for {selectedUser?.name}
-                </DialogTitle>
-                <div className="space-y-4">
-                  <Select
-                    value={selectedStatus}
-                    onValueChange={(value: UserStatus) => setSelectedStatus(value)}
-                  >
-                    <SelectTrigger className={modalConfig.selectClass}>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent className={modalConfig.selectContentClass}>
-                      {Object.values(UserStatus).map((status) => (
-                        <SelectItem 
-                          key={status} 
-                          value={status} 
-                          className={modalConfig.selectItemClass}
-                        >
-                          {status}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Button 
-                    onClick={handleStatusChange}
-                    variant={"custom"}
-                    className="w-full"
-                    size={modalConfig.buttonSize}
-                  >
-                    Update Status
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </>
+          <Badge 
+            className={`text-xs h-5 px-2 ${
+              isDeleted 
+                ? 'bg-red-900/50 text-red-400 border-red-800' 
+                : 'bg-green-900/50 text-green-400 border-green-800'
+            }`}
+            variant="outline"
+          >
+            {status}
+          </Badge>
         );
       },
+      size: 100, 
+    },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        const user = row.original;
+        const isDeleted = user.status.toLowerCase() === 'deleted';
+        
+        return (
+          <div className="flex justify-center">
+            {!isDeleted && (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => handleDelete(user)}
+                className="cursor-pointer h-7 w-7 p-0 hover:bg-red-700"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
+            )}
+
+            {openDialogId === user.id && (
+              <DeleteUserDialog
+                open={openDialogId === user.id}
+                onClose={() => setOpenDialogId(null)}
+                id={user.id}
+                name={user.name}
+              />
+            )}
+          </div>
+        );
+      },
+      size: 60, // Reduced column width
     },
   ];
 
