@@ -10,7 +10,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogClose,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -26,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { addReview } from "@/services/reviewService";
+import { useState } from "react";
 
 const reviewFormSchema = z.object({
   rating: z.coerce.number().min(1).max(10),
@@ -35,6 +35,8 @@ const reviewFormSchema = z.object({
 });
 
 const AddReviewModal = ({ movieId }: { movieId: string }) => {
+  const [open, setOpen] = useState(false);
+
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: {
@@ -55,17 +57,25 @@ const AddReviewModal = ({ movieId }: { movieId: string }) => {
       movieId,
     };
 
+    console.log(payload);
+
     try {
       const result = await addReview(payload, token);
       toast.success(result?.message || "Review added successfully");
       form.reset();
-    } catch (error: any) {
-      toast.error(error.message || "Failed to submit review");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error?.message);
+      } else {
+        toast.error("Failed to submit review");
+      }
     }
+
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button variant="custom">Write a review</Button>
       </DialogTrigger>
@@ -135,11 +145,13 @@ const AddReviewModal = ({ movieId }: { movieId: string }) => {
             />
 
             <DialogFooter className="pt-2">
-              <DialogClose asChild>
-                <Button type="button" variant="secondary">
-                  Cancel
-                </Button>
-              </DialogClose>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </Button>
               <Button type="submit" variant="custom">
                 Submit Review
               </Button>
