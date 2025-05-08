@@ -31,7 +31,6 @@ export const getAllWatchList = async () => {
       },
     });
     const result = await res.json();
-console.log("get all watchl ", result)
     return result;
   } catch (error: any) {
     return Error(error.message);

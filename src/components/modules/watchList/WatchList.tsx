@@ -1,27 +1,26 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import WatchListCard from "./WatchListCard";
-import { getAllWatchList, removeFromWatchList } from "@/services/watchList";
+import { removeFromWatchList } from "@/services/watchList";
 import { toast } from "sonner";
+import { TMovie } from "@/types/movie.type";
 
-const WatchListPage = () => {
-  const [watchList, setWatchList] = useState([]);
 
-  useEffect(() => {
-    const fetchWatchList = async () => {
-      const res = await getAllWatchList();
+type WatchListEntry = {
+  createdAt: string;
+  id: string;
+  movies?: Partial<TMovie>;
+};
 
-      setWatchList(res?.data || []);
-    };
+type WatchListPageProps = {
+  watchListData: WatchListEntry[];
+};
 
-    fetchWatchList();
-  }, []);
+const WatchListPage = ({ watchListData }: WatchListPageProps) => {
 
   async function handleRemoveFromWatchlist(id: string) {
     try {
       const res = await removeFromWatchList(id);
-      console.log(res);
-
       if (res.success) {
         toast.success(
           res?.message || "Movie removed from watchlist successfully"
@@ -35,8 +34,8 @@ const WatchListPage = () => {
   }
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {watchList?.length > 0 ? (
-        watchList?.map(({ movies, id }: any) => (
+      {watchListData?.length > 0 ? (
+        watchListData?.map(({ movies, id }: any) => (
           <WatchListCard
             key={id}
             id={id}
