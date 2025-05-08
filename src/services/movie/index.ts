@@ -18,6 +18,18 @@ export const getAllMovies = async () => {
   }
 };
 
+export const getAllMoviesByFilter = async (sortBy:string, values:string | boolean,limit:number) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/movie?${sortBy}=${values}&limit=${limit}`, {
+      method: "GET",
+    });
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
 export const getSingleMovie = async (movieId: string, userId: string) => {
   const bodyData = { userId };
 
