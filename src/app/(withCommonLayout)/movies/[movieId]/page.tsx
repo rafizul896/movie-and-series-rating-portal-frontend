@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
 import { addToWatchList } from "@/services/watchList";
+import { addToWishlist } from "@/services/wishlist";
 import { TMovie } from "@/types/movie.type";
 import { TAddToWatchList } from "@/types/watchList.type";
 import { ArrowLeft } from "lucide-react";
@@ -38,25 +39,32 @@ const MovieDetailsPage = () => {
 
   // console.log(moviesData);
 
-  const handleAddToWatchList = async (movieId:string) => {
-    if(!user){
-      toast.error("You have to signup first")
-      return
+  const handleAddToWishlist = async (movieId: string) => {
+    if (!user) {
+      toast.error("You have to signup first");
+      return;
     }
+
     startTransition(async () => {
       try {
-        const data:TAddToWatchList = {
+        const data: TAddToWatchList = {
           movieId: movieId,
-          userId:  user?.id,
-        }
-        const result = await addToWatchList(data)
-        if(result.success){
-          toast.success(result?.message || "Successfully added to watchlist")
-        }else{
-          toast.error(result?.message || "Something went wrong!")
+          userId: user?.id,
+        };
+
+        console.log(data);
+
+        const result = await addToWishlist(data);
+
+        if (result.success) {
+          toast.success(result?.message || "Successfully added to watchlist");
+        } else {
+          toast.error(result?.message || "Something went wrong!");
         }
       } catch (error) {
-        toast.error("Something went wrong!");
+        if (error instanceof Error) {
+          toast.error(error?.message || "Something went wrong!");
+        }
       }
     });
   };
@@ -79,7 +87,10 @@ const MovieDetailsPage = () => {
             </div>
             <div className="flex flex-col gap-3">
               <Button variant={"custom"}>Buy or Rent</Button>
-              <Button onClick={()=> handleAddToWatchList(moviesData?.id as string)} variant={"customOutlined"}>
+              <Button
+                onClick={() => handleAddToWishlist(moviesData?.id as string)}
+                variant={"customOutlined"}
+              >
                 {" "}
                 {isPending ? "Adding..." : "+ Add to wishlist"}
               </Button>
