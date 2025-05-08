@@ -44,8 +44,6 @@ const MovieDetailsPage = () => {
     fetchMovies();
   }, [param?.movieId]);
 
-  // console.log(moviesData);
-
   const handleAddToWishlist = async (movieId: string) => {
     if (!user) {
       toast.error("You have to signup first");
