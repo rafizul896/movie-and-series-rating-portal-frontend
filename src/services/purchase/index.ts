@@ -1,8 +1,9 @@
 "use server";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { revalidateTag } from 'next/cache';
 import { PurchaseData } from "@/types/purchase.type";
-import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+
 
 export const createPurchase = async (data: any) => {
   console.log("data", data);
@@ -60,3 +61,45 @@ export const fetchUserPurchases = async (
     throw new Error(error.message || "Failed to fetch purchase history");
   }
 };
+
+export const getAllOrderHistory = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/purchase/purchase-history`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: {
+          tags: ["purchase"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const deleteOrderHistory = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/purchase/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        }
+        
+      },
+    );
+    revalidateTag("orders");
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+

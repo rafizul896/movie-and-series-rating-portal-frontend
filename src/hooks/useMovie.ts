@@ -32,8 +32,8 @@ const useAllMovies = (initialFilters?: FilterOptions) => {
       try {
         setLoading(true);
         const { data } = await getAllMovies();
-        setAllMovies(data.data);
-        setMetaData(data.meta);
+        setAllMovies(data?.data);
+        setMetaData(data?.meta);
       } catch (err) {
         console.error("Failed to fetch movies", err);
       } finally {
