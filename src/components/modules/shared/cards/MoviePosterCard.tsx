@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { TMovie } from "@/types/movie.type";
-import { TMoviePosterCardProps } from "@/types/props.type";
 import Image from "next/image";
 import Link from "next/link";
 

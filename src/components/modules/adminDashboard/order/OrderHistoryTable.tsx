@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,8 +25,6 @@ import { deleteOrderHistory } from "@/services/purchase";
 import { IOrderHistory } from "@/types/purchase.type";
 
 const OrderHistoryTable = ({ orderData }: any) => {
-  const router = useRouter();
-
   const handleDelete = async (id: string) => {
     try {
       const res = await deleteOrderHistory(id);
