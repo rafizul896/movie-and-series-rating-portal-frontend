@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 
@@ -22,22 +23,43 @@ export const getAllUser = async () => {
 };
 
 
-export const updateUserStatus = async (userId: string, UserData: FormData) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/${userId}`, {
-        method: "PATCH",
-        body: UserData,
+export const deletedUser = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/soft/${id}`,
+      {
+        method: "DELETE",
         headers: {
           Authorization: (await cookies()).get("accessToken")!.value,
         },
-        next: {
-          tags: ["users"],
-        },
-      });
-      const result = await res.json();
-      return result;
-    } catch (error: any) {
-      return { error: error.message };
-    }
-  };
+      }
+    );
+    revalidateTag("movies");
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+
+// export const updateUserStatus = async (userId: string, UserData: FormData) => {
+//     try {
+//       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/${userId}`, {
+//         method: "PATCH",
+//         body: UserData,
+//         headers: {
+//           Authorization: (await cookies()).get("accessToken")!.value,
+//         },
+//         next: {
+//           tags: ["users"],
+//         },
+//       });
+//       const result = await res.json();
+//       return result;
+//     } catch (error: any) {
+//       return { error: error.message };
+//     }
+//   };
+
+
   

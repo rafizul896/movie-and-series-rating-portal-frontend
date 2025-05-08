@@ -18,6 +18,8 @@ const WatchListPage = () => {
   
       fetchWatchList();
     }, []);
+
+    console.log(watchList)
   
 
     async function handleRemoveFromWatchlist(id: string) {
