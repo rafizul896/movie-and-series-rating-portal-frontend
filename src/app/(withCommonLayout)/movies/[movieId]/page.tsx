@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
+import { addToWishlist } from "@/services/wishlist";
 import { getReviewsByMovieId } from "@/services/reviewService";
 import { TMovie } from "@/types/movie.type";
 import { TReviewByMovieId } from "@/types/review.type";
@@ -13,7 +14,8 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { startTransition, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const MovieDetailsPage = () => {
   const { user } = useUser();
@@ -42,6 +44,37 @@ const MovieDetailsPage = () => {
     fetchMovies();
   }, [param?.movieId]);
 
+  // console.log(moviesData);
+
+  const handleAddToWishlist = async (movieId: string) => {
+    if (!user) {
+      toast.error("You have to signup first");
+      return;
+    }
+
+    startTransition(async () => {
+      try {
+        const data = {
+          movieId: movieId,
+          userId: user?.id,
+        };
+
+        console.log(data);
+
+        const result = await addToWishlist(data);
+
+        if (result.success) {
+          toast.success(result?.message || "Successfully added to watchlist");
+        } else {
+          toast.error(result?.message || "Something went wrong!");
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error?.message || "Something went wrong!");
+        }
+      }
+    });
+  };
   useEffect(() => {
     fetchReviews();
   }, [moviesData?.reviews]);
@@ -64,7 +97,12 @@ const MovieDetailsPage = () => {
             </div>
             <div className="flex flex-col gap-3">
               <Button variant={"custom"}>Buy or Rent</Button>
-              <Button variant={"customOutlined"}>+ Add to wishlist</Button>
+              <Button
+                onClick={() => handleAddToWishlist(moviesData?.id as string)}
+                variant={"customOutlined"}
+              >
+                Add to wishlist
+              </Button>
             </div>
             <div className="bg-red-400/20 p-3 rounded mt-4">
               <div className="grid grid-cols-2 mt-1">
