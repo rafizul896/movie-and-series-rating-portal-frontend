@@ -107,7 +107,6 @@ export function useUserColumns() {
           <div className="flex justify-center">
             {!isDeleted && (
               <Button
-                variant="destructive"
                 size="sm"
                 onClick={() => handleDelete(user)}
                 className="cursor-pointer h-7 w-7 p-0 hover:bg-red-700"
