@@ -108,6 +108,14 @@ const Navbar = () => {
                     Watchlist
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/purchase"
+                    className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                  >
+                    Purchase
+                  </Link>
+                </DropdownMenuItem>
                 {user.role === "ADMIN" && (
                   <DropdownMenuItem asChild>
                     <Link

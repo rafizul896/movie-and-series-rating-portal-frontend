@@ -10,7 +10,7 @@ import { useUserColumns } from './userTableColums';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
 
 interface UserTableProps {
-  data?: IUserType[]; // Make data optional with default value
+  data?: IUserType[]; 
 }
 
 export function UserTable({ data = [] }: UserTableProps) {

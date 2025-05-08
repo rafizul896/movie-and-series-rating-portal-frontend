@@ -1,39 +1,46 @@
 "use client";
+import LoadingPage from "@/app/loading";
 import AddReviewModal from "@/components/modules/movie/AddReviewModal";
 import ReviewCardOne from "@/components/modules/shared/cards/ReviewCardOne";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
-import { addToWatchList } from "@/services/watchList";
 import { addToWishlist } from "@/services/wishlist";
+import { getReviewsByMovieId } from "@/services/reviewService";
 import { TMovie } from "@/types/movie.type";
-import { TAddToWatchList } from "@/types/watchList.type";
+import { TReviewByMovieId } from "@/types/review.type";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState, useTransition } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const MovieDetailsPage = () => {
+  const { user } = useUser();
+  const [loading, setLoading] = useState(false);
   const [moviesData, setMoviesData] = useState<TMovie>();
-  const [isPending, startTransition] = useTransition();
-  const { user, isLoading } = useUser();
+  const [reviews, setReviews] = useState<TReviewByMovieId[]>([]);
 
   const param = useParams();
 
-  // const token = localStorage.getItem("accessToken");
+  const fetchMovies = async () => {
+    const res = await getSingleMovie(param?.movieId as string, user?.id || "");
+    setMoviesData(res?.data?.data || []);
+  };
 
-  // const user = jwtDecode(token || "");
-  // console.log(user);
+  const fetchReviews = async () => {
+    setLoading(true);
+    try {
+      const res = await getReviewsByMovieId(param?.movieId as string);
+      setReviews(res?.data || []);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      const res = await getSingleMovie(param?.movieId as string, user?.id);
-      setMoviesData(res?.data?.data || []);
-    };
-
     fetchMovies();
   }, [param?.movieId]);
 
@@ -47,7 +54,7 @@ const MovieDetailsPage = () => {
 
     startTransition(async () => {
       try {
-        const data: TAddToWatchList = {
+        const data = {
           movieId: movieId,
           userId: user?.id,
         };
@@ -68,6 +75,9 @@ const MovieDetailsPage = () => {
       }
     });
   };
+  useEffect(() => {
+    fetchReviews();
+  }, [moviesData?.reviews]);
 
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,8 +101,7 @@ const MovieDetailsPage = () => {
                 onClick={() => handleAddToWishlist(moviesData?.id as string)}
                 variant={"customOutlined"}
               >
-                {" "}
-                {isPending ? "Adding..." : "+ Add to wishlist"}
+                Add to wishlist
               </Button>
             </div>
             <div className="bg-red-400/20 p-3 rounded mt-4">
@@ -123,9 +132,9 @@ const MovieDetailsPage = () => {
                   {moviesData?.platforms?.map((p) => (
                     <span
                       key={p}
-                      className="text-sm bg-red-600 text-white px-[10px] py-[1px] rounded"
+                      className="text-sm bg-red-600 text-white px-[10px] py-[1px] rounded mr-1"
                     >
-                      {p}{" "}
+                      {p}
                     </span>
                   ))}
                 </div>
@@ -178,14 +187,25 @@ const MovieDetailsPage = () => {
           <div className="Reviews mt-10 bg-gray-700/45 p-3 rounded">
             <div className="flex justify-between mb-3">
               <h5 className="mb-1 md:text-xl">Reviews</h5>
-              <AddReviewModal movieId={moviesData?.id || ""} />
+              <AddReviewModal
+                movieId={moviesData?.id || ""}
+                onReviewAdded={fetchMovies}
+              />
             </div>
             <Separator className="mb-3" />
-            <div className="p-2">
-              {moviesData?.reviews?.map((review) => (
-                <ReviewCardOne key={review?.id} review={review} />
-              ))}
-            </div>
+            {loading ? (
+              <LoadingPage />
+            ) : (
+              reviews &&
+              reviews.map((review: TReviewByMovieId) => (
+                <ReviewCardOne
+                  key={review.id}
+                  review={review}
+                  movieId={review.movieId}
+                  onReviewChange={fetchMovies}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>
