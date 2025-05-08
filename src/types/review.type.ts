@@ -28,9 +28,15 @@ type TReviewCount = {
   likes: number;
   comments: number;
 };
+type TLike = {
+  id: string;
+  userId: string;
+};
 export type TReviewByMovieId = {
   approved: boolean;
   comments: TComment[];
+  likes?: TLike[];
+  liked?: boolean;
   content: string;
   createdAt: string;
   hasSpoiler: boolean;
