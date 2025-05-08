@@ -38,28 +38,31 @@ const MovieDetailsPage = () => {
 
   // console.log(moviesData);
 
-  const handleAddToWatchList = async (movieId:string) => {
-    if(!user){
-      toast.error("You have to signup first")
-      return
+  const handleAddToWatchList = async (movieId: string) => {
+    if (!user) {
+      toast.error("You have to signup first");
+      return;
     }
     startTransition(async () => {
       try {
-        const data:TAddToWatchList = {
+        const data: TAddToWatchList = {
           movieId: movieId,
-          userId:  user?.id,
-        }
-        const result = await addToWatchList(data)
-        if(result.success){
-          toast.success(result?.message || "Successfully added to watchlist")
-        }else{
-          toast.error(result?.message || "Something went wrong!")
+          userId: user?.id,
+        };
+        const result = await addToWatchList(data);
+        if (result.success) {
+          toast.success(result?.message || "Successfully added to watchlist");
+        } else {
+          toast.error(result?.message || "Something went wrong!");
         }
       } catch (error) {
+        console.log(error);
         toast.error("Something went wrong!");
       }
     });
   };
+
+  if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,7 +82,10 @@ const MovieDetailsPage = () => {
             </div>
             <div className="flex flex-col gap-3">
               <Button variant={"custom"}>Buy or Rent</Button>
-              <Button onClick={()=> handleAddToWatchList(moviesData?.id as string)} variant={"customOutlined"}>
+              <Button
+                onClick={() => handleAddToWatchList(moviesData?.id as string)}
+                variant={"customOutlined"}
+              >
                 {" "}
                 {isPending ? "Adding..." : "+ Add to wishlist"}
               </Button>

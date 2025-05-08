@@ -33,7 +33,10 @@ export const getAllMovies = async () => {
 //   }
 // };
 
-export const getSingleMovie = async (movieId: string, userId: string | undefined) => {
+export const getSingleMovie = async (
+  movieId: string,
+  userId: string | undefined
+) => {
   const bodyData = {
     userId,
   };
