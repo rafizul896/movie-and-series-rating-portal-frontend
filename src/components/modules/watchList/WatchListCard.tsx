@@ -22,7 +22,6 @@ interface WatchListCardProps {
 
 export default function WatchListCard({
   id,
-  movieId,
   title,
   releaseYear,
   createdAt,
