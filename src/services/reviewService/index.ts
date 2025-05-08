@@ -259,3 +259,33 @@ export const toggleLike = async (reviewId: string) => {
     throw new Error("Unknown error occurred while toggling like");
   }
 };
+
+export const addComment = async (data: {
+  content: string;
+  reviewId: string;
+}) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/comments`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result?.message || "Failed to submit comment");
+    }
+
+    revalidateTag(`review-${data.reviewId}`);
+    return result;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error("Unknown error occurred while submitting comment");
+  }
+};

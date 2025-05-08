@@ -15,13 +15,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { deleteReview } from "@/services/reviewService";
+import { addComment, deleteReview } from "@/services/reviewService";
 import { dateConvertor } from "@/utils/dateConvertor";
 import { Heart, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import EditReviewModal from "../../movie/EditReviewModal";
 import { TReviewByMovieId } from "@/types/review.type";
+import { toast } from "sonner";
 
 type TComment = {
   comment: string;
@@ -43,27 +44,38 @@ const ReviewCardOne = ({
     },
   });
 
-  const onSubmit = (data: TComment) => {
+  const onSubmit = async (data: TComment) => {
     const commentData = {
-      comment: data.comment,
+      content: data.comment,
       reviewId: review.id,
     };
-    console.log(commentData);
+
+    try {
+      await addComment(commentData);
+      form.reset();
+      toast.success("Comment Added");
+      onReviewChange();
+    } catch (error) {
+      console.log("Add comment failed", error);
+      toast.error("Failed to add comment");
+    }
   };
 
   const handleDeleteReview = async (reviewId: string) => {
     try {
       await deleteReview(reviewId);
+      toast.success("Review deleted successfully");
       onReviewChange();
     } catch (err) {
       console.error("Delete review failed", err);
+      toast.error("Delete review failed");
     }
   };
 
-  // console.log(review);
+  console.log(review);
 
   return (
-    <div className="mb-5 bg-gray-700/50 p-4 rounded-lg">
+    <div className="bg-gray-700/50 p-4 rounded-lg">
       <div className="flex justify-between">
         <div className="flex gap-4">
           <img
@@ -148,10 +160,7 @@ const ReviewCardOne = ({
       </div>
 
       {review.approved && (
-        <div className="p-3 rounded">
-          <p className="mb-1">Comments</p>
-          <hr />
-          {/* new  */}
+        <div>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -181,6 +190,17 @@ const ReviewCardOne = ({
               </Button>
             </form>
           </Form>
+
+          <div className="my-5">
+            <p className="mb-1">Comments</p>
+            <hr />
+            {review?.comments?.length &&
+              review?.comments?.map((c) => (
+                <div key={c.id} className="p-2 rounded my-4 bg-gray-700/30">
+                  <p>{c.content}</p>
+                </div>
+              ))}
+          </div>
         </div>
       )}
     </div>
