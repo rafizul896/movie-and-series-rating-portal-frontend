@@ -26,6 +26,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { addReview } from "@/services/reviewService";
 import { useState } from "react";
+import { useUser } from "@/context/UserContext";
 
 const reviewFormSchema = z.object({
   rating: z.coerce.number().min(1).max(10),
@@ -42,6 +43,7 @@ const AddReviewModal = ({
   onReviewAdded: () => void;
 }) => {
   const [open, setOpen] = useState(false);
+  const { user } = useUser();
 
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),
@@ -54,8 +56,7 @@ const AddReviewModal = ({
   });
 
   const onSubmit = async (values: z.infer<typeof reviewFormSchema>) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) return toast.warning("Login required");
+    if (!user?.id) return toast.warning("Login required");
 
     const payload = {
       ...values,
@@ -64,7 +65,7 @@ const AddReviewModal = ({
     };
 
     try {
-      const result = await addReview(payload, token);
+      const result = await addReview(payload);
       onReviewAdded();
       toast.success(result?.message || "Review added successfully");
       form.reset();

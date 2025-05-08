@@ -1,11 +1,14 @@
 "use client";
+import LoadingPage from "@/app/loading";
 import AddReviewModal from "@/components/modules/movie/AddReviewModal";
 import ReviewCardOne from "@/components/modules/shared/cards/ReviewCardOne";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
+import { getReviewsByMovieId } from "@/services/reviewService";
 import { TMovie } from "@/types/movie.type";
-import { jwtDecode } from "jwt-decode";
+import { TReviewByMovieId } from "@/types/review.type";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,23 +16,35 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const MovieDetailsPage = () => {
+  const { user } = useUser();
+  const [loading, setLoading] = useState(false);
   const [moviesData, setMoviesData] = useState<TMovie>();
+  const [reviews, setReviews] = useState<TReviewByMovieId[]>([]);
 
   const param = useParams();
-
-  const token = localStorage.getItem("accessToken");
-
-  const user = jwtDecode(token || "");
-  console.log(user);
 
   const fetchMovies = async () => {
     const res = await getSingleMovie(param?.movieId as string, user?.id || "");
     setMoviesData(res?.data?.data || []);
   };
 
+  const fetchReviews = async () => {
+    setLoading(true);
+    try {
+      const res = await getReviewsByMovieId(param?.movieId as string);
+      setReviews(res?.data || []);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchMovies();
   }, [param?.movieId]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [moviesData?.reviews]);
 
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -140,15 +155,19 @@ const MovieDetailsPage = () => {
               />
             </div>
             <Separator className="mb-3" />
-
-            {moviesData?.reviews?.map((review) => (
-              <ReviewCardOne
-                key={review?.id}
-                review={review}
-                movieId={moviesData.id}
-                onReviewChange={fetchMovies}
-              />
-            ))}
+            {loading ? (
+              <LoadingPage />
+            ) : (
+              reviews &&
+              reviews.map((review: TReviewByMovieId) => (
+                <ReviewCardOne
+                  key={review.id}
+                  review={review}
+                  movieId={review.movieId}
+                  onReviewChange={fetchMovies}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>

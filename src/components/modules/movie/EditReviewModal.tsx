@@ -20,6 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { SquarePen } from "lucide-react";
 import { toast } from "sonner";
 import { getReviewById, editReview } from "@/services/reviewService";
+import { useUser } from "@/context/UserContext";
 
 const reviewFormSchema = z.object({
   rating: z.coerce.number().min(1).max(10),
@@ -32,11 +33,11 @@ const EditReviewModal = ({
   reviewId,
   onReviewChange,
 }: {
-  movieId?: string;
   reviewId: string;
   onReviewChange: () => void;
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const { user } = useUser();
 
   const form = useForm<z.infer<typeof reviewFormSchema>>({
     resolver: zodResolver(reviewFormSchema),
@@ -50,11 +51,11 @@ const EditReviewModal = ({
 
   useEffect(() => {
     const fetchReview = async () => {
-      const token = localStorage.getItem("accessToken");
-      if (!token || !reviewId) return;
+      if (!user?.id || !reviewId)
+        return toast.warning("Please Login first to edit review");
 
       try {
-        const review = await getReviewById(reviewId, token);
+        const review = await getReviewById(reviewId);
 
         form.reset({
           rating: review?.data?.rating,
@@ -77,8 +78,7 @@ const EditReviewModal = ({
   }, [isEditModalOpen, reviewId, form]);
 
   const onSubmit = async (values: z.infer<typeof reviewFormSchema>) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) return toast.warning("Login required");
+    if (!user?.id) return toast.warning("Login required");
 
     const payload = {
       rating: values?.rating,
@@ -88,7 +88,7 @@ const EditReviewModal = ({
     };
 
     try {
-      const result = await editReview(reviewId, payload, token);
+      const result = await editReview(reviewId, payload);
       onReviewChange();
       toast.success(result?.message || "Review updated successfully");
       form.reset();

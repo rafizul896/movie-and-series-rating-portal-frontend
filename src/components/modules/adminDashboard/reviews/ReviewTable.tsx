@@ -29,9 +29,8 @@ const ReviewTable = ({
   onRefetch: () => void;
 }) => {
   const handleToggle = async (reviewId: string) => {
-    const token = localStorage.getItem("accessToken") || "";
     try {
-      await toggleApproveReview(reviewId, token);
+      await toggleApproveReview(reviewId);
       onRefetch();
     } catch (err) {
       console.error("Toggle failed", err);
@@ -39,9 +38,8 @@ const ReviewTable = ({
   };
 
   const handleDeleteReview = async (reviewId: string) => {
-    const token = localStorage.getItem("accessToken") || "";
     try {
-      await deleteReview(reviewId, token);
+      await deleteReview(reviewId);
       onRefetch();
     } catch (err) {
       console.error("Delete review failed", err);

@@ -16,12 +16,12 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { deleteReview } from "@/services/reviewService";
-import { TSingleMovieReview } from "@/types/movie.type";
 import { dateConvertor } from "@/utils/dateConvertor";
-import { Trash2 } from "lucide-react";
+import { Heart, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import EditReviewModal from "../../movie/EditReviewModal";
+import { TReviewByMovieId } from "@/types/review.type";
 
 type TComment = {
   comment: string;
@@ -31,7 +31,7 @@ const ReviewCardOne = ({
   review,
   onReviewChange,
 }: {
-  review: TSingleMovieReview;
+  review: TReviewByMovieId;
   movieId?: string;
   onReviewChange: () => void;
 }) => {
@@ -52,14 +52,15 @@ const ReviewCardOne = ({
   };
 
   const handleDeleteReview = async (reviewId: string) => {
-    const token = localStorage.getItem("accessToken") || "";
     try {
-      await deleteReview(reviewId, token);
+      await deleteReview(reviewId);
       onReviewChange();
     } catch (err) {
       console.error("Delete review failed", err);
     }
   };
+
+  // console.log(review);
 
   return (
     <div className="mb-5 bg-gray-700/50 p-4 rounded-lg">
@@ -67,7 +68,6 @@ const ReviewCardOne = ({
         <div className="flex gap-4">
           <img
             src={
-              review?.user?.profileImage ||
               "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
             }
             alt={review?.user?.name}
@@ -138,6 +138,14 @@ const ReviewCardOne = ({
       </div>
 
       <p className="my-5 text-gray-300">{review.content}</p>
+
+      <div className="flex justify-between">
+        <div className="flex gap-2">
+          <Heart className="fill-red-500 text-red-500" />
+          <p>{review._count.likes}</p>
+        </div>
+        <p>{review._count.comments} comments</p>
+      </div>
 
       {review.approved && (
         <div className="p-3 rounded">

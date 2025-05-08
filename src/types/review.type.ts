@@ -14,6 +14,36 @@ export type TReview = {
   movie: TReviewMovie;
 };
 
+type TComment = {
+  content: string;
+  id: string;
+  userId: string;
+};
+type TCommetUser = {
+  id: string;
+  name: string;
+  email: string;
+};
+type TReviewCount = {
+  likes: number;
+  comments: number;
+};
+export type TReviewByMovieId = {
+  approved: boolean;
+  comments: TComment[];
+  content: string;
+  createdAt: string;
+  hasSpoiler: boolean;
+  id: string;
+  movieId: string;
+  rating: 9;
+  tags: string[];
+  updatedAt: string;
+  user: TCommetUser;
+  userId: string;
+  _count: TReviewCount;
+};
+
 export type TMeta = {
   page?: string;
   limit?: string;
