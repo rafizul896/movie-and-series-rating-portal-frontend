@@ -235,7 +235,7 @@ export const toggleLike = async (reviewId: string) => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/likes/${reviewId}`,
       {
-        method: "PATCH",
+        method: "POST",
         headers: {
           Authorization: (await cookies()).get("accessToken")!.value,
         },

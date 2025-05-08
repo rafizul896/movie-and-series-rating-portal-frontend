@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addComment, deleteReview } from "@/services/reviewService";
+import { addComment, deleteReview, toggleLike } from "@/services/reviewService";
 import { dateConvertor } from "@/utils/dateConvertor";
 import { Heart, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -69,6 +69,21 @@ const ReviewCardOne = ({
     } catch (err) {
       console.error("Delete review failed", err);
       toast.error("Delete review failed");
+    }
+  };
+
+  const handleLikeToggle = async (reviewId: string) => {
+    try {
+      await toggleLike(reviewId);
+      if (!review.liked) {
+        toast.success("Liked");
+      } else {
+        toast.warning("Unliked");
+      }
+      onReviewChange();
+    } catch (error) {
+      console.error("Like toggle failed", error);
+      toast.error("Failed to toggle like");
     }
   };
 
@@ -153,7 +168,14 @@ const ReviewCardOne = ({
 
       <div className="flex justify-between">
         <div className="flex gap-2">
-          <Heart className="fill-red-500 text-red-500" />
+          {review.approved && (
+            <Heart
+              onClick={() => handleLikeToggle(review.id)}
+              className={`cursor-pointer transition-all ${
+                review.liked ? "fill-red-500 text-red-500" : ""
+              }`}
+            />
+          )}
           <p>{review._count.likes}</p>
         </div>
         <p>{review._count.comments} comments</p>
