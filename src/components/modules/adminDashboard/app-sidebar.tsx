@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Film, Home, Inbox, Settings, Users } from "lucide-react";
+import { Calendar, Film, Home, Inbox, Settings, Users,ShoppingBag} from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -24,6 +24,7 @@ const items = [
   { title: "Media Management", url: "/admin/movie", icon: Film },
   { title: "Users Management", url: "/admin/users", icon: Users },
   { title: "Review Management", url: "/admin/reviews", icon: Inbox },
+  { title: "Order History Management", url: "/admin/order-history", icon: ShoppingBag },
   {
     title: "Published Content",
     url: "/admin/content/published",
