@@ -95,7 +95,7 @@ export default function WatchListCard({
           <span className="font-bold">${buyPrice}</span>
           <span className="text-xs text-gray-400"> | Rent: ${rentPrice}</span>
         </div>
-        {onRemove ? (
+        {/* {onRemove ? (
           <div onClick={()=> onRemove(id)} className="flex items-center justify-center  p-2 rounded-full  hover:bg-black/70 transition-opacity duration-300 cursor-pointer" >
           <Trash2 className="h-4 w-4 text-red-500" />
           </div>
@@ -103,7 +103,7 @@ export default function WatchListCard({
           <div className="flex items-center justify-center  p-2 rounded-full  hover:bg-black/70 transition-opacity duration-300 cursor-pointer" >
           <Trash2 className="h-4 w-4 text-red-500" />
           </div>
-        )}
+        )} */}
       </CardFooter>
     </Card>
   );
