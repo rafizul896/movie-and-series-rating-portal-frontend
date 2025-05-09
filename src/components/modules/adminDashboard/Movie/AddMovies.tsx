@@ -38,7 +38,7 @@ type MovieFormData = {
   type: MediaType;
   releaseYear: number;
   director: string;
-  cast: string[];
+  cast: string;
   platforms: string[];
   buyPrice: number;
   rentPrice: number;
@@ -104,11 +104,12 @@ export function AddMediaDialog() {
     data.platforms = platforms;
     data.type = mediaType;
     data.isTrending = isTrending;
-    data.cast = data.cast.split(",").map((c: string) => c.trim());
+    const castArray = data.cast.split(",").map((c) => c.trim());
 
     // Convert number fields from string to number
     const parsedData = {
       ...data,
+      cast: castArray,
       buyPrice: Number(data.buyPrice),
       rentPrice: Number(data.rentPrice),
       releaseYear: Number(data.releaseYear),

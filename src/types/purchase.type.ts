@@ -26,3 +26,13 @@ export interface IOrderHistory {
     name: string;
   };
 }
+
+export interface IPurchaseItem  {
+  movieId: string;
+  userId: string | undefined;
+  purchase_type: "BUY" | "RENT";
+  currency: "USD";
+  paymentStatus: "PAID";
+  amount: number;
+  accessExpiryTime?: string;
+};
