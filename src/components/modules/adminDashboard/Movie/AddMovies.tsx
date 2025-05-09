@@ -150,7 +150,9 @@ export function AddMediaDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer ">Add Movie/Series</Button>
+        <div className="flex justify-end mr-8">
+          <Button variant={"custom"}>Add Movie/Series</Button>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto bg-white dark:bg-zinc-900 text-black dark:text-white">
         <DialogHeader>
