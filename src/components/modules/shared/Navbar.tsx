@@ -3,7 +3,7 @@
 import Image from "next/image";
 import logo from "../../../assets/logo.png";
 import Link from "next/link";
-import { Menu, ShoppingCart, X } from "lucide-react";
+import { Menu, ShoppingCart, Video, X } from "lucide-react";
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
@@ -57,14 +57,23 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <li className="headerLink text-white hover:text-gray-300 transition duration-200">
-              TV Shows
-            </li>
             <Link
               href="/movies"
               className="headerLink text-white hover:text-gray-300 transition duration-200"
             >
               Movies
+            </Link>
+            <Link
+              href="/about"
+              className="headerLink text-white hover:text-gray-300 transition duration-200"
+            >
+              About
+            </Link>
+            <Link
+              href="/contact-us"
+              className="headerLink text-white hover:text-gray-300 transition duration-200"
+            >
+              Contact us
             </Link>
           </ul>
         </div>
@@ -74,12 +83,25 @@ const Navbar = () => {
           {user ? (
             <div className="flex justify-between items-center gap-5">
               {/* wishlist icon */}
-              <Link
-                href="/wishlist"
-                className="headerLink hover:text-red-500/80 text-white transition duration-200"
-              >
-                <ShoppingCart width={30} height={30}/>
-              </Link>
+
+              {user.role === "ADMIN" && (
+                <>
+                  <Link
+                    title="Watch list"
+                    href="/watchlist"
+                    className="headerLink hover:text-red-500/80 text-white transition duration-200"
+                  >
+                    <Video width={30} height={30} />
+                  </Link>
+                  <Link
+                    title="Wish list"
+                    href="/wishlist"
+                    className="headerLink hover:text-red-500/80 text-white transition duration-200"
+                  >
+                    <ShoppingCart width={30} height={30} />
+                  </Link>
+                </>
+              )}
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -98,22 +120,6 @@ const Navbar = () => {
                   align="end"
                   className="bg-white text-sm text-gray-800 w-52 rounded-md shadow-xl mt-2 p-1"
                 >
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/wishlist"
-                      className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                    >
-                      Wishlist
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/watchlist"
-                      className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                    >
-                      Watchlist
-                    </Link>
-                  </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link
                       href="/purchase"
@@ -169,26 +175,49 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden bg-black bg-opacity-90 w-full px-4 py-3 absolute top-16 left-0 right-0">
           <ul className="flex flex-col space-y-4">
-            <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
+            <Link
+              href="/"
+              className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
+            >
               Home
-            </li>
-            <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
-              TV Shows
-            </li>
-            <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
+            </Link>
+            <Link
+              href="/movies"
+              className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
+            >
               Movies
-            </li>
-            <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
-              New & Popular
-            </li>
+            </Link>
+            <Link
+              href="/about"
+              className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
+            >
+              About
+            </Link>
+            <Link
+              href="/contact-us"
+              className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
+            >
+              Contact us
+            </Link>
+            {user && user.role === "USER" && (
+              <>
+                <Link
+                  href="/watchlist"
+                  className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
+                >
+                  Watch list
+                </Link>
+                <Link
+                  href="/wishlist"
+                  className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
+                >
+                  Wish list
+                </Link>
+              </>
+            )}
+
             {user ? (
               <>
-                <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
-                  Wishlist
-                </li>
-                <li className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2">
-                  Watchlist
-                </li>
                 {user.role === "ADMIN" && (
                   <Link
                     href="/admin/dashboard"

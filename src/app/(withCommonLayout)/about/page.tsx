@@ -2,13 +2,13 @@ const AboutUsPage = () => {
   return (
     <div className="min-h-screen bg-[url('https://img.freepik.com/premium-photo/many-rows-red-seats-cinema_161149-2461.jpg?semt=ais_hybrid&w=740')] bg-cover bg-fixed">
       <div className="w-full bg-black/30 px-6 py-12">
-        <div className="max-w-5xl mx-auto mt-10">
+        <div className="container mx-auto px-4 mt-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-red-600">
-            About CineFlix
+            About FilmNest
           </h1>
           <p className="text-lg mb-8 text-gray-300">
             Welcome to{" "}
-            <span className="font-semibold text-white">CineFlix</span> — your
+            <span className="font-semibold text-white">FilmNest</span> — your
             ultimate destination for discovering, reviewing, and streaming your
             favorite movies and TV series.
           </p>
@@ -58,7 +58,7 @@ const AboutUsPage = () => {
               👥 Who We Are
             </h2>
             <p className="text-gray-300">
-              CineFlix is powered by a team of developers, designers, and movie
+              FilmNest is powered by a team of developers, designers, and movie
               lovers committed to delivering a modern, user-centric experience.
               With a passion for cinema and cutting-edge tech, we&apos;ve
               created a space that’s intuitive, secure, and interactive.
@@ -79,7 +79,7 @@ const AboutUsPage = () => {
                 respectful and constructive interaction.
               </li>
               <li>
-                <strong>Innovation</strong>: CineFlix evolves based on your
+                <strong>Innovation</strong>: FilmNest evolves based on your
                 feedback and changing trends.
               </li>
             </ul>
@@ -96,10 +96,10 @@ const AboutUsPage = () => {
               </a>{" "}
               or email us at{" "}
               <a
-                href="mailto:support@cineflix.com"
+                href="mailto:support@FilmNest.com"
                 className="text-red-500 underline"
               >
-                support@cineflix.com
+                support@FilmNest.com
               </a>
               .
             </p>
