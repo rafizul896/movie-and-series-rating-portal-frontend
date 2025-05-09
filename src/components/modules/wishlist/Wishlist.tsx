@@ -31,7 +31,6 @@ export default function WishlistPage() {
   }, []);
 
   const removeFromWishlist = async (id: number) => {
-    console.log(id);
     try {
       const response = await removeFromWishlistList(id.toString());
 
