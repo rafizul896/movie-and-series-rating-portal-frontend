@@ -57,11 +57,11 @@ const MovieSalesTable = () => {
   }, [fetchData]);
 
   return (
-    <Card className="w-full overflow-x-auto">
+    <Card className="w-full overflow-x-auto bg-black text-white border-gray-500">
       <div className="flex flex-col md:flex-row gap-4 justify-between px-4">
         <div className="md:w-[50%]">
           <Input
-            className="border-gray-300"
+            className="border-gray-400"
             id="search"
             placeholder="Search by Movie Title"
             value={searchTerm}
@@ -73,9 +73,9 @@ const MovieSalesTable = () => {
         </div>
       </div>
       <CardContent className="px-4">
-        <Table>
+        <Table >
           <TableHeader>
-            <TableRow>
+            <TableRow className="border-gray-500">
               <TableHead>Title</TableHead>
               <TableHead className="text-center">Rentals</TableHead>
               <TableHead className="text-center">Buys</TableHead>
@@ -87,7 +87,7 @@ const MovieSalesTable = () => {
           </TableHeader>
           <TableBody>
             {salesData?.map((movie: IMovie) => (
-              <TableRow key={movie?.movieId}>
+              <TableRow key={movie?.movieId} className="border-gray-500 hover:bg-gray-600">
                 <TableCell>{movie?.movieTitle}</TableCell>
                 <TableCell className="text-center">
                   {movie?.rentalCount}

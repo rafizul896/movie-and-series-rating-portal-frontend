@@ -96,7 +96,6 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-[#2a2a3b] mt-4 pt-3 px-3">
-        <Link href={"/"}>Home</Link>
         <NavUser />
       </SidebarFooter>
     </Sidebar>
