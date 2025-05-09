@@ -29,6 +29,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setIsLoading(true);
       const currentUser = await getCurrentUser();
+
       setUserState(currentUser);
     } catch (error: any) {
       console.error("Error fetching user:", error);
