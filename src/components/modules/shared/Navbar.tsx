@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import logo from "../../../assets/logo.png";
 import Link from "next/link";
 import { Menu, ShoppingCart, Video, X } from "lucide-react";
 import { useState } from "react";
@@ -16,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import user_img from "../../../assets/default_user.jpg";
 import { logoutUser } from "@/services/authService";
+import Logo from "./logo";
 
 const Navbar = () => {
   const { user, setIsLoading, setUser, isLoading } = useUser();
@@ -42,13 +41,16 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-4 py-4 md:px-10">
         {/* Left section - Logo and Desktop Nav */}
         <div className="flex items-center space-x-2 md:space-x-10">
-          <Image
+          {/* <Image
             src={logo}
             width={100}
             height={100}
             alt="logo"
             className="cursor-pointer object-contain w-20 md:w-24"
-          />
+          /> */}
+          <Link href="/">
+            <Logo />
+          </Link>
 
           <ul className="hidden space-x-6 md:flex">
             <Link
@@ -120,16 +122,15 @@ const Navbar = () => {
                   align="end"
                   className="bg-white text-sm text-gray-800 w-52 rounded-md shadow-xl mt-2 p-1"
                 >
-                  
                   {user.role === "USER" && (
                     <DropdownMenuItem asChild>
-                    <Link
-                      href="/purchase"
-                      className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                    >
-                      Purchase
-                    </Link>
-                  </DropdownMenuItem>
+                      <Link
+                        href="/purchase"
+                        className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        Purchase
+                      </Link>
+                    </DropdownMenuItem>
                   )}
                   {user.role === "ADMIN" && (
                     <DropdownMenuItem asChild>
