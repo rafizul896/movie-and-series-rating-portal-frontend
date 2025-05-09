@@ -10,6 +10,7 @@ export const getAllMovies = async () => {
       next: {
         tags: ["movies"],
       },
+      cache: "no-store"
     });
     const result = await res.json();
     return result;
@@ -28,6 +29,7 @@ export const getAllMoviesByFilter = async (
       `${process.env.NEXT_PUBLIC_BASE_API}/movie?${sortBy}=${values}&limit=${limit}`,
       {
         method: "GET",
+        cache: "no-store"
       }
     );
     const result = await res.json();
