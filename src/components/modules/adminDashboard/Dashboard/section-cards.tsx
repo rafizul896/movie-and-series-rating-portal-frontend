@@ -9,7 +9,7 @@ export function SectionCards({ data }: { data: any }) {
     <div className="mt-2 space-y-6">
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
+        <Card className="bg-black text-white border-gray-500">
           <CardHeader>
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
           </CardHeader>
@@ -20,7 +20,7 @@ export function SectionCards({ data }: { data: any }) {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-black text-white border-gray-500">
           <CardHeader>
             <CardTitle className="text-sm font-medium">
               Total Purchases
@@ -33,7 +33,7 @@ export function SectionCards({ data }: { data: any }) {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-black text-white border-gray-500">
           <CardHeader>
             <CardTitle className="text-sm font-medium">Rentals</CardTitle>
           </CardHeader>
@@ -44,7 +44,7 @@ export function SectionCards({ data }: { data: any }) {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-black text-white border-gray-500">
           <CardHeader>
             <CardTitle className="text-sm font-medium">Buys</CardTitle>
           </CardHeader>

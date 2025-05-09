@@ -40,7 +40,7 @@ export function DatePickerWithRange({ className, onDateChange }: Props) {
             id="date"
             variant={"outline"}
             className={cn(
-              "w-full  border-gray-300 md:w-[300px] justify-start text-left font-normal",
+              "w-full bg-black  border-gray-500 md:w-[300px] justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
