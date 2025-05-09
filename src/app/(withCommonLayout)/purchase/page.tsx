@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { UserPurchaseTable } from "@/components/Purchase/UserPurchaseTable";
 import { getCurrentUser } from "@/services/authService";
 import { fetchUserPurchases } from "@/services/purchase";

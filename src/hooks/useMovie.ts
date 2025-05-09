@@ -1,6 +1,7 @@
 "use client";
 
 import { getAllMovies } from "@/services/movie";
+import { TMovie } from "@/types/movie.type";
 import { useEffect, useState, useMemo } from "react";
 
 interface Movie {
@@ -96,7 +97,7 @@ const useAllMovies = (initialFilters?: FilterOptions) => {
   }, [allMovies]);
 
   return {
-    allMovies,
+    allMovies: allMovies as TMovie[],
     filteredMovies,
     loading,
     metaData,

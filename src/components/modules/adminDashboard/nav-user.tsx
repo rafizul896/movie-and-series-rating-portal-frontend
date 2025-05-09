@@ -27,15 +27,6 @@ const NavUser = () => {
   const router = useRouter();
   const { user } = useUser();
 
-  // const userData = await getSingleUser(user?.id);
-
-  // Temporary user data - replace with your actual user fetching logic
-  // const user = {
-  //   email: "habib@gmail.com",
-  //   name: "Habib",
-  //   image: "",
-  // };
-
   const handleLogOut = async () => {
     try {
       await logoutUser();
@@ -59,7 +50,7 @@ const NavUser = () => {
                 aria-label="User menu"
               >
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user?.image} alt={user?.name} />
+                  {/* <AvatarImage src={user?.image} alt={user?.name} /> */}
                   <AvatarFallback className="rounded-lg">
                     {user?.name?.charAt(0).toUpperCase()}
                   </AvatarFallback>
@@ -83,7 +74,7 @@ const NavUser = () => {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-2 py-1.5">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user?.image} alt={user?.name} />
+                  {/* <AvatarImage src={user?.image} alt={user?.name} /> */}
                   <AvatarFallback className="rounded-lg">
                     {user?.name?.charAt(0).toUpperCase()}
                   </AvatarFallback>

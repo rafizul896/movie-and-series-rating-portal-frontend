@@ -26,7 +26,6 @@ import { useForm } from "react-hook-form";
 
 const AllMovie = () => {
   const { allMovies: initialMovies, loading } = useAllMovies();
-  console.log(initialMovies);
   const [filteredMovies, setFilteredMovies] = useState<TMovie[]>([]);
 
   const genres = [
@@ -80,7 +79,7 @@ const AllMovie = () => {
             (movie.director &&
               movie.director
                 .toLowerCase()
-                .includes(filters?.query.toLowerCase()))
+                .includes(filters?.query!.toLowerCase()))
         );
       }
 

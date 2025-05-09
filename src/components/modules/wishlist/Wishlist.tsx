@@ -12,6 +12,7 @@ import { IWishlistMovie } from "@/types/wishlist.type";
 import { toast } from "sonner";
 import { PaymentModal } from "./PaymentModal";
 import { useUser } from "@/context/UserContext";
+import { IPurchaseItem } from "@/types/purchase.type";
 
 export default function WishlistPage() {
   const { user } = useUser();
@@ -70,7 +71,7 @@ export default function WishlistPage() {
 
     const finalPrice = basePrice - discountAmount;
 
-    const purchaseItem = {
+    const purchaseItem: IPurchaseItem = {
       movieId: item.movieId,
       userId: user?.id,
       purchase_type: item.purchaseType,
@@ -243,7 +244,7 @@ export default function WishlistPage() {
                   <div className="border-t pt-4 mb-6">
                     <div className="flex justify-between font-semibold">
                       <span>Total</span>
-                      <span>${(totalPrice).toFixed(2)}</span>
+                      <span>${totalPrice.toFixed(2)}</span>
                     </div>
                   </div>
                   <div className="w-full">
