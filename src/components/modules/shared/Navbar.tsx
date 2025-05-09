@@ -78,7 +78,7 @@ const Navbar = () => {
                 href="/wishlist"
                 className="headerLink hover:text-red-500/80 text-white transition duration-200"
               >
-                <ShoppingCart width={30} height={30}/>
+                <ShoppingCart width={30} height={30} />
               </Link>
 
               <DropdownMenu>
@@ -144,7 +144,7 @@ const Navbar = () => {
           ) : (
             <Link href="/login">
               <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer">
-                Create Account
+                Login
               </button>
             </Link>
           )}

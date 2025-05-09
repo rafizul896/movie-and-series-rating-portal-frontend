@@ -26,6 +26,7 @@ import { useForm } from "react-hook-form";
 
 const AllMovie = () => {
   const { allMovies: initialMovies, loading } = useAllMovies();
+  console.log(initialMovies);
   const [filteredMovies, setFilteredMovies] = useState<TMovie[]>([]);
 
   const genres = [
@@ -47,6 +48,7 @@ const AllMovie = () => {
     "Apple TV+",
   ];
   const years = Array.from({ length: 25 }, (_, i) => `${2025 - i}`);
+  const rating = Array.from({ length: 10 }, (_, i) => `${i + 1}`);
 
   const form = useForm<TSearchBarOne>({
     defaultValues: {
@@ -55,6 +57,7 @@ const AllMovie = () => {
       genre: "",
       platform: "",
       year: "",
+      totalRating: "",
     },
   });
 
@@ -77,7 +80,7 @@ const AllMovie = () => {
             (movie.director &&
               movie.director
                 .toLowerCase()
-                .includes(filters.query.toLowerCase()))
+                .includes(filters?.query.toLowerCase()))
         );
       }
 
@@ -98,6 +101,14 @@ const AllMovie = () => {
           (movie) => String(movie.releaseYear) === filters.year
         );
       }
+
+      if (filters.totalRating) {
+        result = result.filter(
+          (movie) => String(movie.totalRating) === filters.totalRating
+        );
+      }
+
+
 
       if (filters.sortBy) {
         switch (filters.sortBy) {
@@ -135,8 +146,8 @@ const AllMovie = () => {
         {/* Movie List */}
         <div className="w-full md:w-9/12">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
-            {filteredMovies && filteredMovies.length > 0 ? (
-              filteredMovies.map((movie: TMovie) => (
+            {filteredMovies && filteredMovies?.length > 0 ? (
+              filteredMovies?.map((movie: TMovie) => (
                 <SmallMovieCardOne key={movie.id} movie={movie} />
               ))
             ) : (
@@ -255,6 +266,34 @@ const AllMovie = () => {
                   )}
                 />
 
+                {/* Rating Filter */}
+                <FormField
+                  control={form.control}
+                  name="totalRating"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Rating</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
+                          <SelectTrigger className="bg-zinc-800 text-white border border-zinc-700 w-full">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-zinc-900 text-white max-h-60 overflow-auto">
+                            {rating.map((y) => (
+                              <SelectItem key={y} value={y}>
+                                {y}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
                 {/* Year Filter */}
                 <FormField
                   control={form.control}
@@ -292,9 +331,6 @@ const AllMovie = () => {
                   >
                     Reset Filter
                   </Button>
-                  {/* <Button type="submit" variant={"custom"}>
-                    Add Filter
-                  </Button> */}
                 </div>
               </form>
             </Form>

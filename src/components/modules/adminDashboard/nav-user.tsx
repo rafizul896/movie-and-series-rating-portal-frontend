@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import {
-  ChevronsUpDown,
-  LogOut,
-} from "lucide-react";
+import { ChevronsUpDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -21,22 +18,29 @@ import {
 } from "@/components/ui/sidebar";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
+import { getSingleUser } from "@/services/user";
+import { logoutUser } from "@/services/authService";
 
-export function NavUser() {
+const NavUser = () => {
   const { isMobile } = useSidebar();
   const router = useRouter();
-  
-  // Temporary user data - replace with your actual user fetching logic
-  const user = {
-    email: "habib@gmail.com",
-    name: "Habib",
-    image: "",
-  };
+  const { user } = useUser();
 
-  const handleLogOut = () => {
+  // const userData = await getSingleUser(user?.id);
+
+  // Temporary user data - replace with your actual user fetching logic
+  // const user = {
+  //   email: "habib@gmail.com",
+  //   name: "Habib",
+  //   image: "",
+  // };
+
+  const handleLogOut = async () => {
     try {
+      await logoutUser();
       toast.success("Logout successful!");
-      router.push("/");
+      router.push("/login");
     } catch (error) {
       toast.error("Logout failed. Please try again.");
     }
@@ -47,7 +51,9 @@ export function NavUser() {
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className="w-full"> {/* Wrapper div for the trigger */}
+            <div className="w-full">
+              {" "}
+              {/* Wrapper div for the trigger */}
               <button
                 className="flex w-full items-center gap-3 rounded-md p-2 hover:bg-accent hover:text-accent-foreground"
                 aria-label="User menu"
@@ -92,7 +98,7 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogOut}>
-              <LogOut className="mr-2 h-4 w-4" />
+              <LogOut className="mr-2 h-4 w-4 cursor-pointer" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -100,4 +106,6 @@ export function NavUser() {
       </SidebarMenuItem>
     </SidebarMenu>
   );
-}
+};
+
+export default NavUser;
