@@ -24,7 +24,7 @@ const NewArrived = () => {
     }, []);
 
   return (
-    <div className="py-10 w-full px-4 md:px-10">
+    <div className="py-10 container mx-auto px-4">
       <h1 className="border-l-4 border-[#800000] pl-3 text-xl font-bold mb-5">
         New Arrived
       </h1>
