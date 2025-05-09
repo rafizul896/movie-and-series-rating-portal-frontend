@@ -1,3 +1,4 @@
+import LoadingPage from "@/app/loading";
 import { getCurrentUser } from "@/services/authService";
 import { IUser } from "@/types/user";
 import {
@@ -48,7 +49,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Only render children after initial load is complete
   if (!initialLoadComplete) {
-    return <div>Loading...</div>;
+    return <LoadingPage/>;
   }
 
   return (

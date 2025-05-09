@@ -3,7 +3,7 @@
 import Image from "next/image";
 import logo from "../../../assets/logo.png";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
@@ -66,74 +66,81 @@ const Navbar = () => {
             >
               Movies
             </Link>
-            <li className="headerLink text-white hover:text-gray-300 transition duration-200">
-              New & Popular
-            </li>
           </ul>
         </div>
 
         {/* Right section - Avatar Dropdown Menu */}
         <div className="hidden md:flex items-center space-x-4 text-sm font-light">
           {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="cursor-pointer ring-2 ring-white hover:ring-red-500 transition duration-300">
-                  <AvatarImage
-                    src={user_img?.src}
-                    alt="User Avatar"
-                    className="object-cover"
-                  />
-                  <AvatarFallback className="bg-gray-200 text-black">
-                    {user?.name?.charAt(0)?.toUpperCase() || "U"}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="bg-white text-sm text-gray-800 w-52 rounded-md shadow-xl mt-2 p-1"
+            <div className="flex justify-between items-center gap-5">
+              {/* wishlist icon */}
+              <Link
+                href="/wishlist"
+                className="headerLink hover:text-red-500/80 text-white transition duration-200"
               >
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/wishlist"
-                    className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                  >
-                    Wishlist
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/watchlist"
-                    className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                  >
-                    Watchlist
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/purchase"
-                    className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                  >
-                    Purchase
-                  </Link>
-                </DropdownMenuItem>
-                {user.role === "ADMIN" && (
+                <ShoppingCart width={30} height={30}/>
+              </Link>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="cursor-pointer ring-2 ring-white hover:ring-red-500/80 transition duration-300">
+                    <AvatarImage
+                      src={user_img?.src}
+                      alt="User Avatar"
+                      className="object-cover"
+                    />
+                    <AvatarFallback className="bg-gray-200 text-black">
+                      {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-white text-sm text-gray-800 w-52 rounded-md shadow-xl mt-2 p-1"
+                >
                   <DropdownMenuItem asChild>
                     <Link
-                      href="/admin/dashboard"
+                      href="/wishlist"
                       className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
                     >
-                      Dashboard
+                      Wishlist
                     </Link>
                   </DropdownMenuItem>
-                )}
-                <DropdownMenuItem
-                  onClick={handleLogout}
-                  className="text-red-600 hover:text-red-700 w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                >
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/watchlist"
+                      className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                    >
+                      Watchlist
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href="/purchase"
+                      className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                    >
+                      Purchase
+                    </Link>
+                  </DropdownMenuItem>
+                  {user.role === "ADMIN" && (
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/admin/dashboard"
+                        className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="text-red-600 hover:text-red-700 w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                  >
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           ) : (
             <Link href="/login">
               <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition duration-200 cursor-pointer">

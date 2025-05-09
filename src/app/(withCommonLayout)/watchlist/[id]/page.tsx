@@ -5,12 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Film, ArrowLeft, Star, Clock, Calendar } from "lucide-react";
+import {  Star, Clock, Calendar } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useUser } from "@/context/UserContext";
 import { getSingleWatchList } from "@/services/watchList";
 
-export default function WatchPage({ params }: { params: { id: string } }) {
+export default function WatchPage() {
   const { id } = useParams();
   const [movieData, setMoviesData] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +17,7 @@ export default function WatchPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchMovies = async () => {
       const res = await getSingleWatchList(id as string);
-      setMoviesData(res?.data?.movies|| {});
+      setMoviesData(res?.data?.movies || {});
       setIsLoading(false);
     };
 
@@ -45,13 +44,11 @@ export default function WatchPage({ params }: { params: { id: string } }) {
   }
   const {
     synopsis,
-    rentPrice,
     avgRating,
     buyPrice,
     title,
     thumbnail,
     director,
-    platforms,
     genres,
     type,
     streamingLink,
@@ -63,15 +60,20 @@ export default function WatchPage({ params }: { params: { id: string } }) {
     <div className="container mx-auto flex justify-center items-center">
       <main className="pt-16 ">
         {/* Video Player */}
-        <div className="w-full bg-black aspect-video relative">
+        {
+          streamingLink ? <div className="w-full bg-black aspect-video relative">
           <iframe
             className="absolute inset-0 w-full h-full"
-            src={`https://www.youtube.com/embed/nqmYnTZvcw8?si=mo6s_hoMMvAWBWt3?autoplay=1&controls=1`}
+            src={`${streamingLink}?autoplay=1&controls=1`
+            }
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
+        </div> : <div className="w-full bg-black aspect-video relative">
+          <h2>Video not found</h2>
         </div>
+        }
 
         {/* Movie Details */}
         <div className="w-full px-4 py-8">
@@ -156,10 +158,15 @@ export default function WatchPage({ params }: { params: { id: string } }) {
                       ${rentPrice?.toFixed(2)}
                     </p> */}
 
-                    <Link href={`https://www.youtube.com/embed/iu2eXrYe8Fo?si=bhSoxnmmO81yqATw`} >
-                    <Button className="w-full bg-red-600 hover:bg-red-700 mb-2">
-                      Streaming link
-                    </Button>
+                    <Link
+                      href={
+                        streamingLink ||
+                        `https://www.youtube.com/embed/iu2eXrYe8Fo?si=bhSoxnmmO81yqATw`
+                      }
+                    >
+                      <Button className="w-full bg-red-600 hover:bg-red-700 mb-2">
+                        Streaming link
+                      </Button>
                     </Link>
 
                     {/* <Button
