@@ -1,8 +1,8 @@
-import { Clock, Delete, DeleteIcon, Play, Star, Trash2 } from "lucide-react";
+import {  Play, Star } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 
 interface WatchListCardProps {

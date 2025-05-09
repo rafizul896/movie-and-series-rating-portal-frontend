@@ -5,12 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Film, ArrowLeft, Star, Clock, Calendar } from "lucide-react";
+import {  Star, Clock, Calendar } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useUser } from "@/context/UserContext";
 import { getSingleWatchList } from "@/services/watchList";
 
-export default function WatchPage({ params }: { params: { id: string } }) {
+export default function WatchPage() {
   const { id } = useParams();
   const [movieData, setMoviesData] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -45,13 +44,11 @@ export default function WatchPage({ params }: { params: { id: string } }) {
   }
   const {
     synopsis,
-    rentPrice,
     avgRating,
     buyPrice,
     title,
     thumbnail,
     director,
-    platforms,
     genres,
     type,
     streamingLink,

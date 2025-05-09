@@ -1,4 +1,5 @@
 import UpdateMovieForm from "@/components/modules/adminDashboard/Movie/UpdateMovie";
+import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
 
 export const metadata = {
@@ -11,8 +12,9 @@ const UpdateMovie = async ({
 }: {
   params: Promise<{ movieId: string }>;
 }) => {
+  const { user } = useUser();
   const { movieId } = await params;
-  const { data } = await getSingleMovie(movieId);
+  const { data } = await getSingleMovie(movieId, user?.id as string || '');
   const movieData = data.data;
 
   return (
