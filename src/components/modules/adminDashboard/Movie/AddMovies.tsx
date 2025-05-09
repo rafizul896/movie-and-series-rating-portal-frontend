@@ -112,6 +112,7 @@ export function AddMediaDialog() {
       buyPrice: Number(data.buyPrice),
       rentPrice: Number(data.rentPrice),
       releaseYear: Number(data.releaseYear),
+      discountPrice: Number(data.discountPrice),
     };
 
     const formData = new FormData();
@@ -120,6 +121,7 @@ export function AddMediaDialog() {
 
     try {
       const res = await addMovie(formData);
+      console.log(res);
       if (res.success) {
         toast.success(res.message || "Media added successfully");
         setIsOpen(false);
@@ -289,6 +291,25 @@ export function AddMediaDialog() {
                 </p>
               )}
             </div>
+
+            <div>
+              <Label className="mb-2">Discount Price</Label>
+              <Input
+                id="discountPrice"
+                type="number"
+                min={0}
+                className="bg-white dark:bg-zinc-800"
+                {...register("discountPrice", {
+                  required: "Rent price is required",
+                })}
+              />
+              {errors.discountPrice && (
+                <p className="text-red-500 text-sm">
+                  {errors.discountPrice.message}
+                </p>
+              )}
+            </div>
+
             {/* Media Type */}
             <div>
               <Label className="mb-2">Media Type</Label>

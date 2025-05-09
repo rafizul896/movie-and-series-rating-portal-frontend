@@ -1,6 +1,14 @@
 "use client";
 
-import { Calendar, Film, Home, Inbox, Settings, Users,ShoppingBag} from "lucide-react";
+import {
+  Calendar,
+  Film,
+  Home,
+  Inbox,
+  Settings,
+  Users,
+  ShoppingBag,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -16,15 +24,19 @@ import {
 } from "@/components/ui/sidebar";
 
 import Link from "next/link";
-import { NavUser } from "./nav-user";
-
+import NavUser from "./nav-user";
+// import { NavUser } from "./nav-user";
 
 const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
   { title: "Media Management", url: "/admin/movie", icon: Film },
   { title: "Users Management", url: "/admin/users", icon: Users },
   { title: "Review Management", url: "/admin/reviews", icon: Inbox },
-  { title: "Order History Management", url: "/admin/order-history", icon: ShoppingBag },
+  {
+    title: "Order History Management",
+    url: "/admin/order-history",
+    icon: ShoppingBag,
+  },
   {
     title: "Published Content",
     url: "/admin/content/published",
@@ -38,17 +50,19 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="w-56 bg-[#1a1a2e] text-gray-300 shadow-lg min-h-screen" collapsible="icon">
-
+    <Sidebar
+      className="w-56 bg-[#1a1a2e] text-gray-300 shadow-lg min-h-screen"
+      collapsible="icon"
+    >
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className=" tracking-wide px-3 pb-6 pt-4 ">
-          <div className="px-4 py-5 border-b border-[#2a2a3b]">
-        <Link href="/" className="flex items-center gap-2">
-          <Film className="text-blue-500" size={24} />
-          <span className="text-xl font-bold  text-white">FilmNest</span>
-        </Link>
-      </div> 
+            <div className="px-4 py-5 border-b border-[#2a2a3b]">
+              <Link href="/" className="flex items-center gap-2">
+                <Film className="text-blue-500" size={24} />
+                <span className="text-xl font-bold  text-white">FilmNest</span>
+              </Link>
+            </div>
           </SidebarGroupLabel>
 
           <SidebarGroupContent>

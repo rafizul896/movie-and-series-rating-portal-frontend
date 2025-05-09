@@ -12,7 +12,8 @@ const UpdateMovie = async ({
   params: Promise<{ movieId: string }>;
 }) => {
   const { movieId } = await params;
-  const { data } = await getSingleMovie(movieId);
+  //! there are some issues here to get movie data....................
+  const { data } = await getSingleMovie(movieId as string);
   const movieData = data.data;
 
   return (

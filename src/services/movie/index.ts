@@ -20,7 +20,6 @@ export const getAllMovies = async () => {
 
 export const getSingleMovie = async (movieId: string, userId: string) => {
   const bodyData = { userId };
-
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/movie/${movieId}`,
