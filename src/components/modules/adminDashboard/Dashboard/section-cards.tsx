@@ -2,7 +2,16 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-export function SectionCards({ data }: { data: any }) {
+export function SectionCards({
+  data,
+}: {
+  data: {
+    totalRevenue: number;
+    totalPurchases: number;
+    rentalCount: number;
+    buyCount: number;
+  };
+}) {
   const { totalRevenue, totalPurchases, rentalCount, buyCount } = data;
 
   return (
