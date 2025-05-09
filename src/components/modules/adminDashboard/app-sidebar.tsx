@@ -25,6 +25,7 @@ import {
 
 import Link from "next/link";
 import NavUser from "./nav-user";
+import Logo from "../shared/logo";
 // import { NavUser } from "./nav-user";
 
 const items = [
@@ -58,9 +59,8 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel className=" tracking-wide px-3 pb-6 pt-4 ">
             <div className="px-4 py-5 border-b border-[#2a2a3b]">
-              <Link href="/" className="flex items-center gap-2">
-                <Film className="text-blue-500" size={24} />
-                <span className="text-xl font-bold  text-white">FilmNest</span>
+              <Link href="/">
+                <Logo />
               </Link>
             </div>
           </SidebarGroupLabel>
