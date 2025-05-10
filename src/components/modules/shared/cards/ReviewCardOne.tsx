@@ -93,7 +93,7 @@ const ReviewCardOne = ({
   };
 
   return (
-    <div className="bg-gray-700/50 p-4 rounded-lg">
+    <div className="bg-gray-700/50 p-4 rounded-lg mb-4">
       <div className="flex justify-between">
         <div className="flex gap-4">
           <img

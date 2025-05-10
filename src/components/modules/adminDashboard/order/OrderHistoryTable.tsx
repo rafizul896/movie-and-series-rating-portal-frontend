@@ -24,13 +24,13 @@ import {
 import { deleteOrderHistory } from "@/services/purchase";
 import { IOrderHistory } from "@/types/purchase.type";
 
-const OrderHistoryTable = ({ orderData }: any) => {
+const OrderHistoryTable = ({ orderData,onFetch }: any) => {
   const handleDelete = async (id: string) => {
     try {
       const res = await deleteOrderHistory(id);
       if (res.success) {
         toast.success(res.message || "Order history deleted successfully");
-        // router.refresh()
+        onFetch()
       } else {
         toast.error(res.message || "Could not delete order history");
       }

@@ -5,6 +5,7 @@ export const getPurchaseAnalytics = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/purchase/purchase-analytics`,
       {
+        method: "GET",
         next: {
           tags: ["purchase-analytics"],
         },
@@ -17,6 +18,7 @@ export const getPurchaseAnalytics = async () => {
     return Error(error.message);
   }
 };
+
 
 export const getMovieWiseSales = async (query: {
   searchTerm?: string;
@@ -39,12 +41,12 @@ export const getMovieWiseSales = async (query: {
     url.searchParams.append("pageSize", String(query.pageSize || 10));
 
     const res = await fetch(url.toString(), {
+      method: "GET",
       next: { tags: ["GetMovieWiseSales"] },
     });
 
     const data = await res.json();
     return data;
   } catch (err: any) {
-    return { error: err.message };
-  }
+    return { error: err.message}}
 };

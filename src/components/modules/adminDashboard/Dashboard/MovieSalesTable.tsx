@@ -19,29 +19,29 @@ import { useCallback } from "react";
 
 const MovieSalesTable = () => {
   const [salesData, setSalesData] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  // const [startDate, setStartDate] = useState("");
+  // const [endDate, setEndDate] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
 
-  const handleDateChange = ({
-    startDate,
-    endDate,
-  }: {
-    startDate: string;
-    endDate: string;
-  }) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
-  };
+  // const handleDateChange = ({
+  //   startDate,
+  //   endDate,
+  // }: {
+  //   startDate: string;
+  //   endDate: string;
+  // }) => {
+  //   setStartDate(startDate);
+  //   setEndDate(endDate);
+  // };
 
   const fetchData = useCallback(async () => {
     const res = await getMovieWiseSales({
       searchTerm,
-      startDate: startDate,
-      endDate: endDate,
+      // startDate: startDate,
+      // endDate: endDate,
       page,
       pageSize: limit,
     });
@@ -50,7 +50,7 @@ const MovieSalesTable = () => {
       setSalesData(res.data);
       setTotalPages(res.meta.totalPage);
     }
-  }, [searchTerm, startDate, endDate, page, limit]);
+  }, [searchTerm,  page, limit]);
 
   useEffect(() => {
     fetchData();
@@ -69,7 +69,7 @@ const MovieSalesTable = () => {
           />
         </div>
         <div className="col-span-1">
-          <DatePickerWithRange onDateChange={handleDateChange} />
+          {/* <DatePickerWithRange onDateChange={handleDateChange} /> */}
         </div>
       </div>
       <CardContent className="px-4">

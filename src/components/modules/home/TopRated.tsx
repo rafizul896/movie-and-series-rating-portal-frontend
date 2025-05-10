@@ -24,7 +24,7 @@ const TopRated =  () => {
     return (
     <div className="py-10 container mx-auto px-4">
       <h1 className="border-l-4 border-[#800000] pl-3 text-xl font-bold mb-5">
-        Top Rated or Trending
+        Top Rated
       </h1>
       <Carousel
         plugins={[

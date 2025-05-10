@@ -25,6 +25,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 const AllMedia = ({ mediaData }: any) => {
   const router = useRouter();
@@ -91,9 +92,7 @@ const AllMedia = ({ mediaData }: any) => {
                     />
                   </TableCell>
 
-                  <TableCell className="px-4 py-3 ">
-                    {listing.title}
-                  </TableCell>
+                  <TableCell className="px-4 py-3 ">{listing.title}</TableCell>
 
                   {/* Price Column */}
                   <TableCell className="px-4 py-3 font-semibold text-green-600">
@@ -106,17 +105,32 @@ const AllMedia = ({ mediaData }: any) => {
                   </TableCell>
 
                   <TableCell className="px-4 py-3 ">
-                    <span >
-                      {listing.discountPrice ? listing.discountPrice : "Free"}
+                    <span>
+                      {listing.discountPrice ? listing.discountPrice : "0"}
                     </span>
                   </TableCell>
 
                   <TableCell className="px-4 py-3">
-                    <span >{listing.likesCount}</span>
+                    <span>{listing.likesCount}</span>
                   </TableCell>
 
                   <TableCell className="px-4 py-3">
-                    <span >{listing.streamingLink}</span>
+                    {/* <span >{listing.streamingLink}</span> */}
+                    <Link
+                      href={
+                        listing.streamingLink ||
+                        `https://www.youtube.com/embed/iu2eXrYe8Fo?si=bhSoxnmmO81yqATw`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button
+                        variant={"customOutlined"}
+                        className="cursor-pointer w-full  mb-2"
+                      >
+                        Streaming link
+                      </Button>
+                    </Link>
                   </TableCell>
 
                   {/* Actions Column */}
