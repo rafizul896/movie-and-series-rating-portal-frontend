@@ -1,11 +1,9 @@
 "use client";
 
 import {
-  Calendar,
   Film,
   Home,
   Inbox,
-  Settings,
   Users,
   ShoppingBag,
 } from "lucide-react";
