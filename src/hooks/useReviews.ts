@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { getAllReviews } from "@/services/reviewService";
 import { TMeta, TReview } from "@/types/review.type";
 import { useCallback, useEffect, useState } from "react";

@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import logo from "../../assets/logo.png";
+
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import "../../style/login.css";
@@ -10,6 +9,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
+import Logo from "@/components/modules/shared/logo";
 
 const Login = () => {
   const [signState, setSignState] = useState("Sign In");
@@ -58,13 +58,9 @@ const Login = () => {
 
   return (
     <div className="login">
-      <Image
-        src={logo}
-        alt="login"
-        width={100}
-        height={10}
-        className="login-logo"
-      />
+      <Link href="/">
+        <Logo />
+      </Link>
 
       <div className="login-form">
         <h1>{signState}</h1>

@@ -148,6 +148,7 @@ const UpdateMovieForm = ({ movieData }: { movieData: MovieFormData }) => {
       buyPrice: Number(data.buyPrice),
       rentPrice: Number(data.rentPrice),
       releaseYear: Number(data.releaseYear),
+      discountPrice: Number(data.discountPrice),
     };
 
     const formData = new FormData();

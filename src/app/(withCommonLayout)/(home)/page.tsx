@@ -1,15 +1,15 @@
 import Banner from "@/components/modules/home/Banner";
 import EditorsPick from "@/components/modules/home/EditorsPick";
-import Movies from "@/components/modules/home/Movies";
+import FeaturedMovie from "@/components/modules/home/FeaturedMovie";
 import NewArrived from "@/components/modules/home/NewArrived";
 import TopRated from "@/components/modules/home/TopRated";
 
-const HomePage = () => {
+const HomePage = async () => {
   return (
     <div>
       <Banner />
       <NewArrived />
-      <Movies />
+      <FeaturedMovie />
       <TopRated />
       <EditorsPick />
     </div>

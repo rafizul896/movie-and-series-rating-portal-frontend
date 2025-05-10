@@ -81,9 +81,9 @@ const AddReviewModal = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <Button variant="custom">Write a review</Button>
+    <Dialog  open={open} onOpenChange={setOpen}>
+      <DialogTrigger disabled={!user?.email} >
+        <Button disabled={!user?.email} variant="custom" >Write a review</Button>
       </DialogTrigger>
       <DialogContent className="text-black">
         <DialogHeader>

@@ -26,7 +26,7 @@ export enum UserStatus {
 export interface IUserType {
   id: string;
   name: string;
-  profileImage?: string | null;
+  profileImage?: string ;
   email: string;
   password: string;
   role: UserRole;

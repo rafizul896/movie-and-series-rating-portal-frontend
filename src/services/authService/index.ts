@@ -54,7 +54,7 @@ export const loginUser = async (userData: FieldValues) => {
 };
 
 export const refreshToken = async () => {
-  console.log("🔄 Calling refreshToken...");
+  // console.log("🔄 Calling refreshToken...");
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,

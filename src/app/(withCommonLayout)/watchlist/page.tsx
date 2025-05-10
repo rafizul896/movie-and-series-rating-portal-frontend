@@ -1,9 +1,11 @@
 import WatchListPage from "@/components/modules/watchList/WatchList";
-import { Button } from "@/components/ui/button";
-import { Clock, Link } from "lucide-react";
+import { getAllWatchList } from "@/services/watchList";
+import { Clock } from "lucide-react";
 import React from "react";
 
-const WatchListLayout = () => {
+const WatchListLayout = async() => {
+  const data = await getAllWatchList();
+  const watchListData = data?.data;
   return (
     <div className="  text-white">
       <main className="container mx-auto px-4 py-20">
@@ -13,7 +15,7 @@ const WatchListLayout = () => {
         </div>
 
          <div className="flex items-center justify-center ">
-         <WatchListPage />
+         <WatchListPage watchListData={watchListData}/>
          </div>
 
       </main>

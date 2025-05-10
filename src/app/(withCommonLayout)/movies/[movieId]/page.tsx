@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 "use client";
 import LoadingPage from "@/app/loading";
 import AddReviewModal from "@/components/modules/movie/AddReviewModal";
@@ -7,9 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
 import { addToWishlist } from "@/services/wishlist";
-import { getReviewsByMovieId } from "@/services/reviewService";
 import { TMovie } from "@/types/movie.type";
-import { TReviewByMovieId } from "@/types/review.type";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,30 +18,45 @@ import { toast } from "sonner";
 
 const MovieDetailsPage = () => {
   const { user } = useUser();
-  const [loading, setLoading] = useState(false);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [meta, setMeta] = useState("");
   const [moviesData, setMoviesData] = useState<TMovie>();
-  const [reviews, setReviews] = useState<TReviewByMovieId[]>([]);
+
+  const [loading, setLoading] = useState(false);
+  // const [reviews, setReviews] = useState<TReviewByMovieId[]>([]);
 
   const param = useParams();
 
   const fetchMovies = async () => {
-    const res = await getSingleMovie(param?.movieId as string, user?.id || "");
-    setMoviesData(res?.data?.data || []);
-  };
-
-  const fetchReviews = async () => {
-    setLoading(true);
     try {
-      const res = await getReviewsByMovieId(param?.movieId as string);
-      setReviews(res?.data || []);
-    } finally {
-      setLoading(false);
+      const res = await getSingleMovie(
+        param?.movieId as string,
+        user?.id || ""
+      );
+      setMoviesData(res?.data?.data || []);
+      setMeta(res?.data?.meta);
+    } catch (error) {
+      console.log(error);
     }
   };
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    setLoading(true);
     fetchMovies();
+    setLoading(false);
   }, [param?.movieId]);
+
+  // const fetchReviews = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await getReviewsByMovieId(param?.movieId as string);
+  //     setReviews(res?.data || []);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  // console.log(moviesData);
 
   const handleAddToWishlist = async (movieId: string) => {
     if (!user) {
@@ -56,13 +70,10 @@ const MovieDetailsPage = () => {
           movieId: movieId,
           userId: user?.id,
         };
-
-        console.log(data);
-
         const result = await addToWishlist(data);
 
         if (result.success) {
-          toast.success(result?.message || "Successfully added to watchlist");
+          toast.success(result?.message || "Successfully added to wishlist");
         } else {
           toast.error(result?.message || "Something went wrong!");
         }
@@ -73,16 +84,25 @@ const MovieDetailsPage = () => {
       }
     });
   };
-  useEffect(() => {
-    fetchReviews();
-  }, [moviesData?.reviews]);
 
+  // useEffect(() => {
+  //   fetchReviews();
+  // }, [moviesData?.reviews]);
+
+  const reviews = moviesData?.reviews;
+  // console.log("movies data", moviesData);
+  // console.log("reviews data", reviews2);
+  // console.log("meta data", meta);
+
+  if (loading) {
+    return <LoadingPage />;
+  }
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex gap-2 flex-col md:flex-row">
         <div className="md:w-3/12">
           <div className="w-10/12 mx-auto">
-            <div className="relative w-52 h-80 mx-auto">
+            <div className="relative my-5 w-52 h-80 mx-auto">
               <Image
                 src={
                   moviesData?.thumbnail ||
@@ -94,10 +114,10 @@ const MovieDetailsPage = () => {
               />
             </div>
             <div className="flex flex-col gap-3">
-              <Button variant={"custom"}>Buy or Rent</Button>
+              {/* <Button variant={"custom"}>Buy or Rent</Button> */}
               <Button
                 onClick={() => handleAddToWishlist(moviesData?.id as string)}
-                variant={"customOutlined"}
+                variant={"custom"}
               >
                 Add to wishlist
               </Button>
@@ -191,7 +211,7 @@ const MovieDetailsPage = () => {
               />
             </div>
             <Separator className="mb-3" />
-            {loading ? (
+            {/* {loading ? (
               <LoadingPage />
             ) : (
               reviews &&
@@ -203,7 +223,16 @@ const MovieDetailsPage = () => {
                   onReviewChange={fetchMovies}
                 />
               ))
-            )}
+            )} */}
+            {reviews &&
+              reviews?.map((review: any) => (
+                <ReviewCardOne
+                  key={review.id}
+                  review={review}
+                  movieId={review.movieId}
+                  onReviewChange={fetchMovies}
+                />
+              ))}
           </div>
         </div>
       </div>
