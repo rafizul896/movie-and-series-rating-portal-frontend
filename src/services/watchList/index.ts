@@ -31,7 +31,27 @@ export const getAllWatchList = async () => {
       },
     });
     const result = await res.json();
+    console.log(455,result)
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
 
+export const getSingleWatchList = async (watchMovieId: string) => {
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/watchlist/${watchMovieId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        }
+      }
+    );
+    const result = await res.json();
     return result;
   } catch (error: any) {
     return Error(error.message);

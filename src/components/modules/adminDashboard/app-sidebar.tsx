@@ -1,6 +1,12 @@
 "use client";
 
-import { Calendar, Film, Home, Inbox, Settings, Users } from "lucide-react";
+import {
+  Film,
+  Home,
+  Inbox,
+  Users,
+  ShoppingBag,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -15,8 +21,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-import { NavUser } from "./nav-user";
 import Link from "next/link";
+import NavUser from "./nav-user";
+import Logo from "../shared/logo";
+// import { NavUser } from "./nav-user";
 
 const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
@@ -24,31 +32,28 @@ const items = [
   { title: "Users Management", url: "/admin/users", icon: Users },
   { title: "Review Management", url: "/admin/reviews", icon: Inbox },
   {
-    title: "Published Content",
-    url: "/admin/content/published",
-    icon: Calendar,
+    title: "Order History Management",
+    url: "/admin/order-history",
+    icon: ShoppingBag,
   },
-
-  { title: "Analytics", url: "/admin/analytics/stats", icon: Settings },
 ];
 
 export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="w-56 bg-[#1a1a2e] text-gray-300 shadow-lg min-h-screen" collapsible="icon">
-      {/* Logo / Brand */}
-      <div className="px-4 py-5 border-b border-[#2a2a3b]">
-        <Link href="/" className="flex items-center gap-2">
-          <Film className="text-blue-500" size={24} />
-          <span className="text-xl font-bold text-white">FilmNest</span>
-        </Link>
-      </div>
-
+    <Sidebar
+      className="w-56 bg-[#1a1a2e] text-gray-300 shadow-lg min-h-screen"
+      collapsible="icon"
+    >
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="font-semibold text-xs text-gray-400 tracking-wide px-3 pt-4 pb-2">
-            ADMIN DASHBOARD
+          <SidebarGroupLabel className="mb-5 tracking-wide px-3 pb-6 pt-4 ">
+            <div className="px-4 py-5 border-b border-[#2a2a3b]">
+              <Link href="/">
+                <Logo />
+              </Link>
+            </div>
           </SidebarGroupLabel>
 
           <SidebarGroupContent>
@@ -64,8 +69,8 @@ export function AppSidebar() {
                         className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors
                           ${
                             isActive
-                              ? "bg-blue-600 text-white"
-                              : "hover:bg-[#2a2a3b] text-gray-300"
+                              ? "bg-red-600 text-white"
+                              : "hover:bg-red-200 text-gray-300"
                           }
                         `}
                       >
@@ -82,7 +87,6 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-[#2a2a3b] mt-4 pt-3 px-3">
-        <Link href={"/"}>Home</Link>
         <NavUser />
       </SidebarFooter>
     </Sidebar>

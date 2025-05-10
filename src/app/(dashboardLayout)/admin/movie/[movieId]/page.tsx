@@ -1,5 +1,6 @@
 import UpdateMovieForm from "@/components/modules/adminDashboard/Movie/UpdateMovie";
-import { getSingleMovie } from "@/services/movie";
+
+import { getSingleMovieDetails } from "@/services/movie";
 
 export const metadata = {
   title: "FlimNest | Media-Update",
@@ -11,8 +12,9 @@ const UpdateMovie = async ({
 }: {
   params: Promise<{ movieId: string }>;
 }) => {
+  // const { user } = useUser();
   const { movieId } = await params;
-  const { data } = await getSingleMovie(movieId);
+  const { data } = await getSingleMovieDetails(movieId);
   const movieData = data.data;
 
   return (

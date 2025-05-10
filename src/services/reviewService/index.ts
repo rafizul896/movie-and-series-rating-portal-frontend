@@ -69,6 +69,7 @@ export const toggleApproveReview = async (reviewId: string) => {
 
 export const deleteReview = async (reviewId: string) => {
   try {
+    console.log(reviewId)
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/reviews/${reviewId}`,
       {

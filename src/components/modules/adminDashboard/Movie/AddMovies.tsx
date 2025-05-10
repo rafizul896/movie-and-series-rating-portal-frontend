@@ -38,7 +38,7 @@ type MovieFormData = {
   type: MediaType;
   releaseYear: number;
   director: string;
-  cast: string[];
+  cast: string;
   platforms: string[];
   buyPrice: number;
   rentPrice: number;
@@ -104,14 +104,16 @@ export function AddMediaDialog() {
     data.platforms = platforms;
     data.type = mediaType;
     data.isTrending = isTrending;
-    data.cast = data.cast.split(",").map((c: string) => c.trim());
+    const castArray = data.cast.split(",").map((c) => c.trim());
 
     // Convert number fields from string to number
     const parsedData = {
       ...data,
+      cast: castArray,
       buyPrice: Number(data.buyPrice),
       rentPrice: Number(data.rentPrice),
       releaseYear: Number(data.releaseYear),
+      discountPrice: Number(data.discountPrice),
     };
 
     const formData = new FormData();
@@ -120,6 +122,7 @@ export function AddMediaDialog() {
 
     try {
       const res = await addMovie(formData);
+      console.log(res);
       if (res.success) {
         toast.success(res.message || "Media added successfully");
         setIsOpen(false);
@@ -148,7 +151,9 @@ export function AddMediaDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer ">Add Movie/Series</Button>
+        <div className="flex justify-end mr-8">
+          <Button variant={"custom"}>Add Movie/Series</Button>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto bg-white dark:bg-zinc-900 text-black dark:text-white">
         <DialogHeader>
@@ -289,6 +294,25 @@ export function AddMediaDialog() {
                 </p>
               )}
             </div>
+
+            <div>
+              <Label className="mb-2">Discount Price</Label>
+              <Input
+                id="discountPrice"
+                type="number"
+                min={0}
+                className="bg-white dark:bg-zinc-800"
+                {...register("discountPrice", {
+                  required: "Rent price is required",
+                })}
+              />
+              {errors.discountPrice && (
+                <p className="text-red-500 text-sm">
+                  {errors.discountPrice.message}
+                </p>
+              )}
+            </div>
+
             {/* Media Type */}
             <div>
               <Label className="mb-2">Media Type</Label>
