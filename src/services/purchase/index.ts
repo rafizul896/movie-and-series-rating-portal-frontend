@@ -1,5 +1,5 @@
-"use server";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use server";
 import { revalidateTag } from 'next/cache';
 import { PurchaseData } from "@/types/purchase.type";
 import { cookies } from "next/headers";

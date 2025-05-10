@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 "use client";
 import LoadingPage from "@/app/loading";
 import AddReviewModal from "@/components/modules/movie/AddReviewModal";
@@ -7,9 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
 import { addToWishlist } from "@/services/wishlist";
-import { getReviewsByMovieId } from "@/services/reviewService";
 import { TMovie } from "@/types/movie.type";
-import { TReviewByMovieId } from "@/types/review.type";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,11 +19,12 @@ import { toast } from "sonner";
 const MovieDetailsPage = () => {
   const { user } = useUser();
   
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [meta, setMeta] = useState("");
   const [moviesData, setMoviesData] = useState<TMovie>();
   
   const [loading, setLoading] = useState(false);
-  const [reviews, setReviews] = useState<TReviewByMovieId[]>([]);
+  // const [reviews, setReviews] = useState<TReviewByMovieId[]>([]);
 
   const param = useParams();
 
@@ -42,7 +42,7 @@ const MovieDetailsPage = () => {
       console.log(error)
     }
   };
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setLoading(true);
     fetchMovies();
@@ -91,10 +91,10 @@ const MovieDetailsPage = () => {
   //   fetchReviews();
   // }, [moviesData?.reviews]);
 
-  const reviews2 = moviesData?.reviews;
-  console.log("movies data", moviesData);
-  console.log("reviews data", reviews2);
-  console.log("meta data", meta);
+  const reviews = moviesData?.reviews;
+  // console.log("movies data", moviesData);
+  // console.log("reviews data", reviews2);
+  // console.log("meta data", meta);
 
   if (loading) {
     return <LoadingPage />;
@@ -226,8 +226,8 @@ const MovieDetailsPage = () => {
                 />
               ))
             )} */}
-            {reviews2 &&
-              reviews2?.map((review: any) => (
+            {reviews &&
+              reviews?.map((review: any) => (
                 <ReviewCardOne
                   key={review.id}
                   review={review}
