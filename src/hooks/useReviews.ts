@@ -21,6 +21,10 @@ const useGetAllReviews = (params: ReviewQueryParams = {}) => {
   });
   const [loading, setLoading] = useState(true);
 
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   const fetchReviews = useCallback(async () => {
     setLoading(true);
     try {
@@ -29,6 +33,10 @@ const useGetAllReviews = (params: ReviewQueryParams = {}) => {
         data: response?.data?.data || [],
         meta: response?.meta || {},
       });
+
+      const meta = response?.data?.meta;
+      setTotalPages(Math.ceil(meta?.total / meta?.limit));
+
     } catch (err) {
       console.error("Failed to fetch reviews", err);
     } finally {
@@ -40,7 +48,7 @@ const useGetAllReviews = (params: ReviewQueryParams = {}) => {
     fetchReviews();
   }, [fetchReviews]);
 
-  return { allReviews, loading, refetch: fetchReviews };
+  return { allReviews, loading, refetch: fetchReviews , currentPage, totalPages, setCurrentPage};
 };
 
 export default useGetAllReviews;

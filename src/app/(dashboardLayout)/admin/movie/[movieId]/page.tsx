@@ -15,7 +15,7 @@ const UpdateMovie = async ({
   // const { user } = useUser();
   const { movieId } = await params;
   const { data } = await getSingleMovieDetails(movieId);
-  const movieData = data.data;
+  const movieData = data?.data;
 
   return (
     <div>

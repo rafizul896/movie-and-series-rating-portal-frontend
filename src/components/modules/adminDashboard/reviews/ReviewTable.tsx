@@ -64,7 +64,15 @@ const ReviewTable = ({
               <TableCell>{review.movie.title}</TableCell>
               <TableCell>{review.content}</TableCell>
               <TableCell>
+                <span
+                      className={`px-2 py-1 rounded text-xs font-medium ${
+                        review?.approved 
+                          ? "bg-green-700/20 text-green-400"
+                          : "bg-red-700/20 text-red-400"
+                      }`}
+                    >
                 {review.approved ? "Approved" : "Not Approved"}
+                    </span>
               </TableCell>
               <TableCell>
                 <button

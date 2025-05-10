@@ -1,6 +1,7 @@
 "use client";
 import LoadingPage from "@/app/loading";
 import ReviewTable from "@/components/modules/adminDashboard/reviews/ReviewTable";
+import CommonPagination from "@/components/shared/CommonPagination";
 import {
   Select,
   SelectContent,
@@ -13,7 +14,7 @@ import { useState } from "react";
 
 const ReviewManagementPage = () => {
   const [filter, setFilter] = useState("");
-  const { allReviews, loading, refetch } = useGetAllReviews({
+  const { allReviews, refetch,currentPage, totalPages, setCurrentPage } = useGetAllReviews({
     filterReview: filter,
   });
 
@@ -21,7 +22,6 @@ const ReviewManagementPage = () => {
     setFilter(value == "none" ? "" : value);
   };
 
-  console.log(allReviews?.data);
   return (
     <div>
       <div className="flex justify-between my-5">
@@ -39,13 +39,17 @@ const ReviewManagementPage = () => {
           </Select>
         </div>
       </div>
-      {loading ? (
-        <LoadingPage />
-      ) : allReviews?.data.length ? (
+      
+      {
+        allReviews?.data.length ? <>
         <ReviewTable tableData={allReviews?.data} onRefetch={refetch} />
-      ) : (
-        <p className="text-center">No Data found</p>
-      )}
+         <CommonPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
+        </> : <p className="text-center">No Data found</p>
+      }
     </div>
   );
 };

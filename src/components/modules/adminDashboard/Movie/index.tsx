@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
-import { deletedMovie } from "@/services/movie";
+import { deletedMovie,  getMovies } from "@/services/movie";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
@@ -26,16 +26,38 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import CommonPagination from "@/components/shared/CommonPagination";
 
-const AllMedia = ({ mediaData }: any) => {
-  const router = useRouter();
+const AllMedia = () => {
+  const [mediaData, setMediaData] = useState([]);
+
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+
+  const fetchData = async () => {
+    const result = await getMovies({
+      page: currentPage,
+      limit: 5
+    });
+    const meta = result?.data?.meta;
+    setTotalPages(Math.ceil(meta?.total / meta?.limit));
+    setMediaData(result?.data?.data || []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [currentPage,totalPages,currentPage]);
+
 
   const handleDelete = async (id: string) => {
     try {
       const res = await deletedMovie(id);
       if (res.success) {
         toast.success(res.message || "Media deleted successfully");
-        router.push("/admin/movie");
+        fetchData()
       } else {
         toast.error(res.message || "Could not delete media");
       }
@@ -74,7 +96,7 @@ const AllMedia = ({ mediaData }: any) => {
 
           {/* Table Body */}
           <TableBody>
-            {mediaData && mediaData.length > 0 ? (
+            {mediaData && mediaData?.length > 0 ? (
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               mediaData?.map((listing: any, index: number) => (
                 <TableRow
@@ -187,6 +209,12 @@ const AllMedia = ({ mediaData }: any) => {
             )}
           </TableBody>
         </Table>
+
+        <CommonPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
       </div>
     </div>
   );
