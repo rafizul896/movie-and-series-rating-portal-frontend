@@ -25,14 +25,14 @@ const ManageOrderHistory = () => {
     setPurchaseType(value === "none" ? "" : value);
   };
 
+  const fetchData = async () => {
+    const result = await getAllOrderHistory({
+      paymentStatus: paymentStatus,
+      purchase_type: purchaseType,
+    });
+    setOrderData(result?.data?.data || []);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await getAllOrderHistory({
-        paymentStatus: paymentStatus,
-        purchase_type: purchaseType,
-      });
-      setOrderData(result?.data?.data || []);
-    };
     fetchData();
   }, [paymentStatus, purchaseType]);
 
@@ -66,7 +66,7 @@ const ManageOrderHistory = () => {
 
        </div>
 
-      <OrderHistoryTable orderData={orderData} />
+      <OrderHistoryTable orderData={orderData} onFetch={fetchData}/>
     </div>
   );
 };

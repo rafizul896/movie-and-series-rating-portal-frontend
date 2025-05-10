@@ -42,7 +42,7 @@ type MovieFormData = {
   platforms: string[];
   buyPrice: number;
   rentPrice: number;
-  discountPrice: number;
+  discountPercentage: number; 
   thumbnail: File | null;
   streamingLink: string;
   isTrending: boolean;
@@ -113,7 +113,7 @@ export function AddMediaDialog() {
       buyPrice: Number(data.buyPrice),
       rentPrice: Number(data.rentPrice),
       releaseYear: Number(data.releaseYear),
-      discountPrice: Number(data.discountPrice),
+      discountPercentage: Number(data.discountPercentage),
     };
 
     const formData = new FormData();
@@ -296,19 +296,19 @@ export function AddMediaDialog() {
             </div>
 
             <div>
-              <Label className="mb-2">Discount Price</Label>
+              <Label className="mb-2">Discount Percentage %</Label>
               <Input
-                id="discountPrice"
+                id="discountPercentage"
                 type="number"
                 min={0}
                 className="bg-white dark:bg-zinc-800"
-                {...register("discountPrice", {
-                  required: "Rent price is required",
+                {...register("discountPercentage", {
+                  required: "DiscountPercentage  is required",
                 })}
               />
-              {errors.discountPrice && (
+              {errors.discountPercentage && (
                 <p className="text-red-500 text-sm">
-                  {errors.discountPrice.message}
+                  {errors.discountPercentage.message}
                 </p>
               )}
             </div>
