@@ -13,7 +13,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { deletedMovie,  getMovies } from "@/services/movie";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,

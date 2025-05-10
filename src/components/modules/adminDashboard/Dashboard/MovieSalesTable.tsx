@@ -11,8 +11,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { DatePickerWithRange } from "@/components/ui/DateRangePicker";
-import CustomPagination from "@/components/shared/Pagination";
 import { getMovieWiseSales } from "@/services/dashboardHome";
 import { IMovie } from "@/types/dashboardHome.type";
 import { useCallback } from "react";
@@ -22,7 +20,6 @@ const MovieSalesTable = () => {
   const [salesData, setSalesData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
   
   // const [startDate, setStartDate] = useState("");
@@ -42,14 +39,14 @@ const MovieSalesTable = () => {
     const res = await getMovieWiseSales({
       searchTerm,
       page,
-      pageSize: limit,
+      pageSize: 5,
     });
 
     if (res?.data) {
       setSalesData(res.data);
       setTotalPages(res.meta.totalPage);
     }
-  }, [searchTerm,  page, limit]);
+  }, [searchTerm,  page]);
 
   useEffect(() => {
     fetchData();

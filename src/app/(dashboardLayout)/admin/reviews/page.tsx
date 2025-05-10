@@ -1,5 +1,4 @@
 "use client";
-import LoadingPage from "@/app/loading";
 import ReviewTable from "@/components/modules/adminDashboard/reviews/ReviewTable";
 import CommonPagination from "@/components/shared/CommonPagination";
 import {

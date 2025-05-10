@@ -17,7 +17,7 @@ import { logoutUser } from "@/services/authService";
 import Logo from "./logo";
 
 const Navbar = () => {
-  const { user, setIsLoading, setUser, isLoading } = useUser();
+  const { user, setIsLoading, setUser } = useUser();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
