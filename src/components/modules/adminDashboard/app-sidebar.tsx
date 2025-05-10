@@ -38,13 +38,6 @@ const items = [
     url: "/admin/order-history",
     icon: ShoppingBag,
   },
-  {
-    title: "Published Content",
-    url: "/admin/content/published",
-    icon: Calendar,
-  },
-
-  { title: "Analytics", url: "/admin/analytics/stats", icon: Settings },
 ];
 
 export function AppSidebar() {
@@ -57,7 +50,7 @@ export function AppSidebar() {
     >
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className=" tracking-wide px-3 pb-6 pt-4 ">
+          <SidebarGroupLabel className="mb-5 tracking-wide px-3 pb-6 pt-4 ">
             <div className="px-4 py-5 border-b border-[#2a2a3b]">
               <Link href="/">
                 <Logo />

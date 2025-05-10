@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import EditReviewModal from "../../movie/EditReviewModal";
 import { TReviewByMovieId } from "@/types/review.type";
 import { toast } from "sonner";
+import { useUser } from "@/context/UserContext";
 
 type TComment = {
   comment: string;
@@ -37,6 +38,7 @@ const ReviewCardOne = ({
   onReviewChange: () => void;
 }) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const { user } = useUser();
 
   const form = useForm<TComment>({
     defaultValues: {
@@ -73,6 +75,9 @@ const ReviewCardOne = ({
   };
 
   const handleLikeToggle = async (reviewId: string) => {
+    if(!user){
+      return toast.error("Please login to like");
+    }
     try {
       await toggleLike(reviewId);
       if (!review.liked) {
@@ -86,8 +91,6 @@ const ReviewCardOne = ({
       toast.error("Failed to toggle like");
     }
   };
-
-  console.log(review);
 
   return (
     <div className="bg-gray-700/50 p-4 rounded-lg">
@@ -168,11 +171,11 @@ const ReviewCardOne = ({
 
       <div className="flex justify-between">
         <div className="flex gap-2">
-          {review.approved && (
+          {review.approved  && (
             <Heart
               onClick={() => handleLikeToggle(review.id)}
-              className={`cursor-pointer transition-all ${
-                review.liked ? "fill-red-500 text-red-500" : ""
+              className={`cursor-pointer transition-all  ${
+                review.isLikedByUser  ? "fill-red-500 text-red-500" : ""
               }`}
             />
           )}
@@ -189,6 +192,7 @@ const ReviewCardOne = ({
               className="flex flex-col sm:flex-row items-center gap-2 mt-3"
             >
               <FormField
+              disabled={!user?.email}
                 control={form.control}
                 name="comment"
                 render={({ field }) => (
@@ -204,9 +208,9 @@ const ReviewCardOne = ({
                 )}
               />
               <Button
+              disabled={!user?.email}
                 type="submit"
                 variant="customOutlined"
-                className="whitespace-nowrap"
               >
                 Comment
               </Button>

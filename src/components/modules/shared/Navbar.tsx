@@ -83,10 +83,10 @@ const Navbar = () => {
         {/* Right section - Avatar Dropdown Menu */}
         <div className="hidden md:flex items-center space-x-4 text-sm font-light">
           {user ? (
-            <div className="flex justify-between items-center gap-5">
+            <div  className="flex justify-between items-center gap-5">
               {/* wishlist icon */}
 
-              {user.role === "ADMIN" && (
+              {user.role === "USER" && (
                 <>
                   <Link
                     title="Watch list"
@@ -107,8 +107,9 @@ const Navbar = () => {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Avatar className="cursor-pointer ring-2 ring-white hover:ring-red-500/80 transition duration-300">
+                  <Avatar  className="cursor-pointer ring-2 ring-white hover:ring-red-500/80 transition duration-300">
                     <AvatarImage
+                    
                       src={user_img?.src}
                       alt="User Avatar"
                       className="object-cover"
@@ -128,7 +129,7 @@ const Navbar = () => {
                         href="/purchase"
                         className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
                       >
-                        Purchase
+                        My Purchase
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -216,6 +217,12 @@ const Navbar = () => {
                   className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
                 >
                   Wish list
+                </Link>
+                <Link
+                  href="/purchase"
+                  className="text-white hover:text-gray-300 transition duration-200 border-b border-gray-800 pb-2"
+                >
+                  My Purchase
                 </Link>
               </>
             )}

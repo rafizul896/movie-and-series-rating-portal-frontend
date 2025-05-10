@@ -50,7 +50,10 @@ const NavUser = () => {
                 aria-label="User menu"
               >
                 <Avatar className="h-8 w-8 rounded-lg">
-                  {/* <AvatarImage src={user?.image} alt={user?.name} /> */}
+                  <AvatarImage
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U2akySBgSHUK-foX-9SGFmLk6zEuGYNNqw&s"
+                    alt="@shadcn"
+                  />
                   <AvatarFallback className="rounded-lg">
                     {user?.name?.charAt(0).toUpperCase()}
                   </AvatarFallback>
@@ -74,7 +77,7 @@ const NavUser = () => {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-2 py-1.5">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  {/* <AvatarImage src={user?.image} alt={user?.name} /> */}
+                  <AvatarImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U2akySBgSHUK-foX-9SGFmLk6zEuGYNNqw&s" alt={user?.name} />
                   <AvatarFallback className="rounded-lg">
                     {user?.name?.charAt(0).toUpperCase()}
                   </AvatarFallback>
