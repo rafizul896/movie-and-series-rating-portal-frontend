@@ -38,6 +38,7 @@ export type TReviewByMovieId = {
   likes?: TLike[];
   liked?: boolean;
   content: string;
+  isLikedByUser?: boolean;
   createdAt: string;
   hasSpoiler: boolean;
   id: string;

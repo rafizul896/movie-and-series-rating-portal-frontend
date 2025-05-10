@@ -19,8 +19,24 @@ import {
 } from "@/components/ui/select";
 import { TSearchBarOne } from "@/types/form.type";
 
-const genres = ["Action", "Drama", "Comedy", "Thriller"];
-const platforms = ["Netflix", "Disney+", "Amazon Prime", "Hulu"];
+const genres = [
+  "Action",
+  "Comedy",
+  "Drama",
+  "Fantasy",
+  "Horror",
+  "Romance",
+  "Sci-Fi",
+  "Thriller",
+];
+const platforms = [
+  "Netflix",
+  "Amazon Prime",
+  "Disney+",
+  "HBO Max",
+  "Apple TV+",
+];
+
 const years = Array.from({ length: 25 }, (_, i) => `${2025 - i}`);
 
 const SearchBarOne = ({
@@ -31,7 +47,7 @@ const SearchBarOne = ({
   onSubmit: (data: TSearchBarOne) => void;
 }) => {
   return (
-    <div className="bg-zinc-900/80 p-6 rounded-xl shadow-md max-w-6xl mx-auto">
+    <div className="bg-zinc-900/80 p-6 rounded-xl shadow-md container mx-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col md:flex-row gap-4">
@@ -84,9 +100,9 @@ const SearchBarOne = ({
                 control={form.control}
                 name="platform"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-1/2">
                     <FormLabel className="text-white">Platform</FormLabel>
-                    <FormControl className="w-full">
+                    <FormControl className="w-1/2">
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
@@ -138,6 +154,16 @@ const SearchBarOne = ({
             <div className="pt-5">
               <Button type="submit" variant={"custom"} className="w-full">
                 Search
+              </Button>
+            </div>
+            <div className="pt-5">
+              <Button
+                onClick={() => form.reset()}
+                type="submit"
+                variant={"custom"}
+                className="w-full"
+              >
+                Clear
               </Button>
             </div>
           </div>

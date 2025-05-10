@@ -4,6 +4,7 @@ export type TSearchBarOne = {
   platform: string;
   year: string;
   sortBy?: string;
+  totalRating?: string;
 };
 
 export type TFilterOptions = {
