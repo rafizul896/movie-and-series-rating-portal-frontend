@@ -32,9 +32,9 @@ const Navbar = () => {
     router.push("/login");
   };
 
-  if (isLoading) {
-    return <div>loading</div>;
-  }
+  // if (isLoading) {
+  //   return <div>loading</div>;
+  // }
 
   return (
     <header className="fixed w-full bg-gradient-to-b from-black to-transparent z-50">

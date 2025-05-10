@@ -38,7 +38,7 @@ const ManageOrderHistory = () => {
 
   return (
     <div className="space-y-4 mt-10">
-       <div className="px-8 flex justify-start items-center gap-5">
+       <div className="px-8 flex flex-wrap justify-center items-center gap-5">
         {/* Dropdown for paymentStatus */}
       <Select onValueChange={handlePaymentStatusChange}>
         <SelectTrigger className="w-48 border border-gray-300 focus:border-red-500 focus:ring-1 focus:ring-red-500 hover:border-red-500 transition-all duration-200 cursor-pointer">
