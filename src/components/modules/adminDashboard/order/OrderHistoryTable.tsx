@@ -40,7 +40,6 @@ const OrderHistoryTable = ({ orderData,onFetch }: any) => {
     }
   };
 
-  console.log(orderData)
   return (
     <div className="p-6">
       <div className="overflow-x-auto rounded-lg shadow border border-gray-700 bg-[#0f172a]">
