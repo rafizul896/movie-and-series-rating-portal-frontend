@@ -40,8 +40,8 @@ const ManageOrderHistory = () => {
     });
 
     const meta = result?.data?.meta;
-    setOrderData(result?.data?.data || []);
     setTotalPages(Math.ceil(meta?.total / meta?.limit));
+    setOrderData(result?.data?.data || []);
   };
 
   useEffect(() => {

@@ -7,9 +7,9 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 
-export const getAllUser = async () => {
+export const getAllUser = async ({page,limit}:{page?:number,limit?:number}) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user?page=${page}&limit=${limit}`, {
       method: "GET",
       next: {
         tags: ["users"],

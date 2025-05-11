@@ -26,38 +26,45 @@ const CommonPagination: React.FC<PaginationProps> = ({
   };
 
   const getPages = () => {
-    const pages: (number | "...")[] = [];
+    const pages: (number | "...")[] = []; // Create an empty list to hold page numbers or "..."
 
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    // Decide how many pages to show based on screen size
+    const isMobile = window.innerWidth < 640; // Check if the screen is small (less than 640px)
+    const maxPagesToShow = isMobile ? 3 : 5; // Show 3 pages on mobile, 5 on bigger screens
+
+    // If total pages are less than or equal to max pages + 1, show all pages
+    if (totalPages <= maxPagesToShow + 1) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i); // Add each page number from 1 to totalPages
+      }
     } else {
-      pages.push(1);
+      // Show the first few pages
+      for (let i = 1; i <= maxPagesToShow; i++) {
+        pages.push(i); // Add the first 3 or 5 pages
+      }
 
-      if (currentPage > 4) pages.push("...");
+      // Add "..." if there are more pages after the first few
+      if (totalPages > maxPagesToShow + 1) {
+        pages.push("...");
+      }
 
-      const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
-
-      for (let i = start; i <= end; i++) pages.push(i);
-
-      if (currentPage < totalPages - 3) pages.push("...");
-
+      // Always add the last page
       pages.push(totalPages);
     }
 
-    return pages;
+    return pages; // Return the list of pages
   };
 
   return (
-    <div className="flex flex-wrap justify-center items-center gap-2 mt-8  py-4 px-6 rounded-lg shadow-lg">
+    <div className="flex flex-wrap justify-center items-center gap-2 mt-8 py-4 px-2 sm:px-6 rounded-lg shadow-lg">
       {/* Previous Button */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-red-500 hover:bg-red-600 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="cursor-pointer w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-gray-800 text-red-500 hover:bg-red-600 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <svg
-          className="w-5 h-5"
+          className="w-4 h-4 sm:w-5 sm:h-5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -76,7 +83,7 @@ const CommonPagination: React.FC<PaginationProps> = ({
         item === "..." ? (
           <span
             key={idx}
-            className="px-3 text-gray-400 text-lg font-medium select-none"
+            className="px-2 sm:px-3 text-gray-400 text-base sm:text-lg font-medium select-none"
           >
             ...
           </span>
@@ -84,7 +91,7 @@ const CommonPagination: React.FC<PaginationProps> = ({
           <button
             key={item}
             onClick={() => onPageChange(Number(item))}
-            className={`w-10 h-10 flex items-center justify-center rounded-full text-lg font-medium transition-all duration-300 ${
+            className={`w-8 cursor-pointer  h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-base sm:text-lg font-medium transition-all duration-300 ${
               currentPage === item
                 ? "bg-red-600 text-white"
                 : "bg-gray-800 text-gray-300 hover:bg-red-600 hover:text-white"
@@ -99,10 +106,10 @@ const CommonPagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-red-500 hover:bg-red-600 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-8 h-8 cursor-pointer  sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-gray-800 text-red-500 hover:bg-red-600 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <svg
-          className="w-5 h-5"
+          className="w-4 h-4 sm:w-5 sm:h-5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -116,12 +123,12 @@ const CommonPagination: React.FC<PaginationProps> = ({
         </svg>
       </button>
 
-      {/* Page Size Selector */}
+      {/* Page Size Selector - Hidden on Mobile */}
       {onPageSizeChange && (
         <select
           value={pageSize}
           onChange={(e) => onPageSizeChange(Number(e.target.value))}
-          className="ml-4 bg-gray-800 text-gray-300 rounded-lg px-3 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-300"
+          className="ml-2 cursor-pointer  sm:ml-4 bg-gray-800 text-gray-300 rounded-lg px-2 py-1 sm:px-3 sm:py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-300 hidden sm:block"
         >
           {[10, 20, 50, 100].map((size) => (
             <option key={size} value={size} className="bg-gray-900 text-gray-300">
@@ -131,8 +138,8 @@ const CommonPagination: React.FC<PaginationProps> = ({
         </select>
       )}
 
-      {/* Go to Page */}
-      <div className="ml-4 flex items-center gap-2">
+      {/* Go to Page - Hidden on Mobile */}
+      <div className="ml-2 sm:ml-4 md:flex items-center gap-2 hidden sm:flex">
         <span className="text-gray-300 font-medium">Go to</span>
         <input
           type="number"
@@ -140,11 +147,11 @@ const CommonPagination: React.FC<PaginationProps> = ({
           max={totalPages}
           value={inputPage}
           onChange={(e) => setInputPage(e.target.value)}
-          className="w-16 bg-gray-800 text-gray-300 rounded-lg px-3 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-300"
+          className="w-14 sm:w-16 bg-gray-800 text-gray-300 rounded-lg px-2 sm:px-3 py-1 sm:py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-300"
         />
         <button
           onClick={handleGoToPage}
-          className="bg-red-600 text-white rounded-lg px-4 py-2 hover:bg-red-700 transition-all duration-300"
+          className="bg-red-600 text-white rounded-lg px-3 sm:px-4 py-1 sm:py-2 hover:bg-red-700 transition-all duration-300"
         >
           Go
         </button>

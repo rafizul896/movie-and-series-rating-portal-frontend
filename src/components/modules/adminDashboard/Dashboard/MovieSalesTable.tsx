@@ -11,21 +11,19 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { DatePickerWithRange } from "@/components/ui/DateRangePicker";
-import CustomPagination from "@/components/shared/Pagination";
 import { getMovieWiseSales } from "@/services/dashboardHome";
 import { IMovie } from "@/types/dashboardHome.type";
 import { useCallback } from "react";
+import CommonPagination from "@/components/shared/CommonPagination";
 
 const MovieSalesTable = () => {
   const [salesData, setSalesData] = useState([]);
-  // const [startDate, setStartDate] = useState("");
-  // const [endDate, setEndDate] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
-
+  
+  // const [startDate, setStartDate] = useState("");
+  // const [endDate, setEndDate] = useState("");
   // const handleDateChange = ({
   //   startDate,
   //   endDate,
@@ -40,17 +38,15 @@ const MovieSalesTable = () => {
   const fetchData = useCallback(async () => {
     const res = await getMovieWiseSales({
       searchTerm,
-      // startDate: startDate,
-      // endDate: endDate,
       page,
-      pageSize: limit,
+      pageSize: 5,
     });
 
     if (res?.data) {
       setSalesData(res.data);
       setTotalPages(res.meta.totalPage);
     }
-  }, [searchTerm,  page, limit]);
+  }, [searchTerm,  page]);
 
   useEffect(() => {
     fetchData();
@@ -111,17 +107,11 @@ const MovieSalesTable = () => {
         </Table>
         <div className="flex justify-end">
           <div>
-            <CustomPagination
-              page={page}
-              totalPages={totalPages as number}
-              limit={limit}
-              onPageChange={setPage}
-              onLimitChange={(newLimit) => {
-                setLimit(newLimit);
-                setPage(1);
-              }}
-              className="hidden"
-            />
+            <CommonPagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={setPage}
+      />
           </div>
         </div>
       </CardContent>

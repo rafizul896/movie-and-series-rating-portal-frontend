@@ -56,6 +56,7 @@ export function AddMediaDialog() {
   const [preview, setPreview] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+
   const {
     register,
     handleSubmit,
@@ -122,7 +123,7 @@ export function AddMediaDialog() {
 
     try {
       const res = await addMovie(formData);
-      console.log(res);
+      
       if (res.success) {
         toast.success(res.message || "Media added successfully");
         setIsOpen(false);

@@ -4,20 +4,49 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const getAllMovies = async () => {
+
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/movie`, {
-      method: "GET",
-      next: {
-        tags: ["movies"],
-      },
-      cache: "no-store"
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/movie`,
+      {
+        method: "GET",
+        next: {
+          tags: ["movies"],
+        },
+        cache: "no-store",
+      }
+    );
     const result = await res.json();
     return result;
   } catch (error: any) {
     return Error(error.message);
   }
 };
+
+export const getMovies = async (
+  params: { page?: number; limit?: number } = {}
+) => {
+  const { page = 1, limit = 5 } = params;
+
+  try {
+    console.log(page, limit, 8888);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/movie/admin?page=${page}&limit=${limit}`,
+      {
+        method: "GET",
+        next: {
+          tags: ["getMovies"],
+        },
+        cache: "no-store",
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
 
 export const getAllMoviesByFilter = async (
   sortBy: string,
