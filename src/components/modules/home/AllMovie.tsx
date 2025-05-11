@@ -62,7 +62,7 @@ const AllMovie = () => {
 
   useEffect(() => {
     if (!loading && initialMovies) {
-      setFilteredMovies(initialMovies as TMovie[]); // <- populate on first load
+      setFilteredMovies(initialMovies as TMovie[]);
     }
   }, [initialMovies, loading]);
 
