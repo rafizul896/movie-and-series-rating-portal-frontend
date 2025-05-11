@@ -3,7 +3,7 @@ import Movies from "./Movies";
 
 const FeaturedMovie = async () => {
   const { data } = await getAllMovies();
-  const allMovies = data?.data;
+  const allMovies = data?.data?.slice(0,10);
 
   return (
     <div>

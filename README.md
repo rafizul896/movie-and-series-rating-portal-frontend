@@ -2,7 +2,10 @@
 
 This is the _movie-and-series-rating-portal-frontend_ of the Movie & Series Rating & Streaming Portal, built with _Next.js_ and styled using _Tailwind CSS_. It offers a modern, responsive, and user-friendly interface for exploring, reviewing, purchasing, and streaming media content.
 
-🔗 _Live Website_: [https://your-deployment-url.vercel.app](https://your-deployment-url.vercel.app)
+🔗 _Live Website_: [https://movie-and-series-rating-portal-frontend.vercel.app](https://movie-and-series-rating-portal-frontend.vercel.app)
+
+- 🚀 Frontend Repository: [movie-and-series-rating-portal-frontend](https://github.com/rafizul896/movie-and-series-rating-portal-frontend)
+- 🧠 Backend Repository: [movie-and-series-rating-portal-backend](https://github.com/rafizul896/movie-and-series-rating-portal-backend)
 
 💻 Open [http://localhost:3000](http://localhost:3000) with your browser to see the development version.
 
