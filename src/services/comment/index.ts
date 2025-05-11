@@ -1,12 +1,9 @@
-import { toggleApproveReview } from '@/services/reviewService';
 "use server"
-
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const deleteComments = async (reviewIds: string[]) => {
   try {
-    console.log(8,reviewIds);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/comments/delete-comments`,
       {
