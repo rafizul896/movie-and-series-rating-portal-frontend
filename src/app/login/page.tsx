@@ -1,39 +1,66 @@
 "use client";
 
-import Image from "next/image";
-import logo from "../../assets/logo.png";
+
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import "../../style/login.css";
+import { decodeToken, loginUser, registerUser } from "@/services/authService";
+import { toast } from "sonner";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
+import Logo from "@/components/modules/shared/logo";
 
 const Login = () => {
   const [signState, setSignState] = useState("Sign In");
-
+  const { setUser, setIsLoading } = useUser();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
-  const onSubmit = (data) => {
-    if (signState === "Sign In") {
-      console.log("Sign In Data:", data);
-      // add your sign in logic here
-    } else {
-      console.log("Sign Up Data:", data);
-      // add your sign up logic here
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setIsLoading(true);
+    try {
+      if (signState === "Sign In") {
+        const res = await loginUser(data);
+        if (res.success) {
+          toast.success(res.message || "Login successful");
+
+          const decodedToken: any = await decodeToken(res.data.accessToken);
+          await setUser(decodedToken);
+          router.push("/");
+        } else {
+          toast.error(res.message || "Login failed");
+        }
+      } else {
+        const res = await registerUser(data);
+        if (res.success) {
+          toast.success(res.message || "Registration successful");
+          const decodedToken: any = await decodeToken(res.data.accessToken);
+          await setUser(decodedToken);
+          router.push("/");
+          reset();
+        } else {
+          toast.error(res.message || "Registration failed");
+        }
+      }
+    } catch (error: any) {
+      console.error("Auth error:", error);
+      toast.error(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="login">
-      <Image
-        src={logo}
-        alt="login"
-        width={100}
-        height={10}
-        className="login-logo"
-      />
+      <Link href="/">
+        <Logo />
+      </Link>
 
       <div className="login-form">
         <h1>{signState}</h1>
@@ -81,7 +108,9 @@ const Login = () => {
         <div className="form-switch">
           {signState === "Sign In" ? (
             <div>
-              <p className="forgot-password">Forgot Password?</p>
+              <Link href="/forgot-password" className="forgot-password">
+                Forgot Password?{" "}
+              </Link>
               <p>
                 New Here?{" "}
                 <span onClick={() => setSignState("Sign up")}>Sign Up</span>
