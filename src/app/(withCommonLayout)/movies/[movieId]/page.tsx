@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 "use client";
-import LoadingPage from "@/app/loading";
 import { SkeletonLoader } from "@/components/modules/adminDashboard/Movie/SkeletonLoder";
 import AddReviewModal from "@/components/modules/movie/AddReviewModal";
 import ReviewCardOne from "@/components/modules/shared/cards/ReviewCardOne";
@@ -20,7 +19,7 @@ import { toast } from "sonner";
 
 const MovieDetailsPage = () => {
   const { user } = useUser();
-  const [meta, setMeta] = useState("");
+  // const [, setMeta] = useState("");
   const [moviesData, setMoviesData] = useState<TMovie>();
   const [loading, setLoading] = useState(true);
   const param = useParams();
@@ -29,7 +28,7 @@ const MovieDetailsPage = () => {
     try {
       const res = await getSingleMovie(param?.movieId as string, user?.id || "");
       setMoviesData(res?.data?.data || []);
-      setMeta(res?.data?.meta);
+      // setMeta(res?.data?.meta);
     } catch (error) {
       console.log(error);
     } finally {
