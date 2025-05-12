@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FilmNest",
   description: "FilmNest is a movie and series rating portal",
+   icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
