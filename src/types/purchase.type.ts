@@ -27,7 +27,6 @@ export interface IOrderHistory {
   };
 }
 
-
 export interface IPurchaseItem  {
   movieId: string;
   userId: string | undefined;
@@ -35,7 +34,5 @@ export interface IPurchaseItem  {
   currency: "USD";
   paymentStatus: "PAID";
   amount: number;
-  accessExpiryTime?: string; // শুধুমাত্র RENT এর ক্ষেত্রে থাকবে
+  accessExpiryTime?: string;
 };
-
-

@@ -19,6 +19,7 @@ export const getPurchaseAnalytics = async () => {
   }
 };
 
+
 export const getMovieWiseSales = async (query: {
   searchTerm?: string;
   startDate?: string;
@@ -37,7 +38,7 @@ export const getMovieWiseSales = async (query: {
     if (query.startDate) url.searchParams.append("startDate", query.startDate);
     if (query.endDate) url.searchParams.append("endDate", query.endDate);
     url.searchParams.append("page", String(query.page || 1));
-    url.searchParams.append("pageSize", String(query.pageSize || 10));
+    url.searchParams.append("pageSize", String(query.pageSize || 5));
 
     const res = await fetch(url.toString(), {
       method: "GET",
@@ -47,6 +48,5 @@ export const getMovieWiseSales = async (query: {
     const data = await res.json();
     return data;
   } catch (err: any) {
-    return { error: err.message };
-  }
+    return { error: err.message}}
 };

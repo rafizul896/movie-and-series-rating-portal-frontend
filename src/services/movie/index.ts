@@ -4,13 +4,63 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const getAllMovies = async () => {
+
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/movie`, {
-      method: "GET",
-      next: {
-        tags: ["movies"],
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/movie`,
+      {
+        method: "GET",
+        next: {
+          tags: ["movies"],
+        },
+        cache: "no-store",
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const getMovies = async (
+  params: { page?: number; limit?: number } = {}
+) => {
+  const { page = 1, limit = 5 } = params;
+
+  try {
+    console.log(page, limit, 8888);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/movie/admin?page=${page}&limit=${limit}`,
+      {
+        method: "GET",
+        next: {
+          tags: ["getMovies"],
+        },
+        cache: "no-store",
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+
+export const getAllMoviesByFilter = async (
+  sortBy: string,
+  values: string | boolean,
+  limit: number
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/movie?${sortBy}=${values}&limit=${limit}`,
+      {
+        method: "GET",
+        cache: "no-store"
+      }
+    );
     const result = await res.json();
     return result;
   } catch (error: any) {
@@ -20,7 +70,6 @@ export const getAllMovies = async () => {
 
 export const getSingleMovie = async (movieId: string, userId: string) => {
   const bodyData = { userId };
-
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/movie/${movieId}`,
@@ -30,6 +79,28 @@ export const getSingleMovie = async (movieId: string, userId: string) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(bodyData),
+        next: {
+          tags: [`movie-${movieId}`], // ⬅️ This enables tag-based revalidation
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const getSingleMovieDetails = async (movieId: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/movie/${movieId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
         next: {
           tags: [`movie-${movieId}`], // ⬅️ This enables tag-based revalidation
         },

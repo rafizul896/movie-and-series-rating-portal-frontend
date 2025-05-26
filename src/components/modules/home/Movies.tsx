@@ -65,17 +65,17 @@ const Movies = ({ movies: initialMovies }: { movies: TMovie[] }) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="container mx-auto px-4">
       <SearchBarOne form={form} onSubmit={onSubmit} />
 
       <div className="mt-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-white">
-            {filteredMovies.length} Movies Found
+            {filteredMovies?.length} Movies Found
           </h2>
         </div>
 
-        {filteredMovies.length > 0 ? (
+        {filteredMovies?.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {filteredMovies.map((movie: TMovie) => (
               <SmallMovieCardOne key={movie.id} movie={movie} />

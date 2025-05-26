@@ -1,8 +1,8 @@
-import { Clock, Delete, DeleteIcon, Play, Star, Trash2 } from "lucide-react";
+import { Play, Star } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 
 interface WatchListCardProps {
@@ -24,14 +24,10 @@ export default function WatchListCard({
   id,
   title,
   releaseYear,
-  createdAt,
   avgRating,
-  genres,
-  synopsis,
   buyPrice,
   rentPrice,
   thumbnail,
-  onRemove,
 }: WatchListCardProps) {
   return (
     <Card className="w-64 overflow-hidden bg-[#1a1d29] text-white border-none shadow shadow-[#800000] group relative rounded-lg">
@@ -59,12 +55,12 @@ export default function WatchListCard({
 
         {/* Watch Now button on hover */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <Link href={`/watchlist/${id}`}>
-        <Button className="bg-red-600 hover:bg-red-700 text-white flex items-center cursor-pointer gap-2">
-            <Play className="h-4 w-4" />
-            Watch Now
-          </Button>
-        </Link>
+          <Link href={`/watchlist/${id}`}>
+            <Button className="bg-red-600 hover:bg-red-700 text-white flex items-center cursor-pointer gap-2">
+              <Play className="h-4 w-4" />
+              Watch Now
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -95,7 +91,7 @@ export default function WatchListCard({
           <span className="font-bold">${buyPrice}</span>
           <span className="text-xs text-gray-400"> | Rent: ${rentPrice}</span>
         </div>
-        {onRemove ? (
+        {/* {onRemove ? (
           <div onClick={()=> onRemove(id)} className="flex items-center justify-center  p-2 rounded-full  hover:bg-black/70 transition-opacity duration-300 cursor-pointer" >
           <Trash2 className="h-4 w-4 text-red-500" />
           </div>
@@ -103,7 +99,7 @@ export default function WatchListCard({
           <div className="flex items-center justify-center  p-2 rounded-full  hover:bg-black/70 transition-opacity duration-300 cursor-pointer" >
           <Trash2 className="h-4 w-4 text-red-500" />
           </div>
-        )}
+        )} */}
       </CardFooter>
     </Card>
   );

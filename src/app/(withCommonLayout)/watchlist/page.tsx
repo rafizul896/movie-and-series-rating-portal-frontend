@@ -1,7 +1,6 @@
 import WatchListPage from "@/components/modules/watchList/WatchList";
-import { Button } from "@/components/ui/button";
 import { getAllWatchList } from "@/services/watchList";
-import { Clock, Link } from "lucide-react";
+import { Clock } from "lucide-react";
 import React from "react";
 
 const WatchListLayout = async() => {

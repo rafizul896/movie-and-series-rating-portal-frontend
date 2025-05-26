@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Provider from "@/providers/Providers";
-import AuthInitializer from "@/middleware/AuthInitializer";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,10 +15,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "FilmNest",
-  description: "FilmNest is a movie and series rating portal",
-};
+// export const metadata: Metadata = {
+//   title: "FilmNest",
+//   description: "FilmNest is a movie and series rating portal",
+//    icons: {
+//     icon: "/favicon.png",
+//   },
+//   verification: {
+//     google: "Zjwd1ST-ejKrhNWHAcAVcNzlTuPmZmmVPbnlm4KAZe4",
+//   },
+// };
 
 export default function RootLayout({
   children,
@@ -27,10 +33,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google verification meta tag */}
+        <meta
+          name="google-site-verification"
+          content="Zjwd1ST-ejKrhNWHAcAVcNzlTuPmZmmVPbnlm4KAZe4"
+        />
+        <title>FilmNest</title>
+        <meta name="description" content="FilmNest is a movie and series rating portal" />
+        <link rel="icon" href="/favicon.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthInitializer />
         <Provider>
           <Toaster position="top-center" richColors />
           {children}

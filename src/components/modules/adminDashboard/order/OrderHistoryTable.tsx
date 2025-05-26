@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,15 +24,13 @@ import {
 import { deleteOrderHistory } from "@/services/purchase";
 import { IOrderHistory } from "@/types/purchase.type";
 
-const OrderHistoryTable = ({ orderData }: any) => {
-  const router = useRouter();
-
+const OrderHistoryTable = ({ orderData,onFetch }: any) => {
   const handleDelete = async (id: string) => {
     try {
       const res = await deleteOrderHistory(id);
       if (res.success) {
         toast.success(res.message || "Order history deleted successfully");
-        // router.refresh()
+        onFetch()
       } else {
         toast.error(res.message || "Could not delete order history");
       }
@@ -43,7 +40,6 @@ const OrderHistoryTable = ({ orderData }: any) => {
     }
   };
 
-  console.log(orderData)
   return (
     <div className="p-6">
       <div className="overflow-x-auto rounded-lg shadow border border-gray-700 bg-[#0f172a]">

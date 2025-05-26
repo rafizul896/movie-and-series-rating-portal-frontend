@@ -11,9 +11,8 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
-import { deletedMovie } from "@/services/movie";
+import { deletedMovie,  getMovies } from "@/services/movie";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,17 +24,39 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import CommonPagination from "@/components/shared/CommonPagination";
+
+const AllMedia = () => {
+  const [mediaData, setMediaData] = useState([]);
+
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
 
-const AllMedia = ({ mediaData }: any) => {
-  const router = useRouter();
+  const fetchData = async () => {
+    const result = await getMovies({
+      page: currentPage,
+      limit: 5
+    });
+    const meta = result?.data?.meta;
+    setTotalPages(Math.ceil(meta?.total / meta?.limit));
+    setMediaData(result?.data?.data || []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [currentPage,totalPages,currentPage]);
+
 
   const handleDelete = async (id: string) => {
     try {
       const res = await deletedMovie(id);
       if (res.success) {
         toast.success(res.message || "Media deleted successfully");
-        router.push("/admin/movie");
+        fetchData()
       } else {
         toast.error(res.message || "Could not delete media");
       }
@@ -49,11 +70,11 @@ const AllMedia = ({ mediaData }: any) => {
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-6 text-white">All Movies</h2>
       {/* Responsive Table Wrapper */}
-      <div className="overflow-x-auto bg-white">
-        <Table className="min-w-full border border-gray-300">
+      <div className="overflow-x-auto bg-[#101828] ">
+        <Table className="min-w-full border border-gray-300 text-white">
           {/* Table Head */}
           <TableHeader>
-            <TableRow className="bg-gray-200 text-gray-700 uppercase text-sm font-semibold">
+            <TableRow className="bg-gray-200 text-gray-700 uppercase text-sm font-semibold ">
               <TableHead className="px-4 py-3 text-left">Image</TableHead>
               <TableHead className="px-4 py-3 text-left">Title</TableHead>
 
@@ -61,19 +82,25 @@ const AllMedia = ({ mediaData }: any) => {
               <TableHead className="px-4 py-3 text-left">
                 Release Year
               </TableHead>
+              <TableHead className="px-4 py-3 text-left">
+                Discount Price
+              </TableHead>
               <TableHead className="px-4 py-3 text-left">Like Count</TableHead>
-
+              <TableHead className="px-4 py-3 text-left">
+                Streaming Link
+              </TableHead>
               <TableHead className="px-4 py-3 text-left">Actions</TableHead>
             </TableRow>
           </TableHeader>
 
           {/* Table Body */}
           <TableBody>
-            {mediaData && mediaData.length > 0 ? (
+            {mediaData && mediaData?.length > 0 ? (
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               mediaData?.map((listing: any, index: number) => (
                 <TableRow
                   key={listing.id}
-                  className="border-b hover:bg-gray-100 transition"
+                  className="border-b hover:bg-gray-700 text-white"
                 >
                   {/* Image Column */}
                   <TableCell className="px-4 py-3">
@@ -86,9 +113,7 @@ const AllMedia = ({ mediaData }: any) => {
                     />
                   </TableCell>
 
-                  <TableCell className="px-4 py-3 text-black">
-                    {listing.title}
-                  </TableCell>
+                  <TableCell className="px-4 py-3 ">{listing.title}</TableCell>
 
                   {/* Price Column */}
                   <TableCell className="px-4 py-3 font-semibold text-green-600">
@@ -97,11 +122,36 @@ const AllMedia = ({ mediaData }: any) => {
 
                   {/* Status Column */}
                   <TableCell className="px-4 py-3 ">
-                    <span className="text-black">{listing.releaseYear}</span>
+                    <span className="">{listing.releaseYear}</span>
+                  </TableCell>
+
+                  <TableCell className="px-4 py-3 ">
+                    <span>
+                      {listing.discountPrice ? listing.discountPrice : "0"}
+                    </span>
                   </TableCell>
 
                   <TableCell className="px-4 py-3">
-                    <span className="text-black">{listing.likesCount}</span>
+                    <span>{listing.likesCount}</span>
+                  </TableCell>
+
+                  <TableCell className="px-4 py-3">
+                    {/* <span >{listing.streamingLink}</span> */}
+                    <Link
+                      href={
+                        listing.streamingLink ||
+                        `https://www.youtube.com/embed/iu2eXrYe8Fo?si=bhSoxnmmO81yqATw`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button
+                        variant={"customOutlined"}
+                        className="cursor-pointer w-full  mb-2"
+                      >
+                        Streaming link
+                      </Button>
+                    </Link>
                   </TableCell>
 
                   {/* Actions Column */}
@@ -158,6 +208,12 @@ const AllMedia = ({ mediaData }: any) => {
             )}
           </TableBody>
         </Table>
+
+        <CommonPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
       </div>
     </div>
   );

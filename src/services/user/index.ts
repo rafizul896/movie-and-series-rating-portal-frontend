@@ -7,9 +7,9 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 
-export const getAllUser = async () => {
+export const getAllUser = async ({page,limit}:{page?:number,limit?:number}) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user?page=${page}&limit=${limit}`, {
       method: "GET",
       next: {
         tags: ["users"],
@@ -34,7 +34,27 @@ export const deletedUser = async (id: string) => {
         },
       }
     );
-    revalidateTag("movies");
+    revalidateTag("users");
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const updateUserRole = async (id: string, payload:{role:string}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        body: JSON.stringify(payload)
+      }
+    );
+    revalidateTag("users");
     return res.json();
   } catch (error: any) {
     return Error(error);

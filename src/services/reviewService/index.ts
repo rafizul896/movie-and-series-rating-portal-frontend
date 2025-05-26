@@ -7,10 +7,10 @@ import { cookies } from "next/headers";
 export const getAllReviews = async (params: ReviewQueryParams = {}) => {
   try {
     const query = new URLSearchParams();
-
+    const limit = 5;
     if (params.filterReview) query.append("filterReview", params.filterReview);
     if (params.page) query.append("page", params.page.toString());
-    if (params.limit) query.append("limit", params.limit.toString());
+    if (limit) query.append("limit", limit.toString());
 
     const res = await fetch(
       `${
@@ -69,6 +69,7 @@ export const toggleApproveReview = async (reviewId: string) => {
 
 export const deleteReview = async (reviewId: string) => {
   try {
+    console.log(reviewId);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/reviews/${reviewId}`,
       {

@@ -1,5 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 "use client";
-import LoadingPage from "@/app/loading";
+import { SkeletonLoader } from "@/components/modules/adminDashboard/Movie/SkeletonLoder";
 import AddReviewModal from "@/components/modules/movie/AddReviewModal";
 import ReviewCardOne from "@/components/modules/shared/cards/ReviewCardOne";
 import { Button } from "@/components/ui/button";
@@ -7,9 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { useUser } from "@/context/UserContext";
 import { getSingleMovie } from "@/services/movie";
 import { addToWishlist } from "@/services/wishlist";
-import { getReviewsByMovieId } from "@/services/reviewService";
 import { TMovie } from "@/types/movie.type";
-import { TReviewByMovieId } from "@/types/review.type";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,34 +16,30 @@ import { useParams } from "next/navigation";
 import React, { startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
 
+
 const MovieDetailsPage = () => {
   const { user } = useUser();
-  const [loading, setLoading] = useState(false);
+  // const [, setMeta] = useState("");
   const [moviesData, setMoviesData] = useState<TMovie>();
-  const [reviews, setReviews] = useState<TReviewByMovieId[]>([]);
-
+  const [loading, setLoading] = useState(true);
   const param = useParams();
 
   const fetchMovies = async () => {
-    const res = await getSingleMovie(param?.movieId as string, user?.id || "");
-    setMoviesData(res?.data?.data || []);
-  };
-
-  const fetchReviews = async () => {
-    setLoading(true);
     try {
-      const res = await getReviewsByMovieId(param?.movieId as string);
-      setReviews(res?.data || []);
+      const res = await getSingleMovie(param?.movieId as string, user?.id || "");
+      setMoviesData(res?.data?.data || []);
+      // setMeta(res?.data?.meta);
+    } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchMovies();
   }, [param?.movieId]);
-
-  // console.log(moviesData);
 
   const handleAddToWishlist = async (movieId: string) => {
     if (!user) {
@@ -58,13 +53,10 @@ const MovieDetailsPage = () => {
           movieId: movieId,
           userId: user?.id,
         };
-
-        console.log(data);
-
         const result = await addToWishlist(data);
 
         if (result.success) {
-          toast.success(result?.message || "Successfully added to watchlist");
+          toast.success(result?.message || "Successfully added to wishlist");
         } else {
           toast.error(result?.message || "Something went wrong!");
         }
@@ -75,16 +67,19 @@ const MovieDetailsPage = () => {
       }
     });
   };
-  useEffect(() => {
-    fetchReviews();
-  }, [moviesData?.reviews]);
+
+  const reviews = moviesData?.reviews;
+
+  if (loading) {
+    return <SkeletonLoader />;
+  }
 
   return (
     <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex gap-2 flex-col md:flex-row">
         <div className="md:w-3/12">
           <div className="w-10/12 mx-auto">
-            <div className="relative w-52 h-80 mx-auto">
+            <div className="relative my-5 w-52 h-80 mx-auto">
               <Image
                 src={
                   moviesData?.thumbnail ||
@@ -96,10 +91,10 @@ const MovieDetailsPage = () => {
               />
             </div>
             <div className="flex flex-col gap-3">
-              <Button variant={"custom"}>Buy or Rent</Button>
               <Button
+                disabled={user?.role === "ADMIN"}
                 onClick={() => handleAddToWishlist(moviesData?.id as string)}
-                variant={"customOutlined"}
+                variant={"custom"}
               >
                 Add to wishlist
               </Button>
@@ -184,7 +179,7 @@ const MovieDetailsPage = () => {
             ))}
           </div>
 
-          <div className="Reviews mt-10 bg-gray-700/45 p-3 rounded">
+          <div className="Reviews my-10 bg-gray-700/45 p-3 rounded">
             <div className="flex justify-between mb-3">
               <h5 className="mb-1 md:text-xl">Reviews</h5>
               <AddReviewModal
@@ -193,19 +188,15 @@ const MovieDetailsPage = () => {
               />
             </div>
             <Separator className="mb-3" />
-            {loading ? (
-              <LoadingPage />
-            ) : (
-              reviews &&
-              reviews.map((review: TReviewByMovieId) => (
+            {reviews &&
+              reviews?.map((review: any) => (
                 <ReviewCardOne
                   key={review.id}
                   review={review}
                   movieId={review.movieId}
                   onReviewChange={fetchMovies}
                 />
-              ))
-            )}
+              ))}
           </div>
         </div>
       </div>

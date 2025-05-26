@@ -38,11 +38,11 @@ type MovieFormData = {
   type: MediaType;
   releaseYear: number;
   director: string;
-  cast: string[];
+  cast: string;
   platforms: string[];
   buyPrice: number;
   rentPrice: number;
-  discountPrice: number;
+  discountPercentage: number; 
   thumbnail: File | null;
   streamingLink: string;
   isTrending: boolean;
@@ -55,6 +55,7 @@ export function AddMediaDialog() {
   const [isTrending, setIsTrending] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
 
   const {
     register,
@@ -104,14 +105,16 @@ export function AddMediaDialog() {
     data.platforms = platforms;
     data.type = mediaType;
     data.isTrending = isTrending;
-    data.cast = data.cast.split(",").map((c: string) => c.trim());
+    const castArray = data.cast.split(",").map((c) => c.trim());
 
     // Convert number fields from string to number
     const parsedData = {
       ...data,
+      cast: castArray,
       buyPrice: Number(data.buyPrice),
       rentPrice: Number(data.rentPrice),
       releaseYear: Number(data.releaseYear),
+      discountPercentage: Number(data.discountPercentage),
     };
 
     const formData = new FormData();
@@ -120,6 +123,7 @@ export function AddMediaDialog() {
 
     try {
       const res = await addMovie(formData);
+      
       if (res.success) {
         toast.success(res.message || "Media added successfully");
         setIsOpen(false);
@@ -148,7 +152,9 @@ export function AddMediaDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer ">Add Movie/Series</Button>
+        <div className="flex justify-end mr-8">
+          <Button variant={"custom"}>Add Movie/Series</Button>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto bg-white dark:bg-zinc-900 text-black dark:text-white">
         <DialogHeader>
@@ -289,6 +295,25 @@ export function AddMediaDialog() {
                 </p>
               )}
             </div>
+
+            <div>
+              <Label className="mb-2">Discount Percentage %</Label>
+              <Input
+                id="discountPercentage"
+                type="number"
+                min={0}
+                className="bg-white dark:bg-zinc-800"
+                {...register("discountPercentage", {
+                  required: "DiscountPercentage  is required",
+                })}
+              />
+              {errors.discountPercentage && (
+                <p className="text-red-500 text-sm">
+                  {errors.discountPercentage.message}
+                </p>
+              )}
+            </div>
+
             {/* Media Type */}
             <div>
               <Label className="mb-2">Media Type</Label>

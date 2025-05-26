@@ -1,8 +1,9 @@
-"use server";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use server";
 import { revalidateTag } from 'next/cache';
 import { PurchaseData } from "@/types/purchase.type";
 import { cookies } from "next/headers";
+import { ReviewQueryParams } from '@/types/queryParams.type';
 
 
 export const createPurchase = async (data: any) => {
@@ -62,10 +63,17 @@ export const fetchUserPurchases = async (
   }
 };
 
-export const getAllOrderHistory = async () => {
+export const getAllOrderHistory = async (params: ReviewQueryParams = {}) => {
   try {
+    const query = new URLSearchParams();
+
+    if (params.paymentStatus) query.append("paymentStatus", params.paymentStatus);
+    if (params.purchase_type) query.append("purchase_type", params.purchase_type);
+    if (params.page) query.append("page", params.page.toString());
+    if (params.limit) query.append("limit", params.limit.toString());
+
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/purchase/purchase-history`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/purchase/purchase-history?${query.toString()}`,
       {
         method: "GET",
         headers: {

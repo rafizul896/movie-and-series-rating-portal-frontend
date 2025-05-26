@@ -1,6 +1,7 @@
 "use client";
 
 import { getAllMovies } from "@/services/movie";
+import { TMovie } from "@/types/movie.type";
 import { useEffect, useState, useMemo } from "react";
 
 interface Movie {
@@ -46,7 +47,7 @@ const useAllMovies = (initialFilters?: FilterOptions) => {
 
   // Apply filters to movies
   const filteredMovies = useMemo(() => {
-    return allMovies.filter((movie) => {
+    return allMovies?.filter((movie) => {
       // Search by title (case insensitive)
       const matchesSearch =
         !filters.searchTerm ||
@@ -82,21 +83,21 @@ const useAllMovies = (initialFilters?: FilterOptions) => {
 
   // Get unique values for filter options
   const filterOptions = useMemo(() => {
-    const genres = Array.from(
-      new Set(allMovies.flatMap((movie) => movie.genres || []))
+    const genres = Array?.from(
+      new Set(allMovies?.flatMap((movie) => movie.genres || []))
     );
-    const platforms = Array.from(
-      new Set(allMovies.flatMap((movie) => movie.platforms || []))
+    const platforms = Array?.from(
+      new Set(allMovies?.flatMap((movie) => movie.platforms || []))
     );
-    const years = Array.from(
-      new Set(allMovies.map((movie) => movie.releaseYear.toString()))
+    const years = Array?.from(
+      new Set(allMovies?.map((movie) => movie.releaseYear.toString()))
     ).sort((a, b) => parseInt(b) - parseInt(a));
 
     return { genres, platforms, years };
   }, [allMovies]);
 
   return {
-    allMovies,
+    allMovies: allMovies as TMovie[],
     filteredMovies,
     loading,
     metaData,

@@ -45,7 +45,7 @@ const ContactUsPage = () => {
   return (
     <div className="bg-[url('https://img.freepik.com/free-vector/red-background-elegant-design_677411-4234.jpg?semt=ais_hybrid&w=740')] bg-cover bg-fixed">
       <div className="w-full bg-black/30 min-h-screen">
-        <div className="max-w-5xl pt-8 mx-auto flex flex-col md:flex-row gap-4 items-center justify-center min-h-screen">
+        <div className="container mx-auto px-4 pt-8  flex flex-col md:flex-row gap-4 items-center justify-center min-h-screen">
           <div className="w-4/5 md:w-1/2">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-red-500">
               Contact Us

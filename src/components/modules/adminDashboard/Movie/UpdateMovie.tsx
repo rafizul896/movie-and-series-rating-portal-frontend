@@ -37,7 +37,7 @@ type MovieFormData = {
   platforms: string[];
   buyPrice: number;
   rentPrice: number;
-  discountPrice: number;
+  discountPercentage: number;
   thumbnail: File | null;
   streamingLink: string;
   isTrending: boolean;
@@ -92,7 +92,7 @@ const UpdateMovieForm = ({ movieData }: { movieData: MovieFormData }) => {
       platforms: movieData.platforms,
       buyPrice: movieData.buyPrice,
       rentPrice: movieData.rentPrice,
-      discountPrice: movieData.discountPrice,
+      discountPercentage: movieData.discountPercentage,
       thumbnail: movieData.thumbnail,
       streamingLink: movieData.streamingLink,
       isTrending: movieData.isTrending,
@@ -148,6 +148,7 @@ const UpdateMovieForm = ({ movieData }: { movieData: MovieFormData }) => {
       buyPrice: Number(data.buyPrice),
       rentPrice: Number(data.rentPrice),
       releaseYear: Number(data.releaseYear),
+      discountPercentage: Number(data.discountPercentage),
     };
 
     const formData = new FormData();
@@ -318,13 +319,13 @@ const UpdateMovieForm = ({ movieData }: { movieData: MovieFormData }) => {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="discountPrice" className="text-gray-300">
-              Discount Price
+            <Label htmlFor="discountPercentage" className="text-gray-300">
+              Discount Percentage %
             </Label>
             <Input
-              id="discountPrice"
+              id="discountPercentage"
               type="number"
-              {...register("discountPrice")}
+              {...register("discountPercentage")}
               className="bg-gray-700 text-white"
             />
           </div>
@@ -408,7 +409,7 @@ const UpdateMovieForm = ({ movieData }: { movieData: MovieFormData }) => {
 
         <Button
           type="submit"
-          className="bg-blue-600 text-white py-3 px-6 rounded hover:bg-blue-700 cursor-pointer transition-colors duration-200 ease-in-out"
+          className="bg-red-600 text-white py-3 px-6 rounded hover:bg-red-700 cursor-pointer transition-colors duration-200 ease-in-out"
         >
           Update Movie
         </Button>

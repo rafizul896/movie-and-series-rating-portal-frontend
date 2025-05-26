@@ -31,7 +31,6 @@ export default function WishlistPage() {
   }, []);
 
   const removeFromWishlist = async (id: number) => {
-    console.log(id);
     try {
       const response = await removeFromWishlistList(id.toString());
 
@@ -244,7 +243,7 @@ export default function WishlistPage() {
                   <div className="border-t pt-4 mb-6">
                     <div className="flex justify-between font-semibold">
                       <span>Total</span>
-                      <span>${(totalPrice).toFixed(2)}</span>
+                      <span>${totalPrice.toFixed(2)}</span>
                     </div>
                   </div>
                   <div className="w-full">
