@@ -124,6 +124,7 @@ const Navbar = () => {
                   className="bg-white text-sm text-gray-800 w-52 rounded-md shadow-xl mt-2 p-1"
                 >
                   {user.role === "USER" && (
+                    <>
                     <DropdownMenuItem asChild>
                       <Link
                         href="/purchase"
@@ -132,6 +133,15 @@ const Navbar = () => {
                         My Purchase
                       </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/newsletter"
+                        className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        Newsletter History
+                      </Link>
+                    </DropdownMenuItem>
+                    </>
                   )}
                   {user.role === "ADMIN" && (
                     <DropdownMenuItem asChild>

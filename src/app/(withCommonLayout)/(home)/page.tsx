@@ -3,6 +3,7 @@ import EditorsPick from "@/components/modules/home/EditorsPick";
 import FeaturedMovie from "@/components/modules/home/FeaturedMovie";
 import NewArrived from "@/components/modules/home/NewArrived";
 import TopRated from "@/components/modules/home/TopRated";
+import UserNewsletterSection from "@/components/modules/UserNewsLetter/UserNewsLetter";
 
 const HomePage = async () => {
   return (
@@ -12,6 +13,7 @@ const HomePage = async () => {
       <FeaturedMovie />
       <TopRated />
       <EditorsPick />
+      <UserNewsletterSection/>
     </div>
   );
 };

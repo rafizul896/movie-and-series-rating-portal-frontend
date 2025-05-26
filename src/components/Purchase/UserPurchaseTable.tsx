@@ -18,27 +18,28 @@ interface Props {
 }
 
 export function UserPurchaseTable({ data }: Props) {
+
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-gray-200 bg-gray-800 dark:bg-gray-800">
-      <Table>
+    <div className="w-full overflow-x-auto rounded">
+      <Table className="p-4">
         <TableHeader>
           <TableRow>
-            <TableHead className="min-w-[160px] text-white">Transaction ID</TableHead>
-            <TableHead className="text-white">Movie ID</TableHead>
-            <TableHead className="text-white">Type</TableHead>
-            <TableHead className="text-white">Amount</TableHead>
-            <TableHead className="text-white">Status</TableHead>
-            <TableHead className="text-white">Purchased At</TableHead>
-            <TableHead className="text-white">Expiry Time</TableHead>
+            <TableHead className="min-w-[160px] text-gray-300 text-center">Transaction ID</TableHead>
+            <TableHead className="text-gray-300 text-center">Movie name</TableHead>
+            <TableHead className="text-gray-300 text-center">Type</TableHead>
+            <TableHead className="text-gray-300 text-center">Amount</TableHead>
+            <TableHead className="text-gray-300 text-center">Status</TableHead>
+            <TableHead className="text-gray-300 text-center">Purchased At</TableHead>
+            <TableHead className="text-gray-300 text-center">Expiry Time</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell className="font-medium text-white">{item.transactionId}</TableCell>
-              <TableCell className="text-white">{item.movieId}</TableCell>
-              <TableCell className="text-white">{item.purchase_type}</TableCell>
-              <TableCell className="text-white">
+          {data?.map((item:any) => (
+            <TableRow key={item.id} className="hover:bg-gray-700">
+              <TableCell className="font-medium text-gray-300 text-center">{item.transactionId}</TableCell>
+              <TableCell className="text-gray-300 text-center">{item?.movie?.title}</TableCell>
+              <TableCell className="text-gray-300 text-center">{item.purchase_type}</TableCell>
+              <TableCell className="text-gray-300 text-center">
                 {item.amount} {item.currency}
               </TableCell>
               <TableCell
@@ -46,12 +47,12 @@ export function UserPurchaseTable({ data }: Props) {
                   item.paymentStatus === "PAID"
                     ? "text-green-500 font-semibold"
                     : "text-red-500"
-                } text-white`}
+                } text-gray-300 text-center`}
               >
                 {item.paymentStatus}
               </TableCell>
-              <TableCell className="text-white">{format(new Date(item.purchasedAt), "PPpp")}</TableCell>
-              <TableCell className="text-white">{format(new Date(item.accessExpiryTime), "PPpp")}</TableCell>
+              <TableCell className="text-gray-300 text-center">{new Date(item.purchasedAt).toLocaleDateString()}</TableCell>
+              <TableCell className="text-gray-300 text-center">{new Date(item.accessExpiryTime).toLocaleDateString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>

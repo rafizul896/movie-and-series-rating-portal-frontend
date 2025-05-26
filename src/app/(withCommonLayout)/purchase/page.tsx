@@ -24,8 +24,8 @@ export default async function PurchasePage(): Promise<JSX.Element> {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <div className="text-center mb-8 sm:mb-10">
-        <h1 className="text-2xl mt-10 sm:text-3xl font-bold text-white">
+      <div className="text-center mt-20 mb-8 sm:mb-10">
+        <h1 className="text-2xl  sm:text-3xl font-bold text-white">
           Purchase History
         </h1>
         <p className="mt-2 text-sm  text-gray-400">
@@ -33,7 +33,7 @@ export default async function PurchasePage(): Promise<JSX.Element> {
         </p>
       </div>
 
-      <div className="text-white  rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-x-auto">
+      <div className="text-white   overflow-x-auto">
         <UserPurchaseTable data={purchases} />
       </div>
     </div>

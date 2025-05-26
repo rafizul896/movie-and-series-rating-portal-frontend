@@ -36,6 +36,16 @@ const items = [
     url: "/admin/order-history",
     icon: ShoppingBag,
   },
+  {
+    title: "Newsletter Management",
+    url: "/admin/newsletter",
+    icon: ShoppingBag,
+  },
+  // {
+  //   title: "Coupon Management",
+  //   url: "/admin/coupon",
+  //   icon: ShoppingBag,
+  // },
 ];
 
 export function AppSidebar() {
