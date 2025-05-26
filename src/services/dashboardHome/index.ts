@@ -5,6 +5,7 @@ export const getPurchaseAnalytics = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/purchase/purchase-analytics`,
       {
+        method: "GET",
         next: {
           tags: ["purchase-analytics"],
         },
@@ -39,6 +40,7 @@ export const getMovieWiseSales = async (query: {
     url.searchParams.append("pageSize", String(query.pageSize || 10));
 
     const res = await fetch(url.toString(), {
+      method: "GET",
       next: { tags: ["GetMovieWiseSales"] },
     });
 

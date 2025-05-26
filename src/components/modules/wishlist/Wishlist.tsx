@@ -12,6 +12,7 @@ import { IWishlistMovie } from "@/types/wishlist.type";
 import { toast } from "sonner";
 import { PaymentModal } from "./PaymentModal";
 import { useUser } from "@/context/UserContext";
+import { IPurchaseItem } from "@/types/purchase.type";
 
 export default function WishlistPage() {
   const { user } = useUser();
@@ -70,7 +71,7 @@ export default function WishlistPage() {
 
     const finalPrice = basePrice - discountAmount;
 
-    const purchaseItem = {
+    const purchaseItem: IPurchaseItem = {
       movieId: item.movieId,
       userId: user?.id,
       purchase_type: item.purchaseType,
