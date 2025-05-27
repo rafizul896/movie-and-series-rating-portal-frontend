@@ -373,20 +373,13 @@ const MyProfilePage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-10 -right-10 w-72 h-72 bg-red-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-red-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-black rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br">
       {/* Header */}
       <div className="relative">
-        <div className="absolute  inset-0 bg-gradient-to-r from-red-600 via-black to-red-600 opacity-40"></div>
+        <div className="absolute  inset-0"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6  py-8 ">
+          <div className="flex flex-col items-center gap-8">
             {/* Enhanced Profile Image */}
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-red-600 via-black to-red-600 rounded-full opacity-75 group-hover:opacity-100 blur-sm group-hover:blur transition-all duration-300"></div>
@@ -406,7 +399,7 @@ const MyProfilePage = () => {
                   </div>
                 )}
                 {isEditingProfile && (
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
                     <Camera
                       className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       size={32}
@@ -433,9 +426,9 @@ const MyProfilePage = () => {
             </div>
 
             {/* Enhanced User Info */}
-            <div className="text-center lg:text-left flex-1 space-y-4">
+            <div className="space-y-4 flex flex-col items-center">
               <div>
-                <h1 className="text-4xl lg:text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-300 to-red-500">
+                <h1 className="text-4xl font-bold mb-2 text-center text-red-400">
                   {user?.name}
                 </h1>
                 <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-4">
@@ -452,7 +445,7 @@ const MyProfilePage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+              <div className="flex flex-wrap gap-3 justify-center">
                 <span
                   className={`px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm border ${
                     user?.status === "ACTIVE"
@@ -463,7 +456,7 @@ const MyProfilePage = () => {
                   <Activity size={14} className="inline mr-2" />
                   {user?.status}
                 </span>
-                <span className="bg-gradient-to-r from-red-500 to-black bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium text-red-300 border border-red-500 backdrop-blur-sm">
+                <span className="bg-gradient-to-r px-4 py-2 rounded-full text-sm font-medium text-red-300 border border-red-500 backdrop-blur-sm">
                   <Star size={14} className="inline mr-2" />
                   {user?.role}
                 </span>
@@ -472,7 +465,7 @@ const MyProfilePage = () => {
               {activeTab === "profile" && (
                 <button
                   onClick={() => setIsEditingProfile(!isEditingProfile)}
-                  className="bg-gradient-to-r from-red-600 to-black text-white px-8 py-3 rounded-2xl hover:from-red-700 hover:to-gray-900 transition-all duration-300 flex items-center gap-3 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1 mx-auto lg:mx-0"
+                  className="bg-gradient-to-r text-white px-8 py-3 rounded-2xl bg-red-700 transition-all duration-300 flex items-center gap-3 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1 mx-auto lg:mx-0"
                 >
                   <Edit3 size={18} />
                   {isEditingProfile ? "Cancel Edit" : "Edit Profile"}
@@ -497,7 +490,7 @@ const MyProfilePage = () => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`flex items-center gap-3 px-6 py-3 rounded-2xl font-medium transition-all duration-300 ${
                         activeTab === tab.id
-                          ? "bg-gradient-to-r from-red-600 to-black text-white shadow-lg transform scale-105"
+                          ? "bg-gradient-to-r  bg-red-700 text-white shadow-lg transform scale-105"
                           : "text-gray-400 hover:text-white hover:bg-gray-800 hover:bg-opacity-50"
                       }`}
                     >
@@ -548,7 +541,7 @@ const MyProfilePage = () => {
                           <button
                             onClick={handleProfileSave}
                             disabled={isLoading}
-                            className="bg-gradient-to-r from-red-600 to-black text-white px-8 py-3 rounded-xl hover:from-red-700 hover:to-gray-900 transition-all duration-300 flex items-center justify-center gap-3 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                            className="cursor-pointer bg-red-700 text-white px-8 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                           >
                             <Save size={18} />
                             {isLoading ? "Saving..." : "Save Changes"}
@@ -563,7 +556,7 @@ const MyProfilePage = () => {
                               setErrors({});
                             }}
                             disabled={isLoading}
-                            className="bg-gray-700 bg-opacity-50 text-gray-300 px-8 py-3 rounded-xl hover:bg-gray-600 hover:bg-opacity-70 transition-all duration-300 font-medium backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-gray-700 cursor-pointer bg-opacity-50 text-gray-300 px-8 py-3 rounded-xl hover:bg-gray-600 hover:bg-opacity-70 transition-all duration-300 font-medium backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             Cancel
                           </button>
@@ -596,7 +589,7 @@ const MyProfilePage = () => {
                   <div className="space-y-8">
                     <div className="flex items-center gap-3">
                       <Lock className="text-red-400" size={24} />
-                      <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-300">
+                      <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-red-500">
                         Change Password
                       </h3>
                     </div>
@@ -706,7 +699,7 @@ const MyProfilePage = () => {
                             !passwordForm.newPassword ||
                             !passwordForm.confirmPassword
                           }
-                          className="w-full bg-gradient-to-r from-red-600 to-black text-white px-8 py-3 rounded-xl hover:from-red-700 hover:to-gray-900 transition-all duration-300 flex items-center justify-center gap-3 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                          className="w-full cursor-pointer bg-red-700 text-white px-8 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                         >
                           <Lock size={18} />
                           {isLoading

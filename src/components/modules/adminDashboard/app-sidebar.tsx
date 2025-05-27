@@ -45,6 +45,11 @@ const adminItems = [
     url: "/admin/newsletter",
     icon: ShoppingBag,
   },
+  {
+    title: "Management Profile",
+    url: "/user/manage-profile",
+    icon: UserRoundCog,
+  },
   // {
   //   title: "Coupon Management",
   //   url: "/admin/coupon",
