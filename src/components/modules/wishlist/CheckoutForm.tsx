@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/UserContext";
 import { createPurchase } from "@/services/purchase";
 import { deleteManyWishlistItem } from "@/services/wishlist";
+import { IPurchaseItem } from "@/types/purchase.type";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useRouter } from "next/navigation";
 import {
@@ -20,7 +21,7 @@ const CheckoutForm = ({
   purchaseData,
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
-  purchaseData: any;
+  purchaseData: IPurchaseItem[];
 }) => {
   const router = useRouter();
   const { user } = useUser();

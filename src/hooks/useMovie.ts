@@ -11,7 +11,6 @@ interface Movie {
   genres: string[];
   platforms: string[];
   releaseYear: number;
-  // Add other movie properties as needed
 }
 
 interface FilterOptions {
@@ -27,7 +26,6 @@ const useAllMovies = (initialFilters?: FilterOptions) => {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<FilterOptions>(initialFilters || {});
 
-  // Fetch all movies on initial load
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -45,25 +43,20 @@ const useAllMovies = (initialFilters?: FilterOptions) => {
     fetchMovies();
   }, []);
 
-  // Apply filters to movies
   const filteredMovies = useMemo(() => {
-    return allMovies.filter((movie) => {
-      // Search by title (case insensitive)
+    return allMovies?.filter((movie) => {
       const matchesSearch =
         !filters.searchTerm ||
         movie.title.toLowerCase().includes(filters.searchTerm.toLowerCase());
 
-      // Filter by genre
       const matchesGenre =
         !filters.genre ||
         (movie.genres && movie.genres.includes(filters.genre));
 
-      // Filter by platform
       const matchesPlatform =
         !filters.platform ||
         (movie.platforms && movie.platforms.includes(filters.platform));
 
-      // Filter by year
       const matchesYear =
         !filters.year || movie.releaseYear.toString() === filters.year;
 
@@ -71,26 +64,23 @@ const useAllMovies = (initialFilters?: FilterOptions) => {
     });
   }, [allMovies, filters]);
 
-  // Update filters
   const updateFilters = (newFilters: FilterOptions) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
-  // Reset all filters
   const resetFilters = () => {
     setFilters({});
   };
 
-  // Get unique values for filter options
   const filterOptions = useMemo(() => {
-    const genres = Array.from(
-      new Set(allMovies.flatMap((movie) => movie.genres || []))
+    const genres = Array?.from(
+      new Set(allMovies?.flatMap((movie) => movie.genres || []))
     );
-    const platforms = Array.from(
-      new Set(allMovies.flatMap((movie) => movie.platforms || []))
+    const platforms = Array?.from(
+      new Set(allMovies?.flatMap((movie) => movie.platforms || []))
     );
-    const years = Array.from(
-      new Set(allMovies.map((movie) => movie.releaseYear.toString()))
+    const years = Array?.from(
+      new Set(allMovies?.map((movie) => movie.releaseYear.toString()))
     ).sort((a, b) => parseInt(b) - parseInt(a));
 
     return { genres, platforms, years };

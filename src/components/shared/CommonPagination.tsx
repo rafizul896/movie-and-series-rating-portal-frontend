@@ -146,12 +146,14 @@ const CommonPagination: React.FC<PaginationProps> = ({
           min={1}
           max={totalPages}
           value={inputPage}
+          placeholder="Enter Page Number"
           onChange={(e) => setInputPage(e.target.value)}
-          className="w-14 sm:w-16 bg-gray-800 text-gray-300 rounded-lg px-2 sm:px-3 py-1 sm:py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-300"
+          className="inline-block w-32 bg-gray-800 text-gray-300 rounded-lg px-2 sm:px-3 py-1 sm:py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-300 text-[10px]"
+          
         />
         <button
           onClick={handleGoToPage}
-          className="bg-red-600 text-white rounded-lg px-3 sm:px-4 py-1 sm:py-2 hover:bg-red-700 transition-all duration-300"
+          className="bg-red-600 text-white rounded-lg px-3 sm:px-4 py-1 sm:py-2 hover:bg-red-700 transition-all duration-300 cursor-pointer"
         >
           Go
         </button>
