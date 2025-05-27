@@ -19,7 +19,6 @@ import {
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
-import { getSingleUser } from "@/services/user";
 import { logoutUser } from "@/services/authService";
 
 const NavUser = () => {

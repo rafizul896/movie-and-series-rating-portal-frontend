@@ -1,3 +1,4 @@
+
 import AllMovie from "@/components/modules/home/AllMovie";
 import React from "react";
 
