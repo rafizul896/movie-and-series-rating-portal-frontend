@@ -91,16 +91,18 @@ const Navbar = () => {
                   <Link
                     title="Watch list"
                     href="/watchlist"
-                    className="headerLink hover:text-red-500/80 text-white transition duration-200"
+                    className="headerLink hover:text-red-500/80 text-white transition duration-200 flex flex-col items-center "
                   >
-                    <Video width={30} height={30} />
+                    <Video width={26} height={26} />
+                    watch list
                   </Link>
                   <Link
                     title="Wish list"
                     href="/wishlist"
-                    className="headerLink hover:text-red-500/80 text-white transition duration-200"
+                    className="headerLink hover:text-red-500/80 text-white transition duration-200 flex flex-col items-center "
                   >
-                    <ShoppingCart width={30} height={30} />
+                    <ShoppingCart width={26} height={26} />
+                    wish list
                   </Link>
                 </>
               )}

@@ -35,45 +35,47 @@ const UserNewsletterSection = () => {
   };
 
   return (
-    <div className="py-10 px-4 md:px-20 bg-gradient-to-br from-red-800 to-red-600 text-white rounded-2xl shadow-lg container mx-auto">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          Subscribe to Our Movie Newsletter
-        </h2>
-        <p className="text-md md:text-lg mb-6">
-          Get the latest updates on top-rated movies, exclusive reviews, and
-          fan-favorite ratings straight to your inbox.
-        </p>
-        <Card className="bg-red-700/70 backdrop-blur p-6 border-none">
-          <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Input
-              placeholder="Your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="col-span-1 bg-white text-black"
-            />
-            <Input
-              placeholder="Your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="col-span-1 bg-white text-black"
-            />
-            <Button
-              onClick={handleSubscribe}
-              disabled={status === "loading"}
-              className="col-span-1 bg-white text-red-700 hover:bg-gray-200"
-            >
-              {status === "loading" ? "Subscribing..." : "Subscribe"}
-            </Button>
-          </CardContent>
-        </Card>
-        {status === "success" && (
-          <p className="mt-4 text-green-200 font-semibold">
-            🎉 You are subscribed to our movie newsletter!
-          </p>
-        )}
-      </div>
+   <div className="relative bg-zinc-900/80 p-6  text-white py-14 px-6 rounded-3xl shadow-2xl border border-red-700 max-w-5xl mx-auto mt-10">
+  {/* Spotlight effect */}
+  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-red-900/10 to-transparent rounded-3xl pointer-events-none"></div>
+
+  <div className="relative z-10 text-center space-y-4">
+    <h2 className="text-4xl font-extrabold tracking-wide text-white drop-shadow-md">
+      Join the FlimNest Club!
+    </h2>
+    <p className="text-md md:text-lg text-gray-300">
+      Get hand-picked reviews, hot trailers, and exclusive ratings straight to your inbox.
+    </p>
+
+    <div className="grid md:grid-cols-3 gap-4 mt-8">
+      <Input
+        placeholder="Your Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="bg-white/90 text-black rounded-lg shadow-inner"
+      />
+      <Input
+        placeholder="Your Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="bg-white/90 text-black rounded-lg shadow-inner"
+      />
+      <Button
+        onClick={handleSubscribe}
+        className="bg-gradient-to-r from-red-600 to-red-800 text-white font-semibold hover:brightness-110 transition duration-200 rounded-lg"
+      >
+        {status === "loading" ? "Subscribing..." : "Subscribe"}
+      </Button>
     </div>
+
+    {status === "success" && (
+      <p className="text-green-400 font-semibold mt-4">
+        ✅ Subscribed successfully!
+      </p>
+    )}
+  </div>
+</div>
+
   );
 };
 

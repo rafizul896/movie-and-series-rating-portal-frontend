@@ -28,7 +28,7 @@ const AllMovie = () => {
   const { allMovies: initialMovies, loading } = useAllMovies();
   const [filteredMovies, setFilteredMovies] = useState<TMovie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   const genres = ["Action", "Comedy", "Drama", "Fantasy", "Horror", "Romance", "Sci-Fi", "Thriller"];
   const sortBy = ["Highest Rated", "Most Reviews", "Latest Released"];
@@ -125,11 +125,11 @@ const AllMovie = () => {
   if (loading) return <LoadingPage />;
 
   return (
-    <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold mb-6">All Movies</h1>
+    <div className="pt-16 container mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold my-6">All Movies</h1>
       <div className="flex flex-col md:flex-row gap-4 min-h-screen">
         {/* Movie List */}
-        <div className="w-full md:w-9/12">
+        <div className="w-full md:w-9/12 flex flex-col gap-5 md:gap-14 lg:gap-20">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
             {paginatedMovies && paginatedMovies?.length > 0 ? (
               paginatedMovies?.map((movie: TMovie) => (
@@ -144,7 +144,7 @@ const AllMovie = () => {
 
           {/* Pagination */}
           {totalPages  && (
-            <div className="flex justify-center items-center gap-2 mt-6 pb-8">
+            <div className="flex  items-center gap-2 my-6 pb-8">
               <Button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
