@@ -6,6 +6,9 @@ import {
   Inbox,
   Users,
   ShoppingBag,
+  UserRoundCog,
+  Newspaper,
+  History,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -24,9 +27,10 @@ import {
 import Link from "next/link";
 import NavUser from "./nav-user";
 import Logo from "../shared/logo";
+import { useUser } from "@/context/UserContext";
 // import { NavUser } from "./nav-user";
 
-const items = [
+const adminItems = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
   { title: "Media Management", url: "/admin/movie", icon: Film },
   { title: "Users Management", url: "/admin/users", icon: Users },
@@ -48,8 +52,20 @@ const items = [
   // },
 ];
 
+const userItems = [
+  {
+    title: "Management Profile",
+    url: "/user/manage-profile",
+    icon: UserRoundCog,
+  },
+  { title: "Purchase History", url: "/user/purchase-history", icon: History },
+  { title: "Newsletter History", url: "/user/newsletter", icon: Newspaper },
+];
+
 export function AppSidebar() {
   const pathname = usePathname();
+  const { user } = useUser();
+  const items = user?.role === "USER" ? userItems : adminItems;
 
   return (
     <Sidebar
