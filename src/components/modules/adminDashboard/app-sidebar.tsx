@@ -32,6 +32,11 @@ import { useUser } from "@/context/UserContext";
 
 const adminItems = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
+  {
+    title: "Management Profile",
+    url: "/admin/manage-profile",
+    icon: UserRoundCog,
+  },
   { title: "Media Management", url: "/admin/movie", icon: Film },
   { title: "Users Management", url: "/admin/users", icon: Users },
   { title: "Review Management", url: "/admin/reviews", icon: Inbox },
@@ -45,11 +50,7 @@ const adminItems = [
     url: "/admin/newsletter",
     icon: ShoppingBag,
   },
-  {
-    title: "Management Profile",
-    url: "/user/manage-profile",
-    icon: UserRoundCog,
-  },
+
   // {
   //   title: "Coupon Management",
   //   url: "/admin/coupon",
