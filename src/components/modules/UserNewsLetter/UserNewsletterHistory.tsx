@@ -1,13 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -18,8 +12,7 @@ import {
 } from "@/components/ui/table";
 import { useUser } from "@/context/UserContext";
 import { getAllNewslettersByUserID } from "@/services/newsletter";
-import { TNewsletter } from "@/types/newsletter.type";
-import { FileText, Send } from "lucide-react";
+import { FileText } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type Subscriber = {
@@ -66,18 +59,28 @@ export default function UserNewsletterHistoryPage() {
 
   console.log("userNewsletterHistorys", userNewsletterHistory);
   return (
-    <div className="p-6 bg-black min-h-screen">
+    <div className="bg-black">
       {/* New User Newsletter History Table */}
-      <Card className="border-gray-800 bg-gray-900 shadow-xl mt-8">
-        <CardContent className="p-0  container mx-auto ">
+      <Card className="border-gray-800 bg-gray-900 shadow-xl mt-8 p-0">
+        <CardContent className=" container mx-auto ">
           <Table>
             <TableHeader className="bg-gray-800">
               <TableRow className="hover:bg-gray-800 border-gray-800">
-                <TableHead className="text-gray-300 text-center">Title</TableHead>
-                <TableHead className="text-gray-300 text-center">Content</TableHead>
-                <TableHead className="text-gray-300 text-center">Status</TableHead>
-                <TableHead className="text-gray-300 text-center">Send At</TableHead>
-                <TableHead className="text-gray-300 text-center">Email</TableHead>
+                <TableHead className="text-gray-300 text-center">
+                  Title
+                </TableHead>
+                <TableHead className="text-gray-300 text-center">
+                  Content
+                </TableHead>
+                <TableHead className="text-gray-300 text-center">
+                  Status
+                </TableHead>
+                <TableHead className="text-gray-300 text-center">
+                  Send At
+                </TableHead>
+                <TableHead className="text-gray-300 text-center">
+                  Email
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

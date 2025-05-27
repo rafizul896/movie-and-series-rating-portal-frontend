@@ -83,7 +83,7 @@ const Navbar = () => {
         {/* Right section - Avatar Dropdown Menu */}
         <div className="hidden md:flex items-center space-x-4 text-sm font-light">
           {user ? (
-            <div  className="flex justify-between items-center gap-5">
+            <div className="flex justify-between items-center gap-5">
               {/* wishlist icon */}
 
               {user.role === "USER" && (
@@ -107,9 +107,8 @@ const Navbar = () => {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Avatar  className="cursor-pointer ring-2 ring-white hover:ring-red-500/80 transition duration-300">
+                  <Avatar className="cursor-pointer ring-2 ring-white hover:ring-red-500/80 transition duration-300">
                     <AvatarImage
-                    
                       src={user_img?.src}
                       alt="User Avatar"
                       className="object-cover"
@@ -125,22 +124,30 @@ const Navbar = () => {
                 >
                   {user.role === "USER" && (
                     <>
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/purchase"
-                        className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                      >
-                        My Purchase
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/newsletter"
-                        className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
-                      >
-                        Newsletter History
-                      </Link>
-                    </DropdownMenuItem>
+                      {/* <DropdownMenuItem asChild>
+                        <Link
+                          href="/purchase"
+                          className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                        >
+                          My Purchase
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/newsletter"
+                          className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                        >
+                          Newsletter History
+                        </Link>
+                      </DropdownMenuItem> */}
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/user/manage-profile"
+                          className="w-full px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                        >
+                          Dashboard
+                        </Link>
+                      </DropdownMenuItem>
                     </>
                   )}
                   {user.role === "ADMIN" && (
