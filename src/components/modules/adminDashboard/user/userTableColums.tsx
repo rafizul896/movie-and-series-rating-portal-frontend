@@ -10,7 +10,7 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { DeleteUserDialog } from "./DeleteUserDialog";
 import { ChangeRoleDialog } from "./ChangeRoleDialog";
-import { updateUserRole } from "@/services/user";
+import { updateUser } from "@/services/user";
 
 export function useUserColumns() {
   const [openDialogId, setOpenDialogId] = useState<string | null>(null);
@@ -38,10 +38,13 @@ export function useUserColumns() {
     if (!currentRoleUser) return;
 
     const newRole = currentRoleUser.role === "ADMIN" ? "USER" : "ADMIN";
+    const data = {
+      role: newRole,
+    };
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
     try {
-      const res = await updateUserRole(currentRoleUser.id, {
-        role: newRole,
-      });
+      const res = await updateUser(currentRoleUser.id, formData);
 
       console.log("Updated role response:", res);
       setOpenRoleDialogId(null);
