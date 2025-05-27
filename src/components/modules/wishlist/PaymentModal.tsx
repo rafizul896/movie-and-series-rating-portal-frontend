@@ -13,10 +13,11 @@ import { ShoppingCart } from "lucide-react";
 import CheckoutForm from "./CheckoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { IPurchaseItem } from "@/types/purchase.type";
 
 type PaymentModalProps = {
   amount: number;
-  purchaseData: any;
+  purchaseData: IPurchaseItem[];
 };
 
 const stripePromise = loadStripe(

@@ -129,10 +129,9 @@ npm run dev
 
 > Make sure .env.local contains the API URL and JWT secrets if needed.
 
----
-
 ## 📁 Folder Structure
 
+```
 movie-and-series-rating-portal/
 │
 ├── public/ # Static files served as-is (e.g., favicon, images)
@@ -157,7 +156,7 @@ movie-and-series-rating-portal/
 ├── tsconfig.json # TypeScript configuration
 └── package.json # Project metadata and dependencies
 
----
+```
 
 ## 🌐 Deployment
 

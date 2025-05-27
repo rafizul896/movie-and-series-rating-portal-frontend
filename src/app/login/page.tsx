@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import "../../style/login.css";
@@ -10,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import Logo from "@/components/modules/shared/logo";
+import { Button } from "@/components/ui/button";
 
 const Login = () => {
   const [signState, setSignState] = useState("Sign In");
@@ -56,6 +56,19 @@ const Login = () => {
     }
   };
 
+  const handleDemoUserLogin = async (email: string, password: string) => {
+    const res = await loginUser({ email, password });
+    if (res.success) {
+      toast.success(res.message || "Login successful");
+
+      const decodedToken: any = await decodeToken(res.data.accessToken);
+      await setUser(decodedToken);
+      router.push("/");
+    } else {
+      toast.error(res.message || "Login failed");
+    }
+  };
+
   return (
     <div className="login">
       <Link href="/">
@@ -64,7 +77,28 @@ const Login = () => {
 
       <div className="login-form">
         <h1>{signState}</h1>
-
+        {signState === "Sign In" && (
+          <div className="mb-8">
+            <p className="text-slate-500  mt-4"> Easy Demon login</p>
+            <div className="flex w-full justify-start gap-3 items-center ">
+              <Button
+              className="!w-[100px] !border-2 !bg-transparent !rounded-2xl !border-red-600 hover:!bg-red-600 hover:!text-white "
+                onClick={() => handleDemoUserLogin("admin@gmail.com", "123456")}
+              >
+                {" "}
+                Admin login
+              </Button>
+              <Button
+              // variant="destructive"
+              className="!w-[95px] !border-2 !bg-transparent !rounded-2xl !border-red-600 hover:!bg-red-600 hover:!text-white"
+                onClick={() => handleDemoUserLogin("user@gmail.com", "123456")}
+              >
+                {" "}
+                User login
+              </Button>
+            </div>
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)}>
           {signState === "Sign up" && (
             <input
