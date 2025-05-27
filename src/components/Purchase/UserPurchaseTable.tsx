@@ -10,9 +10,6 @@ import {
 } from "@/components/ui/table";
 import { PurchaseData } from "@/types/purchase.type";
 
-import { format } from "date-fns";
-
-
 interface Props {
   data: PurchaseData[];
 }

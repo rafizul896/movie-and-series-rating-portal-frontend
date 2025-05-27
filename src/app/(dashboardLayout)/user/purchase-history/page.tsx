@@ -23,8 +23,8 @@ export default async function PurchasePage(): Promise<JSX.Element> {
   const purchases = await fetchUserPurchases(token);
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="text-center mt-20 mb-8 sm:mb-10">
+    <div className="container mx-auto">
+      <div className="text-center mt-10 mb-8 sm:mb-10">
         <h1 className="text-2xl  sm:text-3xl font-bold text-white">
           Purchase History
         </h1>
