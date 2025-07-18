@@ -122,11 +122,14 @@ This is the _movie-and-series-rating-portal-frontend_ of the Movie & Series Rati
 First, clone the repository to your local machine:
 
 bash
+```
 git clone https://github.com/rafizul896/movie-and-series-rating-portal-frontend.git
 cd movie-and-series-rating-portal-frontend
 npm install
 npm run dev
 
+
+```
 > Make sure .env.local contains the API URL and JWT secrets if needed.
 
 ## 📁 Folder Structure
@@ -157,9 +160,3 @@ movie-and-series-rating-portal/
 └── package.json # Project metadata and dependencies
 
 ```
-
-## 🌐 Deployment
-
-Deployed on [Vercel](https://vercel.com/) with automatic CI/CD from GitHub.
-
----
